@@ -1,11 +1,12 @@
 import { useState, useEffect } from 'react';
-import { useParams } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom';
 import { DateRange } from 'react-date-range';
-import 'react-date-range/dist/styles.css'; // Import default styles
-import 'react-date-range/dist/theme/default.css'; // Import theme styles
+import 'react-date-range/dist/styles.css'; 
+import 'react-date-range/dist/theme/default.css'; 
 
 const ObjectDetail = () => {
   const { id } = useParams();
+  const navigate = useNavigate();
   const [object, setObject] = useState(null);
   const [dateRange, setDateRange] = useState([
     {
@@ -14,6 +15,8 @@ const ObjectDetail = () => {
       key: 'selection',
     },
   ]);
+  const [isBookingValid, setIsBookingValid] = useState(false);
+  const [errorMessage, setErrorMessage] = useState('');
 
   useEffect(() => {
     fetch(`http://localhost:3232/objects/${id}`)
@@ -28,6 +31,26 @@ const ObjectDetail = () => {
         setObject({ error: 'Failed to load object details' });
       });
   }, [id]);
+
+  useEffect(() => {
+    const start = dateRange[0].startDate;
+    const end = dateRange[0].endDate;
+    const days = Math.ceil((end - start) / (1000 * 60 * 60 * 24));
+
+    if (days < 5) {
+      setIsBookingValid(false);
+      setErrorMessage('You must select minimum 5 days.');
+    } else {
+      setIsBookingValid(true);
+      setErrorMessage('');
+    }
+  }, [dateRange]);
+
+  const handleBooking = () => {
+    if (!isBookingValid) return;
+
+    navigate('/booking', { state: { object, dateRange } });
+  };
 
   return (
     <div className='object-detail'>
@@ -49,7 +72,6 @@ const ObjectDetail = () => {
             <h3>{object.description}</h3>
             <h4>{object.price} $</h4>
 
-            {/* Date Range Picker */}
             <div className="calendar-section">
               <h3>Select Your Stay:</h3>
               <DateRange
@@ -59,11 +81,16 @@ const ObjectDetail = () => {
                 ranges={dateRange}
                 className="date-range-picker"
               />
-              <p>
-                Arrival: {dateRange[0].startDate.toDateString()}<br />
-                Departure: {dateRange[0].endDate.toDateString()}
-              </p>
+              {errorMessage && <p style={{ color: 'red' }}>{errorMessage}</p>}
             </div>
+
+            <button
+              className="booking-button"
+              onClick={handleBooking}
+              disabled={!isBookingValid}
+            >
+              Book Now
+            </button>
           </div>
         )
       ) : (
