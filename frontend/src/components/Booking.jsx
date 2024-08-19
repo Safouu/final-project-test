@@ -3,7 +3,7 @@ import { useLocation } from 'react-router-dom';
 
 function Booking() {
   const location = useLocation();
-  const { object, dateRange } = location.state || {};
+  const { object} = location.state || {};
 
   const [formData, setFormData] = useState({
     name: '',
@@ -23,7 +23,7 @@ function Booking() {
     advancePayment: '',
   });
 
-  // Calculate total price and advance payment whenever pricePerDay or days change
+  // Calculate total price and advance payment
   useEffect(() => {
     const totalPrice = formData.pricePerDay * formData.days;
     const advancePayment = totalPrice * 0.3;
