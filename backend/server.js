@@ -2,7 +2,8 @@ import express from "express";
 import { Object } from "./objectModel.js";
 import { connect } from "./db.js";
 import { Register } from "./RegisterModel.js";
-import { Login } from "./loginModel.js";
+import { Contact } from "./contactModel.js";
+// import { Login } from "./loginModel.js";
 import cors from "cors";
 import dotenv from "dotenv";
 
@@ -46,6 +47,17 @@ app.post("/register", async (req, res) => {
   }
 });
 
+app.post("/contact", async (req, res) => {
+  await connect();
+  try {
+    const { name, email, message } = req.body;
+    const newMessage = new Contact({ name, email, message });
+    await newMessage.save();
+    res.status(201).json(newMessage);
+  } catch (e) {
+    res.sendStatus(500);
+  }
+});
 
 app.post("/objects", async (req, res) => {
   await connect();
