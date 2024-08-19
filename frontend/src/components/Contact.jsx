@@ -20,9 +20,9 @@ const Contact = () => {
       <div className="contact-container">
         <div className="company-details">
     
-          <p> Worlda Wide Vecation GmbH</p>
-          <p> 1234 Street Name, Berlin, CGermany</p>
-          <p> (123) 456-7890</p>
+          <p> World Wide Vecation GmbH</p>
+          <p> Berliner Strasse 2b, Berlin, Germany</p>
+          <p> (+49) 1456-7890</p>
           <p><a href="https://www.wwv.com" target="_blank" rel="noopener noreferrer">www.wwv.com</a></p>
         
   
