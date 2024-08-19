@@ -4,7 +4,8 @@ import { NavLink } from 'react-router-dom';
 const Register = () => {
 
 const [email, setEmail] = useState('');
-const [name, setName] = useState('');
+const [lastName, setlastName] = useState('');
+const [firstName, setfirstName] = useState('')
 const [password, setPassword] = useState('');
 
 //   const [message, setMessage] = useState('');
@@ -28,9 +29,16 @@ const [password, setPassword] = useState('');
         <h2>Register</h2>
         <input
           type="text"
-          placeholder="Name"
-          value={name}
-          onChange={(e) => setName(e.target.value)}
+          placeholder="First Name"
+          value={firstName}
+          onChange={(e) => setfirstName(e.target.value)}
+          required
+          />
+          <input
+          type="text"
+          placeholder="Last Name"
+          value={lastName}
+          onChange={(e) => setlastName(e.target.value)}
           required
           />
         <input
