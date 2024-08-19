@@ -2,45 +2,65 @@ import { useState } from 'react';
 import { NavLink } from 'react-router-dom';
 
 const Register = () => {
+  const [firstName, setFirstName] = useState('');
+  const [lastName, setLastName] = useState('');
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [message, setMessage] = useState('');
+//   const navigate = useNavigate();
 
-const [email, setEmail] = useState('');
-const [lastName, setlastName] = useState('');
-const [firstName, setfirstName] = useState('')
-const [password, setPassword] = useState('');
-
-//   const [message, setMessage] = useState('');
-
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    // console.log(email, name, password);
 
-    // if (email === 'user@example.com' ) {
-    //   setMessage('Login successful!');
-    // } else {
-    //   setMessage('Invalid email');
-    // }
+    try {
+      const response = await fetch('http://localhost:3232/register', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ firstName, lastName, email, password }),
+      });
+
+      const data = await response.json();
+
+      if (response.ok) {
+        setMessage('Registration successful!');
+        //Beispiel: ////////////////////////////////////////
+        // navigate('/login');
+        
+      } else {
+        setMessage(data.message || 'Registration failed!');
+      }
+    } catch (error) {
+      console.error('Error:', error);
+      setMessage('An error occurred. Please try again later.');
+    }
+
+    // Felder zurücksetzen
+    setFirstName('');
+    setLastName('');
+    setEmail('');
+    setPassword('');
   };
 
   return (
     <div className="container">
-
       <form className="login-form" onSubmit={handleSubmit}>
-
         <h2>Register</h2>
         <input
           type="text"
           placeholder="First Name"
           value={firstName}
-          onChange={(e) => setfirstName(e.target.value)}
+          onChange={(e) => setFirstName(e.target.value)}
           required
-          />
-          <input
+        />
+        <input
           type="text"
           placeholder="Last Name"
           value={lastName}
-          onChange={(e) => setlastName(e.target.value)}
+          onChange={(e) => setLastName(e.target.value)}
           required
-          />
+        />
         <input
           type="email"
           placeholder="Email"
@@ -54,16 +74,13 @@ const [password, setPassword] = useState('');
           value={password}
           onChange={(e) => setPassword(e.target.value)}
           required
-          />
-
+        />
         <button type="submit">Sign up</button>
-        {/* {message && <p className="message">{message}</p>} */}
-
-        <p> already have an account !!! <NavLink to={"/login"} >Login</NavLink> </p>
+        {message && <p className="message">{message}</p>}
+        <p>Already have an account? <NavLink to="/login">Login</NavLink></p>
       </form>
-
     </div>
   );
 };
 
-export default Register
+export default Register;

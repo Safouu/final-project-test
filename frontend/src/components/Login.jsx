@@ -1,19 +1,42 @@
 import { useState } from 'react'; 
-import { NavLink } from 'react-router-dom';
+import { NavLink, useNavigate } from 'react-router-dom';
 
 const Login = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  
   const [message, setMessage] = useState('');
+  const navigate = useNavigate();
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    if (email === 'user@example.com' ) {
-      setMessage('Login successful!');
-    } else {
-      setMessage('Invalid email');
+
+    try {
+      const response = await fetch('http://localhost:3232/login', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ email, password }),
+      });
+
+      const data = await response.json();
+
+      if (response.ok) {
+        setMessage('Login successful!');
+        //Beispiel: ////////////////////////////////////////
+        navigate('/')
+      } else {
+        setMessage(data.message || 'Login failed!');
+        navigate('/register')
+      }
+
+    } catch (error) {
+      console.error('Error:', error);
+      setMessage('An error occurred. Please try again later.');
     }
+
+    setEmail('');
+    setPassword('');
   };
 
   return (
@@ -33,18 +56,15 @@ const Login = () => {
           value={password}
           onChange={(e) => setPassword(e.target.value)}
           required
-          />
+        />
 
         <button type="submit">Login</button>
         {message && <p className="message">{message}</p>}
 
-        <p> no account !!! <NavLink to={"/register"} >Register</NavLink> </p>
+        <p>No account? <NavLink to="/register">Register</NavLink></p>
       </form>
-
-      
-
     </div>
   );
 };
 
-export default Login
+export default Login;
