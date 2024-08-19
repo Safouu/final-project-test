@@ -4,6 +4,7 @@ import Login from './components/Login'
 import Layout from './components/Layout'
 import Contact from './components/Contact'
 import ObjectDetail from './components/ObjectDetail';
+import Register from './components/Register'
 
 function App() {
 
@@ -16,6 +17,7 @@ function App() {
           
           <Route index element={<Home />} />
           <Route path="login" element={<Login />} />
+          <Route path="register" element={<Register />} />
           <Route path="contact" element={<Contact />} />
           <Route path="object/:id" element={<ObjectDetail />} /> 
         </Route>
