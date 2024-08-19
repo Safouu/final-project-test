@@ -1,5 +1,6 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom'; // Import useParams
+
 
 const ObjectDetail = () => {
   const { id } = useParams(); // Access the route parameter (id)
@@ -18,6 +19,8 @@ const ObjectDetail = () => {
         setObject({ error: 'Failed to load object details' });
       });
   }, [id]);
+
+
 
   return (
     <div className='object-detail'>

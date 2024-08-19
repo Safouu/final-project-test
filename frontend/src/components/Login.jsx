@@ -1,42 +1,35 @@
-const Login = () =>{
+import { useState } from 'react'; 
+
+const Login = () => {
+  const [email, setEmail] = useState('');
+  const [message, setMessage] = useState('');
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    if (email === 'user@example.com' ) {
+      setMessage('Login successful!');
+    } else {
+      setMessage('Invalid email');
+    }
+  };
+
   return (
-     <> 
-  <h1>Login form</h1>
-  
-  <form action="">
+    <div className="container">
+      <form className="login-form" onSubmit={handleSubmit}>
+        <h2>Login</h2>
+        <input
+          type="email"
+          placeholder="Email"
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
+          required
+        />
 
-    <div>
-      <label>First Name</label>
-      <input type="text" name="FirstName" id="FirstName" />
+        <button type="submit">Login</button>
+        {message && <p className="message">{message}</p>}
+      </form>
     </div>
-
-    <div>
-      <label>Last Name</label>
-      <input type="text" name="LastName" id="LastName" placeholder="enter Last name"/>
-    </div>
-
-    <div>
-      <label >Email</label>
-      <input type="email" name="email" id="email" placeholder="Enter an email" />
-    </div>
-
-    <div>
-      <label>Password</label>
-      <input type="password" name="name" id="name" />
-    </div>
-
-    <button>
-      Submit
-    </button>
-
-  </form>
-  
-  
-  
-  </> 
-  )
-
-
-}
+  );
+};
 
 export default Login
