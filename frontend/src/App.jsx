@@ -8,7 +8,7 @@ import ObjectDetail from './components/ObjectDetail';
 import Register from './components/Register'
 import Admin from './components/Admin';
 
-import Register from './components/Register';
+
 import Booking from './components/Booking';
 
 
