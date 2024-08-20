@@ -4,8 +4,13 @@ import Login from './components/Login'
 import Layout from './components/Layout'
 import Contact from './components/Contact'
 import ObjectDetail from './components/ObjectDetail';
+
 import Register from './components/Register'
 import Admin from './components/Admin';
+
+import Register from './components/Register';
+import Booking from './components/Booking';
+
 
 function App() {
 
@@ -20,6 +25,7 @@ function App() {
           <Route path="login" element={<Login />} />
           <Route path="register" element={<Register />} />
           <Route path="contact" element={<Contact />} />
+          <Route path="booking" element={<Booking />} />
           <Route path="object/:id" element={<ObjectDetail />} /> 
           <Route path='admin' element={<Admin />} />
         </Route>
