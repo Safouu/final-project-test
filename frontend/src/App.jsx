@@ -28,6 +28,7 @@ function App() {
           <Route path="booking" element={<Booking />} />
           <Route path="object/:id" element={<ObjectDetail />} /> 
           <Route path='admin' element={<Admin />} />
+          
         </Route>
 
       </Routes>
