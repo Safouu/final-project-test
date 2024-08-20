@@ -5,6 +5,7 @@ import Layout from './components/Layout'
 import Contact from './components/Contact'
 import ObjectDetail from './components/ObjectDetail';
 import Register from './components/Register'
+import Admin from './components/Admin';
 
 function App() {
 
@@ -20,6 +21,7 @@ function App() {
           <Route path="register" element={<Register />} />
           <Route path="contact" element={<Contact />} />
           <Route path="object/:id" element={<ObjectDetail />} /> 
+          <Route path='admin' element={<Admin />} />
         </Route>
 
       </Routes>

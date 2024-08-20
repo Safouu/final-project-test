@@ -5,6 +5,7 @@ const Contact = () => {
   const [email, setEmail] = useState('');
   const [message, setMessage] = useState('');
   const [submitted, setSubmitted] = useState(false);
+  const [thanks, setThanks] = useState("Thank you for your message!");
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -31,9 +32,11 @@ const Contact = () => {
     setName('');
     setEmail('');
     setMessage('');
+    setThanks(thanks);
   };
 
   return (
+
     <div className="contact-container">
       <div className="company-details">
         <p>World Wide Vecation GmbH 123</p>
