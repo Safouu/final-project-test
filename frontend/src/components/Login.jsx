@@ -1,4 +1,4 @@
-import { useState } from 'react'; 
+import { useState } from 'react';
 import { NavLink, useNavigate } from 'react-router-dom';
 
 const Login = () => {
@@ -23,13 +23,16 @@ const Login = () => {
 
       if (response.ok) {
         setMessage('Login successful!');
-        //Beispiel: ////////////////////////////////////////
-        navigate('/')
+
+        localStorage.setItem('isAdmin', data.isAdmin);  
+        if (data.isAdmin) {
+          navigate('/admin');
+        } else {
+          navigate('/');
+        }
       } else {
         setMessage(data.message || 'Login failed!');
-        navigate('/register')
       }
-
     } catch (error) {
       console.error('Error:', error);
       setMessage('An error occurred. Please try again later.');
