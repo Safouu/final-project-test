@@ -28,8 +28,10 @@ app.post("/login", async (req, res) => {
     if (!user) {
       return res.status(401).json({ message: "Invalid email or password" });
     }
+    const adminEmails = [process.env.ADMIN1, process.env.ADMIN2 , process.env.ADMIN3];
+    const isAdmin = adminEmails.includes(email);
 
-    res.status(200).json({ message: "Login successful", userId: user._id });
+    res.status(200).json({ message: "Login successful", isAdmin });
   } catch (e) {
     res.sendStatus(500);
   }
@@ -38,8 +40,8 @@ app.post("/login", async (req, res) => {
 app.post("/register", async (req, res) => {
   await connect();
   try {
-    const { firstName, lastName, email, password } = req.body;
-    const newUser = new Register({ firstName, lastName, email, password });
+    const { firstName, lastName, email, password, address, zipCode, city, country } = req.body;
+    const newUser = new Register({ firstName, lastName, email, password,address, zipCode, city, country });
     await newUser.save();
     res.status(201).json(newUser);
   } catch (e) {
