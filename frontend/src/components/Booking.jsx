@@ -1,26 +1,18 @@
-import { useState, useEffect } from 'react';
-import { useLocation } from 'react-router-dom';
+import { useState, useEffect } from "react";
+import { useLocation } from "react-router-dom";
 
 function Booking() {
   const location = useLocation();
-  const { object} = location.state || {};
+  const { object } = location.state || {};
 
   const [formData, setFormData] = useState({
-    name: '',
-    surname: '',
-    email: '',
-    mobile: '',
-    address: '',
-    zipCode: '',
-    city: '',
-    country: '',
     people: 0,
     children: 0,
     pets: 0,
-    pricePerDay: object ? object.price : '',
-    days: '0',
-    totalPrice: '',
-    advancePayment: '',
+    pricePerDay: object ? object.price : "",
+    days: "0",
+    totalPrice: "",
+    advancePayment: "",
   });
 
   // Calculate total price and advance payment
@@ -67,131 +59,62 @@ function Booking() {
       <h2>Reservation</h2>
       <form onSubmit={handleSubmit}>
         <div>
-          <label>Name:</label>
-          <input
-            type="text"
-            name="name"
-            value={formData.name}
-            onChange={handleChange}
-            required
-          />
-        </div>
-        <div>
-          <label>Surname:</label>
-          <input
-            type="text"
-            name="surname"
-            value={formData.surname}
-            onChange={handleChange}
-            required
-          />
-        </div>
-        <div>
-          <label>Email:</label>
-          <input
-            type="email"
-            name="email"
-            value={formData.email}
-            onChange={handleChange}
-            required
-          />
-        </div>
-        <div>
-          <label>Mobile Phone:</label>
-          <input
-            type="tel"
-            name="mobile"
-            value={formData.mobile}
-            onChange={handleChange}
-            required
-          />
-        </div>
-        <div>
-          <label>Address:</label>
-          <input
-            type="text"
-            name="address"
-            value={formData.address}
-            onChange={handleChange}
-            required
-          />
-        </div>
+          <div className="people">
+            <label>Adults:</label>
+            <div className="input-group">
+              <button type="button" onClick={() => handleDecrement("people")}>
+                -
+              </button>
+              <input
+                type="number"
+                name="people"
+                value={formData.people}
+                onChange={handleChange}
+                readOnly
+              />
+              <button type="button" onClick={() => handleIncrement("people")}>
+                +
+              </button>
+            </div>
+          </div>
 
-        <div className="city-row">
-          <div className="zip-code">
-            <label>Zip Code:</label>
-            <input
-              type="text"
-              name="zipCode"
-              value={formData.zipCode}
-              onChange={handleChange}
-              required
-            />
+          <div>
+            <label>Children:</label>
+            <div className="input-group">
+              <button type="button" onClick={() => handleDecrement("children")}>
+                -
+              </button>
+              <input
+                type="number"
+                name="children"
+                value={formData.children}
+                onChange={handleChange}
+                readOnly
+              />
+              <button type="button" onClick={() => handleIncrement("children")}>
+                +
+              </button>
+            </div>
           </div>
-          <div className="city">
-            <label>City:</label>
-            <input
-              type="text"
-              name="city"
-              value={formData.city}
-              onChange={handleChange}
-              required
-            />
-          </div>
-          <div className="country">
-            <label>Country:</label>
-            <input
-              type="text"
-              name="country"
-              value={formData.country}
-              onChange={handleChange}
-              required
-            />
-          </div>
-       <div className = "people" >
-          <label>Adults:</label>
-          <div className="input-group">
-            <button type="button" onClick={() => handleDecrement('people')}>-</button>
-            <input
-              type="number"
-              name="people"
-              value={formData.people}
-              onChange={handleChange}
-              readOnly
-            />
-            <button type="button" onClick={() => handleIncrement('people')}>+</button>
-          </div>
-        </div>
 
-        <div>
-          <label>Children:</label>
-          <div className="input-group">
-            <button type="button" onClick={() => handleDecrement('children')}>-</button>
-            <input
-              type="number"
-              name="children"
-              value={formData.children}
-              onChange={handleChange}
-              readOnly
-            />
-            <button type="button" onClick={() => handleIncrement('children')}>+</button>
+          <div>
+            <label>Pets:</label>
+            <div className="input-group">
+              <button type="button" onClick={() => handleDecrement("pets")}>
+                -
+              </button>
+              <input
+                type="number"
+                name="pets"
+                value={formData.pets}
+                onChange={handleChange}
+                readOnly
+              />
+              <button type="button" onClick={() => handleIncrement("pets")}>
+                +
+              </button>
+            </div>
           </div>
-        </div>
-
-        <div>
-          <label>Pets:</label>
-          <div className="input-group">
-            <button type="button" onClick={() => handleDecrement('pets')}>-</button>
-            <input
-              type="number"
-              name="pets"
-              value={formData.pets}
-              onChange={handleChange}
-              readOnly
-            />
-            <button type="button" onClick={() => handleIncrement('pets')}>+</button>
-          </div>
-        </div>
         </div>
 
         {/* Calculator Section */}

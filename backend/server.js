@@ -38,8 +38,8 @@ app.post("/login", async (req, res) => {
 app.post("/register", async (req, res) => {
   await connect();
   try {
-    const { firstName, lastName, email, password } = req.body;
-    const newUser = new Register({ firstName, lastName, email, password });
+    const { firstName, lastName, email, password, address, zipCode, city, country } = req.body;
+    const newUser = new Register({ firstName, lastName, email, password,address, zipCode, city, country });
     await newUser.save();
     res.status(201).json(newUser);
   } catch (e) {
