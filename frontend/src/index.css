@@ -571,7 +571,13 @@ input[type="number"] {
 -------------------------
 /* Admin seite */
 
-.toolbar {
+/* Admin Container */
+.admin-container {
+  display: flex;
+}
+
+/* Admin Sidebar */
+.admin-sidebar {
   width: 200px;
   background-color: #333;
   color: white;
@@ -583,28 +589,21 @@ input[type="number"] {
   overflow-y: auto;
 }
 
-.toolbar h2 {
+.admin-sidebar h2 {
   color: #fff;
 }
 
-.toolbar-container {
-  width: 20%;
-  background-color: #444; 
-  padding: 20px;
-  border-radius: 5px; 
-}
-
-.toolbar ul {
+.admin-sidebar ul {
   list-style-type: none;
   padding: 0;
   margin: 0;
 }
 
-.toolbar ul li {
+.admin-sidebar ul li {
   margin: 10px 0;
 }
 
-.toolbar ul li a {
+.admin-sidebar ul li a {
   color: #fff;
   text-decoration: none;
   padding: 10px;
@@ -614,15 +613,24 @@ input[type="number"] {
   transition: background-color 0.3s;
 }
 
-.toolbar ul li a:hover {
+.admin-sidebar ul li a:hover {
   background-color: #777;
 }
 
+/* Admin Content */
+.admin-content {
+  margin-left: 220px; /* Adjust based on the sidebar width */
+  padding: 20px;
+  width: calc(100% - 220px);
+  background-color: #f4f4f4; /* Light background for content area */
+}
+
+/* Admin Toolbar Actions */
 .toolbar-actions {
   margin-top: 20px;
   margin-bottom: 40px;
-  display: flex; /* Flexbox for horizontal layout */
-  gap: 10px; /* Space between buttons */
+  display: flex;
+  gap: 10px;
 }
 
 .toolbar-button {
@@ -637,4 +645,125 @@ input[type="number"] {
 
 .toolbar-button:hover {
   background-color: #777;
+}
+--------------------------------
+/* Add Guest */
+
+.add-guest {
+  max-width: 600px;
+  margin: 0 auto;
+  padding: 20px;
+  background-color: #f9f9f9;
+  border-radius: 8px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.add-guest h2 {
+  text-align: center;
+  color: #333;
+  margin-bottom: 20px;
+}
+
+.add-guest form > div {
+  margin-bottom: 15px;
+}
+
+.add-guest label {
+  display: block;
+  margin-bottom: 5px;
+  color: #666;
+  font-weight: bold;
+}
+
+.add-guest input[type="text"],
+.add-guest input[type="email"],
+.add-guest input[type="number"] {
+  width: calc(100% - 20px);
+  padding: 8px 10px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-size: 16px;
+}
+
+.add-guest .calendar-section {
+  margin-bottom: 20px;
+}
+
+.add-guest .calendar-section h3 {
+  margin-bottom: 10px;
+  color: #333;
+}
+
+.add-guest .input-group {
+  display: flex;
+  align-items: center;
+}
+
+.add-guest .input-group button {
+  background-color: #007bff;
+  color: white;
+  border: none;
+  padding: 8px 12px;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.add-guest .input-group button:hover {
+  background-color: #0056b3;
+}
+
+.add-guest .input-group input[type="number"] {
+  text-align: center;
+  width: 60px;
+  margin: 0 5px;
+}
+.person-container {
+  display: flex;
+  gap: 20px;
+}
+.add-guest .calculator h3 {
+  margin-bottom: 10px;
+  color: #333;
+  text-align: center;
+}
+
+.add-guest .calculator > div {
+  margin-bottom: 10px;
+}
+
+.add-guest .calculator input {
+  width: 100%;
+  padding: 8px 10px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-size: 16px;
+}
+
+.add-guest button[type="submit"] {
+  width: 100%;
+  padding: 12px;
+  background-color: #28a745;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 18px;
+}
+
+.add-guest button[type="submit"]:hover {
+  background-color: #218838;
+}
+
+.add-guest button[type="submit"]:disabled {
+  background-color: #ccc;
+  cursor: not-allowed;
+}
+
+.add-guest .date-range-picker {
+  width: 100%;
+}
+
+.add-guest .error-message {
+  color: red;
+  margin-top: 10px;
 }
