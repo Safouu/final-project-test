@@ -94,7 +94,7 @@ const AddGuest = () => {
   
     return (
         <div className="add-guest">
-          <h2>Reservation</h2>
+          <h2>AddGuest</h2>
           <form onSubmit={handleSubmit}>
             <div>
               <label>First Name:</label>
