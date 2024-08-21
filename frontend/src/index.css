@@ -567,3 +567,74 @@ input[type="number"] {
   border-color: #007bff;
   outline: none;
 }
+
+-------------------------
+/* Admin seite */
+
+.toolbar {
+  width: 200px;
+  background-color: #333;
+  color: white;
+  padding: 20px;
+  position: fixed;
+  height: 100%;
+  top: 0;
+  left: 0;
+  overflow-y: auto;
+}
+
+.toolbar h2 {
+  color: #fff;
+}
+
+.toolbar-container {
+  width: 20%;
+  background-color: #444; 
+  padding: 20px;
+  border-radius: 5px; 
+}
+
+.toolbar ul {
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+}
+
+.toolbar ul li {
+  margin: 10px 0;
+}
+
+.toolbar ul li a {
+  color: #fff;
+  text-decoration: none;
+  padding: 10px;
+  display: block;
+  border-radius: 5px;
+  background-color: #555;
+  transition: background-color 0.3s;
+}
+
+.toolbar ul li a:hover {
+  background-color: #777;
+}
+
+.toolbar-actions {
+  margin-top: 20px;
+  margin-bottom: 40px;
+  display: flex; /* Flexbox for horizontal layout */
+  gap: 10px; /* Space between buttons */
+}
+
+.toolbar-button {
+  padding: 10px;
+  background-color: #555;
+  text-align: center;
+  border-radius: 5px;
+  transition: background-color 0.3s;
+  flex: 1;
+  white-space: nowrap;
+}
+
+.toolbar-button:hover {
+  background-color: #777;
+}

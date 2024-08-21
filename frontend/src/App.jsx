@@ -5,11 +5,10 @@ import Layout from "./components/Layout";
 import Contact from "./components/Contact";
 import ObjectDetail from "./components/ObjectDetail";
 import ProtectedRoute from "./components/ProtectedRoute";
-
 import Register from "./components/Register";
-import Admin from "./components/Admin";
-
+import Admin from "./components/Admin/Admin";
 import Booking from "./components/Booking";
+// import AddObject from "./components/Admin/AddObject"; // Import the AddObject component
 
 function App() {
   return (
@@ -23,6 +22,7 @@ function App() {
               element={
                 <ProtectedRoute>
                   <Admin />
+                  {/* <Route path="AddObject" element={<AddObject />} /> Add the route for "add-object" */}
                 </ProtectedRoute>
               }
             />
