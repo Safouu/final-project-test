@@ -11,7 +11,7 @@ const Home = () => {
     <img src='./images/logo.jpg' alt='Logo' />
         </div>
     <div className='top-text'>
-          World  Wide  Vacation
+          World  Wide  Vocation
         </div>
     </div>
 
