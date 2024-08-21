@@ -15,22 +15,22 @@ function App() {
     <>
       <BrowserRouter>
         <Routes>
+
           <Route path="/" element={<Layout />}>
             <Route index element={<Home />} />
+
+            <Route path="/admin" element={
+            <ProtectedRoute>
+              <Admin/>
+            </ProtectedRoute>}/>
+
             <Route path="login" element={<Login />} />
-            <Route path="/admin"
-              element={
-                <ProtectedRoute>
-                  <Admin />
-                  {/* <Route path="AddObject" element={<AddObject />} /> Add the route for "add-object" */}
-                </ProtectedRoute>
-              }
-            />
             <Route path="register" element={<Register />} />
             <Route path="contact" element={<Contact />} />
             <Route path="booking" element={<Booking />} />
             <Route path="object/:id" element={<ObjectDetail />} />
-            <Route path="admin" element={<Admin />} />
+
+
           </Route>
         </Routes>
       </BrowserRouter>

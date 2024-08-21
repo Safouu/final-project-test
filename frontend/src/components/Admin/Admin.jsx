@@ -7,7 +7,7 @@ const Admin = () => {
           <h2>Admin</h2>
           <div className="toolbar-actions">
             <Link to="/add-guest" className="toolbar-button">Add New Guest</Link>
-            <Link to="/add-object" className="toolbar-button">Add New Object</Link>
+            <Link to="addObject" className="toolbar-button">Add New Object</Link>
           </div>
           <div className="toolbar-container">
             <ul>

@@ -1,11 +1,12 @@
 
+const AddObject = () => {
 
-// function AddObject() {
-//     return (
-//         <div>
-//             <h1>Add Objects</h1>
-//         </div>
-//     )
-// }
+    return (
+      <>
+      <h1>Add Object</h1>
+       
+      </>
+    );
+}
 
-// export default AddObject;
+export default AddObject;
