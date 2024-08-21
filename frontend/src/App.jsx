@@ -9,7 +9,7 @@ import Register from "./components/Register";
 import Admin from "./components/Admin/Admin";
 import Booking from "./components/Booking";
 // import AddObject from "./components/Admin/AddObject"; // Import the AddObject component
-
+import Logout from './components/LogOut'; 
 function App() {
   return (
     <>
@@ -18,7 +18,9 @@ function App() {
           <Route path="/" element={<Layout />}>
             <Route index element={<Home />} />
             <Route path="login" element={<Login />} />
-            <Route path="/admin"
+            <Route path="logout" element={<Logout />} /> 
+            <Route
+              path="/admin"
               element={
                 <ProtectedRoute>
                   <Admin />
@@ -30,7 +32,6 @@ function App() {
             <Route path="contact" element={<Contact />} />
             <Route path="booking" element={<Booking />} />
             <Route path="object/:id" element={<ObjectDetail />} />
-            <Route path="admin" element={<Admin />} />
           </Route>
         </Routes>
       </BrowserRouter>
