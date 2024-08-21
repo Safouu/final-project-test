@@ -8,8 +8,9 @@ import ProtectedRoute from "./components/ProtectedRoute";
 import Register from "./components/Register";
 import Admin from "./components/Admin/Admin";
 import Booking from "./components/Booking";
-// import AddObject from "./components/Admin/AddObject"; // Import the AddObject component
 import Logout from './components/LogOut'; 
+
+
 function App() {
   return (
     <>
@@ -22,11 +23,10 @@ function App() {
             <Route path="login" element={<Login />} />
             <Route path="logout" element={<Logout />} /> 
             <Route
-              path="/admin"
+              path="/admin/*"
               element={
                 <ProtectedRoute>
                   <Admin />
-                  {/* <Route path="AddObject" element={<AddObject />} /> Add the route for "add-object" */}
                 </ProtectedRoute>
               }
             />
