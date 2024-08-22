@@ -7,8 +7,6 @@ const AddObject = () => {
     const [description, setDescription] = useState('');
     const [image, setImage] = useState('');
 
-
-  
     const handleSubmit = async (e) => {
       e.preventDefault();
   
@@ -31,6 +29,7 @@ const AddObject = () => {
       setDescription('');
       setImage('');
     };
+
   
     return (
       <div className="container">
@@ -59,11 +58,18 @@ const AddObject = () => {
           />
             <input
             type="text"
-            placeholder="Image URL"
+            placeholder="./images/bild-1pg"
             value={image}
             onChange={(e) => setImage(e.target.value)}
             required
           />
+          {/* <input 
+            type="file"
+            placeholder="Image URL"
+            value={image}
+            onChange={(e) => setImage(e.target.value)}
+            required
+          /> */}
   
           <button type="submit">Add</button>
 
