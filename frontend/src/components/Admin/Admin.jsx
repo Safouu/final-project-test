@@ -12,10 +12,11 @@ const Admin = () => {
         <h2>Admin Panel</h2>
         <ul>
         <li><Link to="add-object">AddObject +</Link></li>
+        <li><Link to="add-guest">AddGuest +</Link></li>
         <li><Link to="objects">ListObjects</Link></li>
-          <li><Link to="calendar">AdminCalendar</Link></li>
-          <li><Link to="guests">ListGuests</Link></li>
-          <li><Link to="add-guest">AddGuest</Link></li>
+        <li><Link to="guests">ListGuests</Link></li>
+        <li><Link to="calendar">AdminCalendar</Link></li>
+          
         </ul>
       </div>
       <div className="admin-content">

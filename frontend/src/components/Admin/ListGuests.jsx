@@ -15,10 +15,7 @@ const ListGuests = () => {
               <th>Total Price</th>
               <th>Advance Payment</th>
             </tr>
-        <p>Guest 1</p>
-        <p>Guest 2</p>
-        <p>Guest 3</p>
-          
+      
         
       
         <p>No guests added yet.</p>

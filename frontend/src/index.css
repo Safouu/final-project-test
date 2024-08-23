@@ -720,26 +720,16 @@ input[type="number"] {
   margin-bottom: 20px;
 }
 
-.add-guest form > div {
-  margin-bottom: 15px;
-}
+
 
 .add-guest label {
   display: block;
+  justify-content: center;
   margin-bottom: 5px;
   color: #666;
   font-weight: bold;
 }
 
-.add-guest input[type="text"],
-.add-guest input[type="email"],
-.add-guest input[type="number"] {
-  width: calc(100% - 20px);
-  padding: 8px 10px;
-  border: 1px solid #ccc;
-  border-radius: 4px;
-  font-size: 16px;
-}
 
 .add-guest .calendar-section {
   margin-bottom: 20px;
@@ -773,6 +763,7 @@ input[type="number"] {
   width: 60px;
   margin: 0 5px;
 }
+
 .person-container {
   display: flex;
   gap: 20px;
