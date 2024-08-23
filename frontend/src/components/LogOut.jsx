@@ -1,15 +1,20 @@
 import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 
-const Logout = () => {
+const Logout = ({ setIsLoggedIn, setIsAdmin }) => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    
+    // Clear localStorage and update states
     localStorage.removeItem('isAdmin');
-    localStorage.removeItem('userToken'); 
+    localStorage.removeItem('userToken');
+    
+    setIsLoggedIn(false);
+    setIsAdmin(false);
+    
+    // Navigate to the login page
     navigate('/login');
-  }, [navigate]);
+  }, [navigate, setIsLoggedIn, setIsAdmin]);
 
   return null;
 };

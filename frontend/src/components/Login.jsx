@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { NavLink, useNavigate } from 'react-router-dom';
 
-const Login = () => {
+const Login = ({ setIsLoggedIn, setIsAdmin }) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [message, setMessage] = useState('');
@@ -23,8 +23,11 @@ const Login = () => {
 
       if (response.ok) {
         setMessage('Login successful!');
-
-        localStorage.setItem('isAdmin', data.isAdmin);  
+        
+        localStorage.setItem('isAdmin', data.isAdmin);
+        setIsLoggedIn(true);  // Update the logged-in state
+        setIsAdmin(data.isAdmin);  // Update the admin state if applicable
+        
         if (data.isAdmin) {
           navigate('/admin');
         } else {
