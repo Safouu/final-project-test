@@ -26,7 +26,7 @@ const Header = () => {
       <NavLink to="/contact" className="nav-link">Contact</NavLink>
       {isLoggedIn ? (
         <>
-          {isAdmin && <NavLink to="/admin" className="nav-link">Admin Panel</NavLink>}
+          {isAdmin && <NavLink to="/admin" className="nav-link">Admin</NavLink>}
           <NavLink to="/" className="nav-link" onClick={handleLogout}>Logout</NavLink>
         </>
       ) : (
