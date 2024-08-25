@@ -97,6 +97,16 @@ app.delete("/objects/:id", async (req, res) => {
   }
 });
 
+app.patch("/objects/:id", async (req, res) => {
+  const id = req.params.id;
+  try {
+    const object = await Object.findByIdAndUpdate(id, req.body);
+    res.json(object);
+  } catch (e) {
+    res.sendStatus(404);
+  }
+});
+
 app.listen(process.env.PORT, () => {
   console.log(
     `server is listening to port http://localhost:${process.env.PORT}`

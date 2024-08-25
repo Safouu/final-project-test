@@ -8,7 +8,7 @@ const Home = () => {
 
     <div className='top'>
     <div className='top-logo'>
-    <img src='./images/logo.jpg' alt='Logo' />
+    {/* <img src='./images/logo.jpg' alt='Logo' /> */}
         </div>
     <div className='top-text'>
           World  Wide  Vocation

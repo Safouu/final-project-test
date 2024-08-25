@@ -18,9 +18,12 @@ const Objects = () => {
         <NavLink to={`/object/${item._id}`} key={item._id}>
           <div className='object'>
             <img src={item.image} alt={item.name} />
+          <div className='object-details'>
             <h1>{item.name}</h1>
             <h3>{item.description}</h3>
-            <h4>{item.price} $</h4>
+            <p>{item.price} $</p>
+          </div>
+
           </div>
         </NavLink>
       ))}

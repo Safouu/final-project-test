@@ -1,62 +1,78 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&display=swap');
+
 * {
-  color: #ffffffde;
   margin: 0;
   padding: 0;
   box-sizing: border-box;
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: Montserrat,Arial, Helvetica, sans-serif;
   }
   
   #root {
   display: flex;
   flex-direction: column;
-  background-color: #242424;
+  background-color: #ffffff;
   min-height: 100vh;
-  padding: 20px;
   }
-  
+
+  /* .layout{
+    min-height: 100vh;
+    display: grid;
+    grid-template-columns: repeat(auto 1fr auto);
+  } */
+
+  .home{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 20px;
+    padding-bottom: 20px;
+  }
    /* Header */
    .header {
     display: flex;
     justify-content: flex-end;
-   gap: 100px;
+    gap: 100px;
     padding: 20px 40px;
-    background-color: #2c3e50;
+    background-color: #09684b;
     color: white;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    border-bottom: 10px solid #24e0bb;
+    /* box-shadow: 0 4px 8px rgba(124, 124, 124, 0.2); */
     }
+
     
-    .header .logo {
+    /* .header .logo {
     font-size: 1.5rem;
     font-weight: bold;
-    }
+    } */
     
-    .header nav {
+    /* .header nav {
     display: flex;
     gap: 20px;
-    }
+    background-color: red;
+    padding: 100px;
+    } */
     
-    .header .nav-link {
+   .header .nav-link {
     color: white;
     text-decoration: none;
-    font-size: 1.1rem;
+    font-size: 1.4rem;
     transition: color 0.3s;
     }
     
-    .header .nav-link:hover {
-    color: #18bc9c;
+   .header .nav-link:hover {
+    color: #24e0bb;
+    text-shadow: #24e0bb 0px 0px 12px;
     }
     
     .header .nav-link.active {
     font-weight: bold;
-    color: #18bc9c;
+    color: #24e0bb;
+    /* text-shadow: #12cfa9b6 0px 0px 12px; */
     }
-    
-    
   
   .nav-link {
   position: relative;
   text-decoration: none;
-  color: rgb(128, 128, 28); /* Link color */
   font-size: 18px;
   padding-bottom: 3px; /* Space for the underline */
   transition: color 0.3s ease; /* Smooth transition for color */
@@ -69,9 +85,10 @@
   left: 0;
   bottom: 0;
   width: 0;
-  height: 2px;
-  background-color: rgb(71, 122, 23); 
+  height: 4px;
+  background-color: #ffffffef; 
   transition: width 0.3s ease; 
+  box-shadow: #ffffffda 0px 0px 12px;
   }
   
   .nav-link:hover::after {
@@ -80,27 +97,30 @@
 
   
   .top {
-  background-image: url('/public/images/bild-4.jpg');
+  background-image: url('/public/images/niceView.jpg');
   background-position: center;
   background-repeat: no-repeat;
   background-size: cover;
-  position: fixed;
-  border-radius: 8px;
+  /* position: fixed; */
+  border-radius: 2px;
   height: 60vh;
-  margin: 20px;
   position: relative;
   }
   
   .top-text {
   position: absolute;
-  font-family: "Helvetica Neue",Helvetica,Arial;
+  font-family: "Montserrat",Helvetica,Arial;
   top: 50%;
-  left: 50%;
+  left: 38%;
   transform: translate(-50%, -50%);
-  font-size: 4rem;
+  font-size: 5rem;
+  font-weight: 500;
   color: #ffffff;
-  text-shadow: 2px 2px 8px rgba(2, 2, 2, 0.7);
+  text-shadow: 0 0 50px #000000;
+  box-shadow: -2px 0 10px 10px #00000060;
+  /* filter: blur(2px); */
   animation: fadeInSlideUp 4s ease-in-out forwards;
+  /* background-color: #00000017; */
   
   }
   
@@ -114,89 +134,114 @@
   transform: translate(0%, -80%);
   }
   }
+
+
   
-  .bottom {
+  /* .bottom {
   display: grid;
-  grid-template-columns: repeat(2, 1fr);
+  grid-template-columns: repeat(3, 1fr);
   gap: 20px;
-  }
+  } */
   .objects-container {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
   gap: 20px;
+  padding:0px 20px;
+  a{
+    text-decoration: none;
   }
+  }
+
   .object {
   display: flex;
   flex-direction: column;
-  border: 2px solid rgb(105, 105, 105);
-  padding: 10px;
+  justify-content: start;
+  border: 2px solid rgb(0, 0, 0);
   border-radius: 8px;
-  background-color: #333;
+  /* background-color: #333; */
   width: 100%; 
   height: 100%;
-  }
-  .object img {
+  overflow: hidden;
+
+  img {
   width: 100%;
-  height: 200px;
+  height: 65%;
   object-fit: cover;
-  border-radius: 4px;
+  }
+
+  .object-details{
+    color: black;
+    height: 35%;
+    padding: 0 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;   
+    /* border-top: 8px solid rgb(182, 122, 11); */
+  }
+  &:hover{
+    box-shadow: #4e4e4eb7 0px 0px 15px 3px;
+    /* text-shadow: #ffffffc2 0px 0px 5px; */
+    border: 2px solid rgb(255, 255, 255);
+    .object-details{
+      background-color: #18bc9c;
+      /* background-color: black; */
+      color: rgb(255, 255, 255);
+    }
+  }
   }
   
-  .object h1 h3 {
+  /* .object h1 h3 {
   font-size: 1.5rem;
   margin-bottom: 10px;
   color: #ffffff;
-  }
+  } */
   
-  footer {
-  color: #ffffffde;
-  border-top: 2px solid white;
-  padding: 10px;
-  text-align: center;
-  margin-top: 20px;
-  }
  
   body {
-  background-color: #f4f4f4;
-  color: #333;
-  line-height: 1.6;
+  /* background-color: #f4f4f4; */
+  /* color: #333; */
+  line-height: 1.5;
   }
   
   /* Root Container */
-  #root {
+  /* #root {
   display: flex;
   flex-direction: column;
   min-height: 100vh;
-  }
+  background-color: red;
+  } */
   
  
+  footer {
+    color: #ffffffde;
+    padding: 20px;
+    text-align: center;
+    /* margin-top: 20px; */
+    background-color: #09684b;
+    border-top: 5px solid #24e0bb;
+    }
   
   /* Footer */
-  footer {
-  background-color: #2c3e50;
+  /* footer {
   color: white;
   padding: 20px;
   text-align: center;
   margin-top: auto;
-  border-top: 2px solid #18bc9c;
-  }
+  border-top: 5px solid #24e0bb;
+  } */
   
-  footer p {
-  margin: 0;
-  font-size: 1rem;
-  }
-  
+
   -------------------------
   /* LoginForm */
   
-  .container {
+  /* .container {
   width: 100%;
   height: 100vh;
   display: flex;
   justify-content: center;
   align-items: center;
   background-color: #f0f0f0;
-  }
+  } */
 -------------------------
 /* LoginForm */
 
@@ -372,12 +417,12 @@
 --------------------------------
 /* Calendar Form */
 
-.object-detail {
+/* .object-detail {
   padding: 20px;
   background-color: #fff;
   border-radius: 8px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-}
+} */
 
 .calendar-section {
   margin-top: 20px;

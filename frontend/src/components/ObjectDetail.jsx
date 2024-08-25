@@ -27,6 +27,7 @@ const ObjectDetail = () => {
 
   return (
     <div className='object-detail'>
+  
       {object ? (
         object.error ? (
           <p>{object.error}</p>

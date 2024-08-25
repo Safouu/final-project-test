@@ -13,7 +13,7 @@ const Logout = ({ setIsLoggedIn, setIsAdmin }) => {
     setIsAdmin(false);
     
     // Navigate to the login page
-    navigate('/login');
+    navigate('/');
   }, [navigate, setIsLoggedIn, setIsAdmin]);
 
   return null;

@@ -1,7 +1,7 @@
 const Footer = () => {
   return (
     <footer>
-      {new Date().getFullYear()} @ Ferienwohnung
+      {new Date().getFullYear()} @ World Wide Vacation
     </footer>
 ) 
   };
