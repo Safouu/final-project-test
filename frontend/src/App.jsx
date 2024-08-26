@@ -1,8 +1,5 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { useState, useEffect } from "react";
-// import { createContext } from "react";
-// export const DropDownContext = createContext(true);
-
 import Home from "./components/Home";
 import Login from "./components/Login";
 import Layout from "./components/Layout";
@@ -23,17 +20,13 @@ function App() {
     const adminStatus = localStorage.getItem('isAdmin');
     if (adminStatus) {
       setIsLoggedIn(true);
-      setIsAdmin(adminStatus === 'true');  // Convert string to boolean
+      setIsAdmin(adminStatus === 'true'); 
     }
   }, []);
 
   return (
     <BrowserRouter>
       <Routes>
-      {/* <DropDownContext.Provider value={{sprache, setSprache}}>
-      <Header/>
-      <Content/>
-    </DropDownContext.Provider> */}
         <Route path="/" element={<Layout isLoggedIn={isLoggedIn} isAdmin={isAdmin} />}>
           <Route index element={<Home />} />
           <Route path="login" element={<Login setIsLoggedIn={setIsLoggedIn} setIsAdmin={setIsAdmin} />} />

@@ -2,9 +2,8 @@ import { NavLink } from 'react-router-dom';
 import { useState, useEffect } from 'react';
 
 const ListObject = () => {
-
   const [objects, setObjects] = useState(null);
-  const [editingObject, setEditingObject] = useState(null); // Holds the object being edited
+  const [editingObject, setEditingObject] = useState(null);
 
   useEffect(() => {
     fetch('http://localhost:3232/objects')
@@ -28,13 +27,27 @@ const ListObject = () => {
     }
   };
 
-  const handleEditClick = (object) => {
-    setEditingObject(object); // Set the object to be edited
-  };
-
   const handleEditChange = (e) => {
     const { name, value } = e.target;
-    setEditingObject({ ...editingObject, [name]: value });
+    setEditingObject((prevObject) => ({ ...prevObject, [name]: value }));
+  };
+
+  const handleEditClick = (object) => {
+    setEditingObject(object);
+  };
+
+  const handleFileChange = (e) => {
+    const file = e.target.files[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        setEditingObject((prevObject) => ({
+          ...prevObject,
+          image: reader.result,
+        }));
+      };
+      reader.readAsDataURL(file);
+    }
   };
 
   const handleEditSubmit = async (e) => {
@@ -45,14 +58,20 @@ const ListObject = () => {
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify(editingObject),
+        body: JSON.stringify({
+          name: editingObject.name,
+          description: editingObject.description,
+          price: editingObject.price,
+          image: editingObject.image,
+        }),
       });
       if (response.ok) {
+        const updatedObject = await response.json();
         const newObjects = objects.map((item) =>
-          item._id === editingObject._id ? editingObject : item
+          item._id === updatedObject._id ? updatedObject : item
         );
         setObjects(newObjects);
-        setEditingObject(null); // Close the edit form
+        setEditingObject(null);
       }
     } catch (error) {
       console.error('Error:', error);
@@ -65,7 +84,7 @@ const ListObject = () => {
         <div key={item._id}>
           <NavLink to={`/object/${item._id}`}>
             <div className='object'>
-              <p> ID: {item._id}</p>
+              <p>ID: {item._id}</p>
               <img src={item.image} alt={item.name} />
               <h1>{item.name}</h1>
               <h3>{item.description}</h3>
@@ -119,18 +138,17 @@ const ListObject = () => {
               />
             </label>
             <label>
-              Image URL:
+              Image:
               <input
-                type='text'
-                name='image'
-                value={editingObject.image}
-                onChange={handleEditChange}
+                type='file'
+                accept='image/*'
+                onChange={handleFileChange}
               />
             </label>
             <button type='submit' style={{ background: 'blue', color: 'white', cursor: 'pointer', padding: '5px 10px' }}>
               Save
             </button>
-            <button onClick={() => setEditingObject(null)} style={{ background: 'gray', color: 'white', cursor: 'pointer', padding: '5px 10px' }}>
+            <button type='button' onClick={() => setEditingObject(null)} style={{ background: 'gray', color: 'white', cursor: 'pointer', padding: '5px 10px' }}>
               Cancel
             </button>
           </form>
@@ -138,6 +156,6 @@ const ListObject = () => {
       )}
     </div>
   );
-}
+};
 
 export default ListObject;

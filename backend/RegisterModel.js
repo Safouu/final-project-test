@@ -38,3 +38,5 @@ const registerationSchema = new mongoose.Schema({
 });
 
 export const Register = mongoose.model("Register", registerationSchema);
+
+

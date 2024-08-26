@@ -21,6 +21,7 @@
   } */
 
   .home{
+    /* border-top: 10px rgb(5, 148, 141) solid; */
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -746,6 +747,12 @@ input[type="number"] {
 
 .toolbar-button:hover {
   background-color: #777;
+}
+.admin-sidebar{
+  .active{
+    background-color: rgb(255, 255, 255);
+    color: black;
+  }
 }
 --------------------------------
 /* Add Guest */

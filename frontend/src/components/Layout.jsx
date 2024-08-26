@@ -8,6 +8,7 @@ const Layout = ({ isLoggedIn, isAdmin }) => {
     <div className='layout'>
 
       <Header isLoggedIn={isLoggedIn} isAdmin={isAdmin} />
+      
       <main>
         <Outlet />
       </main>
