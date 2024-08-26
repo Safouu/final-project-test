@@ -208,14 +208,12 @@ body {
 
 footer {
   color: #ffffffde;
-  padding: 20px;
+  padding: 15px;
   text-align: center;
   /* margin-top: 20px; */
   background-color: #09684b;
   border-top: 5px solid #24e0bb;
-  position: fixed;
-  width: 100%;
-  bottom: 0;
+  
 }
 
 /* Footer */

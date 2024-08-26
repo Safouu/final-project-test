@@ -11,8 +11,10 @@ const Home = () => {
     {/* <img src='./images/logo.jpg' alt='Logo' /> */}
         </div>
     <div className='top-text'>
-          World Wide Vacation
+          Your Dream Vacation
+   
         </div>
+        
     </div>
 
     <Objects/>
