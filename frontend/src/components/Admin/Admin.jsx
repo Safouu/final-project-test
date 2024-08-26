@@ -4,6 +4,7 @@ import ListGuests from './ListGuests';
 import AddGuest from './AddGuest';
 import ListObjects from './ListObjects';
 import AddObject from './AddObject';
+import Messages from './Messages';
 
 const Admin = () => {
   return (
@@ -11,12 +12,12 @@ const Admin = () => {
       <div className="admin-sidebar">
         <h2>Admin Panel</h2>
         <ul>
-        <li><Link to="add-object">AddObject +</Link></li>
-        <li><Link to="add-guest">AddGuest +</Link></li>
-        <li><Link to="objects">ListObjects</Link></li>
-        <li><Link to="guests">ListGuests</Link></li>
-        <li><Link to="calendar">AdminCalendar</Link></li>
-          
+          <li><Link to="calendar">Admin-Calendar</Link></li>
+          <li><Link to="add-object">Add Apartment</Link></li>
+          <li><Link to="add-guest">Add Guest</Link></li>
+          <li><Link to="objects">All Apartments</Link></li>
+          <li><Link to="guests">All Guests</Link></li>
+          <li><Link to="messages">Messages</Link></li> 
         </ul>
       </div>
       <div className="admin-content">
@@ -26,6 +27,7 @@ const Admin = () => {
           <Route path="objects" element={<ListObjects />} />
           <Route path="add-object" element={<AddObject />} />
           <Route path="add-guest" element={<AddGuest />} />
+          <Route path="messages" element={<Messages />} /> 
         </Routes>
       </div>
     </div>
@@ -33,4 +35,3 @@ const Admin = () => {
 };
 
 export default Admin;
-

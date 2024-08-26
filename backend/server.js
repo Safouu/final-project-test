@@ -18,6 +18,17 @@ app.get("/objects", async (req, res) => {
   const objects = await Object.find();
   res.send(objects);
 });
+app.get('/contacts', async (req, res) => {
+  await connect();
+  try {
+    const contacts = await Contact.find();
+    res.status(200).json(contacts);
+  } catch (err) {
+    console.error('Error fetching contacts:', err);
+    res.status(500).json({ error: 'Failed to fetch contacts' });
+  }
+});
+
 app.post("/login", async (req, res) => {
   await connect();
   try {

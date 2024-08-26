@@ -23,7 +23,7 @@ const registerationSchema = new mongoose.Schema({
     required: true,
   },
   zipCode: {
-    type: String,
+    type: Number,
     required: true,
   },
   city: {
