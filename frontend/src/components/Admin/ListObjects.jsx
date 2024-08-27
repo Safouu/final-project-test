@@ -65,12 +65,17 @@ const ListObject = () => {
           image: editingObject.image,
         }),
       });
+
       if (response.ok) {
         const updatedObject = await response.json();
+
+        // Update the state immediately after the edit
         const newObjects = objects.map((item) =>
           item._id === updatedObject._id ? updatedObject : item
         );
         setObjects(newObjects);
+
+        // Clear the editing state
         setEditingObject(null);
       }
     } catch (error) {
@@ -145,6 +150,11 @@ const ListObject = () => {
                 onChange={handleFileChange}
               />
             </label>
+            {editingObject.image && (
+              <div>
+                <img src={editingObject.image} alt="Preview" style={{ width: '100px', height: '100px' }} />
+              </div>
+            )}
             <button type='submit' style={{ background: 'blue', color: 'white', cursor: 'pointer', padding: '5px 10px' }}>
               Save
             </button>
