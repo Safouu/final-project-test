@@ -49,6 +49,7 @@ const AddGuest = () => {
         days: days,
       }));
     }
+
   }, [dateRange]);
 
   // Calculate total price and advance payment
@@ -88,6 +89,9 @@ const AddGuest = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
     console.log(formData);
+    // console.log(dateRange[0]['startDate']);
+    // console.log(dateRange[0]['endDate']);
+
     // Handle form submission (e.g., send data to server)
   };
 
