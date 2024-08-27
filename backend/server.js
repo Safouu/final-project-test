@@ -10,9 +10,9 @@ dotenv.config();
 
 const app = express();
 
-app.use(express.json({ limit: '10mb' }));
-app.use(express.urlencoded({ limit: '10mb', extended: true }));
 
+app.use(express.json({ limit: '10mb' })); 
+app.use(express.urlencoded({ limit: '10mb', extended: true })); 
 app.use(cors());
 
 app.get("/objects", async (req, res) => {
@@ -117,7 +117,7 @@ app.delete("/objects/:id", async (req, res) => {
   try {
     await connect();
     await Object.findByIdAndDelete(id);
-    res.status(204).send(); // No content to send after a successful deletion
+    res.status(204).send(); 
   } catch (e) {
     console.error('Error deleting object:', e);
     res.status(500).json({ error: 'Failed to delete object' });
@@ -128,7 +128,7 @@ app.patch("/objects/:id", async (req, res) => {
   const id = req.params.id;
   try {
     await connect();
-    const object = await Object.findByIdAndUpdate(id, req.body, { new: true }); // Return the updated document
+    const object = await Object.findByIdAndUpdate(id, req.body, { new: true }); 
     if (object) {
       res.status(200).json(object);
     } else {
