@@ -97,7 +97,7 @@ const AddObject = () => {
             <img
               src={imagePreview}
               alt="Preview"
-              style={{ maxWidth: '300px', marginTop: '20px', borderRadius: '8px' }}
+              style={{ maxWidth: '75%', borderRadius: '8px' }}
             />
           </div>
         )}

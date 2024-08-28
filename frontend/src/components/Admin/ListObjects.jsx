@@ -87,16 +87,15 @@ const ListObject = () => {
     <div className='objects-container'>
       {objects && objects.map((item) => (
         <div key={item._id}>
-          <NavLink to={`/object/${item._id}`}>
+          {/* <NavLink to={`/object/${item._id}`}> */}
             <div className='object'>
-              <p>ID: {item._id}</p>
+              
               <img src={item.image} alt={item.name} />
+              <h4>ID: {item._id}</h4>
               <h1>{item.name}</h1>
               <h3>{item.description}</h3>
               <h4>{item.price} $</h4>
-            </div>
-          </NavLink>
-          <button
+              <button
             style={{ background: 'red', color: 'white', cursor: 'pointer', padding: '5px 10px' }}
             onClick={() => handleDelete(item._id)}
           >
@@ -108,6 +107,9 @@ const ListObject = () => {
           >
             Edit
           </button>
+            </div>
+          {/* </NavLink> */}
+
         </div>
       ))}
 

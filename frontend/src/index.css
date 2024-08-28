@@ -114,6 +114,7 @@
   height: 100%;
   object-fit: cover;
   }
+
   .top {
   position: relative;
   height: 60vh;
@@ -122,10 +123,7 @@
   justify-content: center;
   border-radius: 2px;
   }
-  
-  
-  
-  
+
 
 .top-text {
   position: absolute;
@@ -135,13 +133,23 @@
   transform: translate(-50%, -50%);
   font-size: 5rem;
   font-weight: 500;
-  color: #ffffff;
-  text-shadow: 0 0 50px #000000;
-  box-shadow: -2px 0 10px 10px #00000060;
+  color: #ffffffda;
   /* filter: blur(2px); */
-  animation: fadeInSlideUp 4s ease-in-out forwards;
+animation: fadeInSlideUp 4s ease-in-out forwards;
   /* background-color: #00000017; */
+border-radius: 16px;
+box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+backdrop-filter: blur(4.2px);
+background: linear-gradient( 90deg, rgba(255, 255, 255, 0.108) 0%, rgba(0, 0, 0, 0.097) 50%, rgba(107, 102, 102, 0.097) 100%);
+
+
 }
+/* From https://css.glass */
+/* background: rgba(255, 255, 255, 0.14);
+border-radius: 16px;
+box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+backdrop-filter: blur(4.2px);
+-webkit-backdrop-filter: blur(4.2px); */
 
 @keyframes fadeInSlideUp {
   0% {
