@@ -26,23 +26,7 @@ const AddObject = () => {
   };
   
 
-const resizeImage = (file) => {
-  return new Promise((resolve, reject) => {
-    const img = new Image();
-    img.src = URL.createObjectURL(file);
-    img.onload = () => {
-      const canvas = document.createElement('canvas');
-      const ctx = canvas.getContext('2d');
-      const MAX_WIDTH = 800; // Set desired width
-      const scaleSize = MAX_WIDTH / img.width;
-      canvas.width = MAX_WIDTH;
-      canvas.height = img.height * scaleSize;
-      ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
-      canvas.toBlob(resolve, 'image/jpeg', 0.7); // Adjust compression quality
-    };
-    img.onerror = reject;
-  });
-};
+
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -113,7 +97,7 @@ const resizeImage = (file) => {
             <img
               src={imagePreview}
               alt="Preview"
-              style={{ maxWidth: '300px', marginTop: '20px', borderRadius: '8px' }}
+              style={{ maxWidth: '75%', borderRadius: '8px' }}
             />
           </div>
         )}
