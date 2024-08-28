@@ -1,17 +1,16 @@
-import { useState, useEffect } from 'react';
-import { DateRange } from 'react-date-range';
-import 'react-date-range/dist/styles.css'; // Import the necessary styles
-import 'react-date-range/dist/theme/default.css';
+import { useState, useEffect } from "react";
+import { DateRange } from "react-date-range";
+import "react-date-range/dist/styles.css";
+import "react-date-range/dist/theme/default.css";
 
 const AddGuest = () => {
-  // Initialize form data with useState
   const [formData, setFormData] = useState({
-    firstName: '',
-    lastName: '',
-    email: '',
-    phone: '',
-    checkin: '',
-    checkout: '',
+    firstName: "",
+    lastName: "",
+    email: "",
+    phone: "",
+    checkin: "",
+    checkout: "",
     people: 0,
     children: 0,
     pets: 0,
@@ -21,19 +20,18 @@ const AddGuest = () => {
     advancePayment: "",
   });
 
-  // State to manage date range selection
   const [dateRange, setDateRange] = useState([
     {
       startDate: new Date(),
       endDate: new Date(),
-      key: 'selection'
-    }
+      key: "selection",
+    },
   ]);
 
   const [isBookingValid, setIsBookingValid] = useState(false);
-  const [errorMessage, setErrorMessage] = useState('');
+  const [errorMessage, setErrorMessage] = useState("");
+  const [submitMessage, setSubmitMessage] = useState(""); //
 
-  // Calculate the number of days and validate booking
   useEffect(() => {
     const start = dateRange[0].startDate;
     const end = dateRange[0].endDate;
@@ -41,87 +39,76 @@ const AddGuest = () => {
 
     if (days < 5) {
       setIsBookingValid(false);
-      setErrorMessage('You must select a minimum of 5 days.');
+      setErrorMessage("You must select a minimum of 5 days.");
     } else {
       setIsBookingValid(true);
-      setErrorMessage('');
-      setFormData(prevFormData => ({
+      setErrorMessage("");
+      setFormData((prevFormData) => ({
         ...prevFormData,
         days: days,
-        checkin: start.toISOString().split('T')[0],  // Set checkin date
-        checkout: end.toISOString().split('T')[0]   // Set checkout date
+        checkin: start.toISOString().split("T")[0],
+        checkout: end.toISOString().split("T")[0],
       }));
     }
   }, [dateRange]);
 
-  // Calculate total price and advance payment
   useEffect(() => {
     const totalPrice = formData.pricePerDay * formData.days;
     const advancePayment = totalPrice * 0.3;
 
-    setFormData(prevFormData => ({
+    setFormData((prevFormData) => ({
       ...prevFormData,
       totalPrice: totalPrice.toFixed(2),
       advancePayment: advancePayment.toFixed(2),
     }));
   }, [formData.pricePerDay, formData.days]);
 
-  // Handle input changes
   const handleChange = (e) => {
     const { name, value } = e.target;
-    setFormData(prevFormData => ({
+    setFormData((prevFormData) => ({
       ...prevFormData,
       [name]: value,
     }));
   };
 
-  // Increment value for people, children, or pets
   const handleIncrement = (field) => {
-    setFormData(prevFormData => ({
+    setFormData((prevFormData) => ({
       ...prevFormData,
       [field]: formData[field] + 1,
     }));
   };
 
-  // Decrement value for people, children, or pets
   const handleDecrement = (field) => {
-    setFormData(prevFormData => ({
+    setFormData((prevFormData) => ({
       ...prevFormData,
       [field]: formData[field] > 0 ? formData[field] - 1 : 0,
     }));
   };
-  
-  // Handle form submission
-  const handleSubmit = (e) => {
+
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log(formData);
-    console.log(dateRange[0].startDate);
-    console.log(dateRange[0].endDate);
-    // Handle form submission logic here, e.g., send data to server
+
     try {
-      const fetchData = async () => {
-        const response = await fetch('http://localhost:3232/add-guest', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify( formData ),
-        });
+      const response = await fetch("http://localhost:3232/reserve", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(formData),
+      });
 
-        const data = await response.json();
-      };
-
-      fetchData();
+      if (response.ok) {
+        const result = await response.json();
+        setSubmitMessage("Reservation created successfully!");
+        console.log("Reservation created:", result);
+      } else {
+        setSubmitMessage("Failed to create reservation.");
+        console.error("Error creating reservation:", response.statusText);
+      }
     } catch (error) {
-      console.error('Error:', error);
-      setMessage('An error occurred. Please try again later.');
+      setSubmitMessage("An error occurred during reservation.");
+      console.error("Error during reservation:", error);
     }
-
-    // setEmail('');
-    // setPassword('');
- 
-
-
   };
 
   return (
@@ -163,25 +150,26 @@ const AddGuest = () => {
         <div>
           <label>Phone:</label>
           <input
-            type="phone"
+            type="tel"
             name="phone"
             value={formData.phone}
             onChange={handleChange}
             required
           />
         </div>
-        
+
         <div className="calendar-section">
           <h3>Select Your Stay:</h3>
           <DateRange
             editableDateInputs={true}
-            onChange={item => setDateRange([item.selection])}
+            onChange={(item) => setDateRange([item.selection])}
             moveRangeOnFirstSelection={false}
             ranges={dateRange}
             className="date-range-picker"
+            minDate={new Date()}
           />
-          {errorMessage && <p style={{ color: 'red' }}>{errorMessage}</p>}
-        </div> 
+          {errorMessage && <p style={{ color: "red" }}>{errorMessage}</p>}
+        </div>
 
         <div className="people">
           <label>Adults:</label>
@@ -225,12 +213,7 @@ const AddGuest = () => {
             <button type="button" onClick={() => handleDecrement("pets")}>
               -
             </button>
-            <input
-              type="number"
-              name="pets"
-              value={formData.pets}
-              readOnly
-            />
+            <input type="number" name="pets" value={formData.pets} readOnly />
             <button type="button" onClick={() => handleIncrement("pets")}>
               +
             </button>
@@ -251,12 +234,7 @@ const AddGuest = () => {
           </div>
           <div>
             <label>Number of days:</label>
-            <input
-              type="number"
-              name="days"
-              value={formData.days}
-              readOnly
-            />
+            <input type="number" name="days" value={formData.days} readOnly />
           </div>
           <div>
             <label>Total Price:</label>
@@ -281,6 +259,7 @@ const AddGuest = () => {
         <button type="submit" disabled={!isBookingValid}>
           Submit
         </button>
+        {submitMessage && <p>{submitMessage}</p>}
       </form>
     </div>
   );
