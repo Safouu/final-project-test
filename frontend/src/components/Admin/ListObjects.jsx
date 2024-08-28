@@ -116,7 +116,6 @@ const ListObject = () => {
       {editingObject && (
         <div className='edit-modal'>
           <form onSubmit={handleEditSubmit}>
-            <h2>Edit Object</h2>
             <label>
               Name:
               <input
@@ -154,15 +153,17 @@ const ListObject = () => {
             </label>
             {editingObject.image && (
               <div>
-                <img src={editingObject.image} alt="Preview" style={{ width: '100px', height: '100px' }} />
+                <img src={editingObject.image} alt="Preview"  />
               </div>
             )}
-            <button type='submit' style={{ background: 'blue', color: 'white', cursor: 'pointer', padding: '5px 10px' }}>
+            <div className='edit-delete-btn'>            
+            <button type='submit' >
               Save
             </button>
-            <button type='button' onClick={() => setEditingObject(null)} style={{ background: 'gray', color: 'white', cursor: 'pointer', padding: '5px 10px' }}>
+            <button type='button' onClick={() => setEditingObject(null)}>
               Cancel
             </button>
+            </div>
           </form>
         </div>
       )}

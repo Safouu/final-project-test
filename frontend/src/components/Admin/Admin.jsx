@@ -38,3 +38,20 @@ const Admin = () => {
 };
 
 export default Admin;
+
+
+// .object {
+//   border-radius: 8px;
+//   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+//   overflow: hidden;
+//   width: 400px;
+//   transition: transform 0.3s ease, box-shadow 0.3s ease;
+//   cursor: pointer;
+//   border: solid 2px rgb(199, 199, 199);
+// }
+
+// .object:hover {
+//   transform: translateY(-5px);
+//   box-shadow: 0 3px 10px 1px #00000083;
+//   border: solid 2px rgb(255, 255, 255);
+// }

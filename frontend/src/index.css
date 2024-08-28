@@ -166,6 +166,7 @@ background: linear-gradient( 90deg, rgba(255, 255, 255, 0.108) 0%, rgba(0, 0, 0,
   a {
     text-decoration: none;
   }
+  
 }
 
 .object {
@@ -173,11 +174,12 @@ background: linear-gradient( 90deg, rgba(255, 255, 255, 0.108) 0%, rgba(0, 0, 0,
   flex-direction: column;
   justify-content: start;
   border: 2px solid rgb(0, 0, 0);
-  border-radius: 8px;
+  border-radius: 6px;
   /* background-color: #333; */
   width: 100%;
   height: 100%;
   overflow: hidden;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
 
   img {
     width: 100%;
@@ -186,6 +188,7 @@ background: linear-gradient( 90deg, rgba(255, 255, 255, 0.108) 0%, rgba(0, 0, 0,
   }
 
   .object-details {
+    position: relative;
     color: black;
     height: 35%;
     padding: 0 20px;
@@ -195,13 +198,79 @@ background: linear-gradient( 90deg, rgba(255, 255, 255, 0.108) 0%, rgba(0, 0, 0,
     /* border-top: 8px solid rgb(182, 122, 11); */
   }
   &:hover {
-    box-shadow: #4e4e4eb7 0px 0px 15px 3px;
+    transform: translateY(-5px);
+    box-shadow: 0 3px 10px 1px #00000083;
     /* text-shadow: #ffffffc2 0px 0px 5px; */
     border: 2px solid rgb(255, 255, 255);
     .object-details {
-      background-color: #18bc9c;
+      /* background-color: #18bc9c; */
+      background: linear-gradient( 110deg, #18bc9be9  0%, #18bc9bb6  50%, #18bc9b60  100%);
       /* background-color: black; */
       color: rgb(255, 255, 255);
+    }
+  }
+}
+
+.edit-modal{
+  padding: 10px;
+  background-color: #000000c2;
+  position: absolute;
+  width: 30%;
+  top: 10%;
+  left: 20%;
+  border-radius: 5px;
+  form{
+  font-size: 1.4rem;
+  label{
+    width: 100%;
+    background-color: transparent;
+  }
+  input{
+    font-size: 1.2rem;
+    width: 100%;
+    border: 2px solid #ffffff;
+    font-weight: 600;
+    box-sizing: border-box;
+    color: #ffffff;
+    background-color: transparent;
+    &:focus{
+      color: white;
+    }
+  }
+
+  img{
+    width: 70%;
+    object-fit: cover;
+  }
+}
+}
+
+.edit-delete-btn{
+  width: 100%;
+  text-align: center;
+  button{
+    display: inline;
+    color: white;
+    border-radius: 4px;
+    cursor: pointer;
+    padding: 5px;
+    width: 15%;
+    margin: 5px;
+    font-size: 1.2rem;
+    font-weight: 600;
+  }
+  button[type="submit"] {
+    background-color: #09684b;
+    border: 1px solid #0fbe8a;
+    &:hover {
+      background-color: #0fbe8a;
+    }
+  }
+  button[type="button"] {
+    background-color: #ff0000;
+    border: 1px solid #ff0000;
+    &:hover {
+      background-color: #ff4d4d;
     }
   }
 }
@@ -235,6 +304,8 @@ footer {
   border-top: 5px solid #24e0bb;
   
 }
+
+
 
 /* Footer */
 /* footer {
@@ -540,7 +611,7 @@ input[type="number"]:focus {
   color: #000;
 }
 
-button[type="submit"] {
+/* button[type="submit"] {
   padding: 10px 15px;
   background-color: #007bff;
   color: white;
@@ -552,7 +623,7 @@ button[type="submit"] {
 
 button[type="submit"]:hover {
   background-color: #0056b3;
-}
+} */
 
 .calculator {
   width: 70%;
@@ -914,3 +985,4 @@ input[type="number"] {
 
 
 }
+
