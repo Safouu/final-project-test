@@ -5,6 +5,7 @@ import { Register } from "./RegisterModel.js";
 import { Contact } from "./contactModel.js";
 import cors from "cors";
 import dotenv from "dotenv";
+import { Reservation } from './reservationModel.js';
 
 dotenv.config();
 
@@ -141,6 +142,19 @@ app.patch("/objects/:id", async (req, res) => {
     res.status(500).json({ error: 'Failed to update object' });
   }
 });
+
+app.post("/add-guest", async (req, res) => {
+  try {
+    await connect();
+    const { firstName, lastName, email, phone, people, children, pets, pricePerDay, days, totalPrice, advancePayment, checkin, checkout } = req.body;
+    const newReservation = new Reservation({ firstName, lastName, email, phone, people, children, pets, pricePerDay, days, totalPrice, advancePayment, checkin, checkout });
+    await newReservation.save();
+    res.status(201).json(newReservation);
+  } catch (e) {
+    console.error('Error saving reservation:', e);
+    res.status(500).json({ error: 'Failed to save reservation' });
+  }
+})
 
 app.listen(process.env.PORT, () => {
   console.log(

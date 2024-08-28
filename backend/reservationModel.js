@@ -13,6 +13,10 @@ const reservationSchema = new mongoose.Schema({
       type: String,
       required: true,
     },
+    phone: {
+      type: String,
+      required: true,
+    },
     people: {
       type: Number,
       required: true,
@@ -40,8 +44,16 @@ const reservationSchema = new mongoose.Schema({
     advancePayment:{
             type: Number,
             required: true,
-        }
+        },
+    checkin: {
+      type: String,
+      required: true,
+    },
+    checkout: {
+      type: String,
+      required: true,
+    },
   });
   
-  export const reservation = mongoose.model("Reservation", reservationSchema);
+  export const Reservation = mongoose.model("Reservation", reservationSchema);
 

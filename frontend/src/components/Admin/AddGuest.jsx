@@ -90,12 +90,38 @@ const AddGuest = () => {
       [field]: formData[field] > 0 ? formData[field] - 1 : 0,
     }));
   };
-
+  
   // Handle form submission
   const handleSubmit = (e) => {
     e.preventDefault();
     console.log(formData);
+    console.log(dateRange[0].startDate);
+    console.log(dateRange[0].endDate);
     // Handle form submission logic here, e.g., send data to server
+    try {
+      const fetchData = async () => {
+        const response = await fetch('http://localhost:3232/add-guest', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify( formData ),
+        });
+
+        const data = await response.json();
+      };
+
+      fetchData();
+    } catch (error) {
+      console.error('Error:', error);
+      setMessage('An error occurred. Please try again later.');
+    }
+
+    // setEmail('');
+    // setPassword('');
+ 
+
+
   };
 
   return (
@@ -139,7 +165,7 @@ const AddGuest = () => {
           <input
             type="phone"
             name="phone"
-            value={formData.email}
+            value={formData.phone}
             onChange={handleChange}
             required
           />
