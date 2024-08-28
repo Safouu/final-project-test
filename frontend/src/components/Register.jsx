@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { NavLink } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 const Register = () => {
   const [firstName, setFirstName] = useState("");
@@ -13,7 +14,7 @@ const Register = () => {
   const [country, setCountry] = useState("");
 
   const [message, setMessage] = useState("");
-  //   const navigate = useNavigate();
+    const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -32,7 +33,7 @@ const Register = () => {
       if (response.ok) {
         setMessage("Registration successful!");
         //Beispiel: ////////////////////////////////////////
-        // navigate('/login');
+        navigate('/login');
       } else {
         setMessage(data.message || "Registration failed!");
       }
