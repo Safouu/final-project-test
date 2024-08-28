@@ -1,33 +1,34 @@
-import { useState, useEffect } from "react";
-import { useLocation } from "react-router-dom";
+import { useState, useEffect } from 'react';
 import { DateRange } from 'react-date-range';
-import 'react-date-range/dist/styles.css';
+import 'react-date-range/dist/styles.css'; // Import the necessary styles
 import 'react-date-range/dist/theme/default.css';
 
 const AddGuest = () => {
-  const location = useLocation();
-  const { object } = location.state || {};
-
-  const [dateRange, setDateRange] = useState([
-    {
-      startDate: new Date(),
-      endDate: new Date(),
-      key: 'selection',
-    },
-  ]);
-
+  // Initialize form data with useState
   const [formData, setFormData] = useState({
     firstName: '',
     lastName: '',
     email: '',
+    phone: '',
+    checkin: '',
+    checkout: '',
     people: 0,
     children: 0,
     pets: 0,
-    pricePerDay: object ? object.price : "",
+    pricePerDay: "",
     days: 0,
     totalPrice: "",
     advancePayment: "",
   });
+
+  // State to manage date range selection
+  const [dateRange, setDateRange] = useState([
+    {
+      startDate: new Date(),
+      endDate: new Date(),
+      key: 'selection'
+    }
+  ]);
 
   const [isBookingValid, setIsBookingValid] = useState(false);
   const [errorMessage, setErrorMessage] = useState('');
@@ -44,12 +45,13 @@ const AddGuest = () => {
     } else {
       setIsBookingValid(true);
       setErrorMessage('');
-      setFormData((prevFormData) => ({
+      setFormData(prevFormData => ({
         ...prevFormData,
         days: days,
+        checkin: start.toISOString().split('T')[0],  // Set checkin date
+        checkout: end.toISOString().split('T')[0]   // Set checkout date
       }));
     }
-
   }, [dateRange]);
 
   // Calculate total price and advance payment
@@ -57,42 +59,43 @@ const AddGuest = () => {
     const totalPrice = formData.pricePerDay * formData.days;
     const advancePayment = totalPrice * 0.3;
 
-    setFormData((prevFormData) => ({
+    setFormData(prevFormData => ({
       ...prevFormData,
       totalPrice: totalPrice.toFixed(2),
       advancePayment: advancePayment.toFixed(2),
     }));
   }, [formData.pricePerDay, formData.days]);
 
+  // Handle input changes
   const handleChange = (e) => {
     const { name, value } = e.target;
-    setFormData({
-      ...formData,
+    setFormData(prevFormData => ({
+      ...prevFormData,
       [name]: value,
-    });
+    }));
   };
 
+  // Increment value for people, children, or pets
   const handleIncrement = (field) => {
-    setFormData({
-      ...formData,
+    setFormData(prevFormData => ({
+      ...prevFormData,
       [field]: formData[field] + 1,
-    });
+    }));
   };
 
+  // Decrement value for people, children, or pets
   const handleDecrement = (field) => {
-    setFormData({
-      ...formData,
+    setFormData(prevFormData => ({
+      ...prevFormData,
       [field]: formData[field] > 0 ? formData[field] - 1 : 0,
-    });
+    }));
   };
 
+  // Handle form submission
   const handleSubmit = (e) => {
     e.preventDefault();
     console.log(formData);
-    // console.log(dateRange[0]['startDate']);
-    // console.log(dateRange[0]['endDate']);
-
-    // Handle form submission (e.g., send data to server)
+    // Handle form submission logic here, e.g., send data to server
   };
 
   return (
@@ -131,7 +134,17 @@ const AddGuest = () => {
             required
           />
         </div>
-
+        <div>
+          <label>Phone:</label>
+          <input
+            type="phone"
+            name="phone"
+            value={formData.email}
+            onChange={handleChange}
+            required
+          />
+        </div>
+        
         <div className="calendar-section">
           <h3>Select Your Stay:</h3>
           <DateRange
@@ -142,7 +155,7 @@ const AddGuest = () => {
             className="date-range-picker"
           />
           {errorMessage && <p style={{ color: 'red' }}>{errorMessage}</p>}
-        </div>
+        </div> 
 
         <div className="people">
           <label>Adults:</label>
@@ -154,7 +167,6 @@ const AddGuest = () => {
               type="number"
               name="people"
               value={formData.people}
-              onChange={handleChange}
               readOnly
             />
             <button type="button" onClick={() => handleIncrement("people")}>
@@ -173,7 +185,6 @@ const AddGuest = () => {
               type="number"
               name="children"
               value={formData.children}
-              onChange={handleChange}
               readOnly
             />
             <button type="button" onClick={() => handleIncrement("children")}>
@@ -192,7 +203,6 @@ const AddGuest = () => {
               type="number"
               name="pets"
               value={formData.pets}
-              onChange={handleChange}
               readOnly
             />
             <button type="button" onClick={() => handleIncrement("pets")}>
@@ -219,7 +229,6 @@ const AddGuest = () => {
               type="number"
               name="days"
               value={formData.days}
-              onChange={handleChange}
               readOnly
             />
           </div>
