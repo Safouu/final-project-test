@@ -36,7 +36,7 @@ const AdminCalendar = () => {
         }));
         setObjects(resources);
 
-        // Example events 
+        // Example event
         const initialEvents = [
           {
             id: 1,
