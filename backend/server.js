@@ -3,6 +3,7 @@ import { Object } from "./objectModel.js";
 import { connect } from "./db.js";
 import { Register } from "./RegisterModel.js";
 import { Contact } from "./contactModel.js";
+import { Reservation } from "./reservationModel.js";
 import cors from "cors";
 import dotenv from "dotenv";
 
@@ -36,6 +37,17 @@ app.get("/contacts", async (req, res) => {
     res.status(500).json({ error: 'Failed to fetch contacts' });
   }
 });
+app.get("/reservations", async (req, res) => {
+  try {
+    await connect();
+    const reservations = await Reservation.find();
+    res.status(200).json(reservations);
+  } catch (error) {
+    console.error('Error fetching reservations:', error);
+    res.status(500).json({ error: 'Failed to fetch reservations' });
+  }
+});
+
 
 app.post("/login", async (req, res) => {
   try {
@@ -97,6 +109,56 @@ app.post("/objects", async (req, res) => {
     res.status(500).json({ error: 'Failed to save object' });
   }
 });
+
+
+
+
+app.post("/reserve", async (req, res) => {
+  try {
+    await connect();
+    const {
+      firstName,
+      lastName,
+      email,
+      phone,
+      checkin,
+      checkout,
+      people,
+      children,
+      pets,
+      pricePerDay,
+      days,
+      totalPrice,
+      advancePayment,
+    } = req.body;
+
+    const newReservation = new Reservation({
+      firstName,
+      lastName,
+      email,
+      phone,
+      checkin: new Date(checkin),
+      checkout: new Date(checkout),
+      people,
+      children,
+      pets,
+      pricePerDay,
+      days,
+      totalPrice,
+      advancePayment,
+    });
+
+    
+    await newReservation.save();
+
+    
+    res.status(201).json({ message: "Reservation created successfully!", reservation: newReservation });
+  } catch (error) {
+    console.error("Error creating reservation:", error);
+    res.status(500).json({ error: "Failed to create reservation." });
+  }
+});
+
 
 app.get("/objects/:id", async (req, res) => {
   const id = req.params.id;
