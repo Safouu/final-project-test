@@ -21,22 +21,22 @@ const AdminCalendar = () => {
   const [objects, setObjects] = useState([]);
   const [events, setEvents] = useState([]);
   const [scheduler, setScheduler] = useState(null);
-  const [startDate, setStartDate] = useState("2024-01-01"); // Start date
-  const [days, setDays] = useState(365); // Number of days 
+  const [startDate, setStartDate] = useState("2024-01-01"); 
+  const [days, setDays] = useState(365); 
 
   useEffect(() => {
-    // Fetch objects 
+    
     fetch('http://localhost:3232/objects')
       .then((res) => res.json())
       .then((data) => {
         const resources = data.map((item) => ({
           id: item._id,
           name: item.name,
-          color: getColorForResource(item._id, data) // Assign a color
+          color: getColorForResource(item._id, data) 
         }));
         setObjects(resources);
 
-        // Example event
+       
         const initialEvents = [
           {
             id: 1,

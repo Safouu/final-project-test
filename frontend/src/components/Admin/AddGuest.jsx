@@ -3,13 +3,13 @@ import { DateRange } from "react-date-range";
 import "react-date-range/dist/styles.css";
 import "react-date-range/dist/theme/default.css";
 
-const AddGuest = () => {
+const AddGuest = ({ reservationToEdit, onClose }) => {
   const [formData, setFormData] = useState({
     firstName: "",
     lastName: "",
     email: "",
     phone: "",
-    selectedObject: "", // To store the selected object ID
+    selectedObject: "", 
     checkin: "",
     checkout: "",
     people: 0,
@@ -34,7 +34,6 @@ const AddGuest = () => {
   const [errorMessage, setErrorMessage] = useState("");
   const [submitMessage, setSubmitMessage] = useState("");
 
-  // Fetch objects from the server
   useEffect(() => {
     const fetchObjects = async () => {
       try {
@@ -53,7 +52,24 @@ const AddGuest = () => {
     fetchObjects();
   }, []);
 
-  // Calculate the number of days and validate the booking duration
+  useEffect(() => {
+    if (reservationToEdit) {
+      setFormData({
+        ...reservationToEdit,
+        checkin: reservationToEdit.checkin,
+        checkout: reservationToEdit.checkout,
+        days: Math.ceil((new Date(reservationToEdit.checkout) - new Date(reservationToEdit.checkin)) / (1000 * 60 * 60 * 24)),
+      });
+      setDateRange([
+        {
+          startDate: new Date(reservationToEdit.checkin),
+          endDate: new Date(reservationToEdit.checkout),
+          key: "selection",
+        },
+      ]);
+    }
+  }, [reservationToEdit]);
+
   useEffect(() => {
     const start = dateRange[0].startDate;
     const end = dateRange[0].endDate;
@@ -74,7 +90,6 @@ const AddGuest = () => {
     }
   }, [dateRange]);
 
-  // Calculate the total price and advance payment
   useEffect(() => {
     const totalPrice = formData.pricePerDay * formData.days;
     const advancePayment = totalPrice * 0.3;
@@ -86,7 +101,6 @@ const AddGuest = () => {
     }));
   }, [formData.pricePerDay, formData.days]);
 
-  // Handle form field changes
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData((prevFormData) => ({
@@ -95,7 +109,6 @@ const AddGuest = () => {
     }));
   };
 
-  // Handle incrementing the number of people, children, or pets
   const handleIncrement = (field) => {
     setFormData((prevFormData) => ({
       ...prevFormData,
@@ -103,7 +116,6 @@ const AddGuest = () => {
     }));
   };
 
-  // Handle decrementing the number of people, children, or pets
   const handleDecrement = (field) => {
     setFormData((prevFormData) => ({
       ...prevFormData,
@@ -111,13 +123,17 @@ const AddGuest = () => {
     }));
   };
 
-  // Handle form submission
   const handleSubmit = async (e) => {
     e.preventDefault();
 
+    const method = reservationToEdit ? "PATCH" : "POST";
+    const url = reservationToEdit
+      ? `http://localhost:3232/reservation/${reservationToEdit._id}`
+      : "http://localhost:3232/reservation";
+
     try {
-      const response = await fetch("http://localhost:3232/reservation", {
-        method: "POST",
+      const response = await fetch(url, {
+        method: method,
         headers: {
           "Content-Type": "application/json",
         },
@@ -126,11 +142,12 @@ const AddGuest = () => {
 
       if (response.ok) {
         const result = await response.json();
-        setSubmitMessage("Reservation created successfully!");
-        console.log("Reservation created:", result);
+        setSubmitMessage("Reservation saved successfully!");
+        console.log("Reservation saved:", result);
+        if (onClose) onClose(); 
       } else {
-        setSubmitMessage("Failed to create reservation.");
-        console.error("Error creating reservation:", response.statusText);
+        setSubmitMessage("Failed to save reservation.");
+        console.error("Error saving reservation:", response.statusText);
       }
     } catch (error) {
       setSubmitMessage("An error occurred during reservation.");
@@ -140,9 +157,8 @@ const AddGuest = () => {
 
   return (
     <div className="add-guest">
-      <h2>Reservation</h2>
+      <h2>{reservationToEdit ? "Edit Reservation" : "New Reservation"}</h2>
 
-      {/* Select Object */}
       <div>
         <label>Select Object:</label>
         <select
@@ -162,9 +178,7 @@ const AddGuest = () => {
         </select>
       </div>
 
-      {/* Reservation Form */}
       <form onSubmit={handleSubmit}>
-        {/* First Name */}
         <div>
           <label>First Name:</label>
           <input
@@ -176,7 +190,6 @@ const AddGuest = () => {
           />
         </div>
 
-        {/* Last Name */}
         <div>
           <label>Last Name:</label>
           <input
@@ -188,7 +201,6 @@ const AddGuest = () => {
           />
         </div>
 
-        {/* Email */}
         <div>
           <label>Email:</label>
           <input
@@ -200,7 +212,6 @@ const AddGuest = () => {
           />
         </div>
 
-        {/* Phone */}
         <div>
           <label>Phone:</label>
           <input
@@ -212,7 +223,6 @@ const AddGuest = () => {
           />
         </div>
 
-        {/* Date Range Picker */}
         <div className="calendar-section">
           <h3>Select Your Stay:</h3>
           <DateRange
@@ -226,7 +236,6 @@ const AddGuest = () => {
           {errorMessage && <p style={{ color: "red" }}>{errorMessage}</p>}
         </div>
 
-        {/* Number of People */}
         <div className="people">
           <label>Adults:</label>
           <div className="input-group">
@@ -245,7 +254,6 @@ const AddGuest = () => {
           </div>
         </div>
 
-        {/* Number of Children */}
         <div>
           <label>Children:</label>
           <div className="input-group">
@@ -264,7 +272,7 @@ const AddGuest = () => {
           </div>
         </div>
 
-        {/* Number of Pets */}
+       
         <div>
           <label>Pets:</label>
           <div className="input-group">
@@ -278,7 +286,7 @@ const AddGuest = () => {
           </div>
         </div>
 
-        {/* Price Calculator */}
+        
         <div className="calculator">
           <h3>Price Calculator</h3>
           <div>
@@ -315,11 +323,12 @@ const AddGuest = () => {
           </div>
         </div>
 
-        {/* Submit Button */}
+        
         <button type="submit" disabled={!isBookingValid}>
-          Submit
+          {reservationToEdit ? "Update" : "Submit"}
         </button>
         {submitMessage && <p>{submitMessage}</p>}
+        <button type="button" onClick={onClose}>Close</button>
       </form>
     </div>
   );
