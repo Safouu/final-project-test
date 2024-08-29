@@ -17,6 +17,15 @@ const GuestList = () => {
     }
   };
 
+  
+  const formatDate = (date) => {
+    const d = new Date(date);
+    const day = String(d.getDate()).padStart(2, '0');
+    const month = String(d.getMonth() + 1).padStart(2, '0'); 
+    const year = d.getFullYear();
+    return `${day}/${month}/${year}`;
+  };
+
   return (
     <div className="reservations-table">
       <h2>Guest List</h2>
@@ -45,8 +54,8 @@ const GuestList = () => {
               <td>{reservation.lastName}</td>
               <td>{reservation.email}</td>
               <td>{reservation.phone}</td>
-              <td>{reservation.checkin}</td>
-              <td>{reservation.checkout}</td>
+              <td>{formatDate(reservation.checkin)}</td>
+              <td>{formatDate(reservation.checkout)}</td>
               <td>{reservation.people}</td>
               <td>{reservation.children}</td>
               <td>{reservation.pets}</td>
@@ -63,4 +72,3 @@ const GuestList = () => {
 };
 
 export default GuestList;
-
