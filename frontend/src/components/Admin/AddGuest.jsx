@@ -138,6 +138,30 @@ const AddGuest = () => {
     }
   };
 
+  const handelEdit = async (id) => {
+    try {
+      const response = await fetch(`http://localhost:3232/reservation/${id}`, {
+        method: "PATCH",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(formData),
+      });
+
+      if (response.ok) {
+        const result = await response.json();
+        setSubmitMessage("Reservation updated successfully!");
+        console.log("Reservation updated:", result);
+      } else {
+        setSubmitMessage("Failed to update reservation.");
+        console.error("Error updating reservation:", response.statusText);
+      }
+    } catch (error) {
+      setSubmitMessage("An error occurred during update.");
+      console.error("Error during update:", error);
+    }
+  }
+
   return (
     <div className="add-guest">
       <h2>Reservation</h2>
