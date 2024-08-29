@@ -150,6 +150,8 @@ app.post("/reservation", async (req, res) => {
   }
 });
 
+
+
 app.get("/reservation", async (req, res) => {
   try {
     await connect();
@@ -158,6 +160,20 @@ app.get("/reservation", async (req, res) => {
   } catch (error) {
     console.error('Error fetching reservations:', error);
     res.status(500).json({ error: 'Failed to fetch reservations' });
+  }
+});app.patch("/reservation/:id", async (req, res) => {
+  const id = req.params.id;
+  try {
+    await connect(); 
+    const reservation = await Reservation.findByIdAndUpdate(id, req.body, { new: true });
+    if (reservation) {
+      res.status(200).json(reservation);
+    } else {
+      res.status(404).json({ error: 'Reservation not found' });
+    }
+  } catch (e) {
+    console.error('Error updating reservation:', e);
+    res.status(500).json({ error: 'Failed to update reservation' });
   }
 });
 
@@ -188,6 +204,7 @@ app.delete("/reservation/:id", async (req, res) => {
     res.status(500).json({ error: 'Failed to delete reservation' });
   }
 })
+
 
 
 

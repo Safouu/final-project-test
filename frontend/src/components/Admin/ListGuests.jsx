@@ -1,7 +1,10 @@
 import { useState, useEffect } from "react";
+import AddGuest from "./AddGuest"; 
 
 const GuestList = () => {
   const [reservations, setReservations] = useState([]);
+  const [selectedReservation, setSelectedReservation] = useState(null);
+  const [isAdding, setIsAdding] = useState(false); 
 
   useEffect(() => {
     fetchReservations();
@@ -17,18 +20,26 @@ const GuestList = () => {
     }
   };
 
-  
-  const formatDate = (date) => {
-    const d = new Date(date);
-    const day = String(d.getDate()).padStart(2, '0');
-    const month = String(d.getMonth() + 1).padStart(2, '0'); 
-    const year = d.getFullYear();
-    return `${day}/${month}/${year}`;
+  const handleEdit = (reservation) => {
+    setSelectedReservation(reservation);
+    setIsAdding(false); 
+  };
+
+  const handleAdd = () => {
+    setSelectedReservation(null);
+    setIsAdding(true); 
+  };
+
+  const handleClose = () => {
+    setSelectedReservation(null);
+    setIsAdding(false);
+    fetchReservations(); 
   };
 
   return (
     <div className="reservations-table">
       <h2>Guest List</h2>
+      <button onClick={handleAdd}>Add New Reservation</button>
       <table>
         <thead>
           <tr>
@@ -45,6 +56,7 @@ const GuestList = () => {
             <th>Total Price</th>
             <th>Advance Payment</th>
             <th>Apartment</th>
+            <th>Actions</th>
           </tr>
         </thead>
         <tbody>
@@ -54,8 +66,8 @@ const GuestList = () => {
               <td>{reservation.lastName}</td>
               <td>{reservation.email}</td>
               <td>{reservation.phone}</td>
-              <td>{formatDate(reservation.checkin)}</td>
-              <td>{formatDate(reservation.checkout)}</td>
+              <td>{reservation.checkin}</td>
+              <td>{reservation.checkout}</td>
               <td>{reservation.people}</td>
               <td>{reservation.children}</td>
               <td>{reservation.pets}</td>
@@ -63,10 +75,19 @@ const GuestList = () => {
               <td>${reservation.totalPrice}</td>
               <td>${reservation.advancePayment}</td>
               <td>{reservation.selectedObject?.name}</td>
+              <td>
+                <button onClick={() => handleEdit(reservation)}>Edit</button>
+              </td>
             </tr>
           ))}
         </tbody>
       </table>
+      {(selectedReservation || isAdding) && (
+        <AddGuest
+          reservationToEdit={selectedReservation}
+          onClose={handleClose}
+        />
+      )}
     </div>
   );
 };

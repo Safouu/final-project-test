@@ -69,13 +69,11 @@ const ListObject = () => {
       if (response.ok) {
         const updatedObject = await response.json();
 
-        // Update the state immediately after the edit
         const newObjects = objects.map((item) =>
           item._id === updatedObject._id ? updatedObject : item
         );
         setObjects(newObjects);
 
-        // Clear the editing state
         setEditingObject(null);
       }
     } catch (error) {
@@ -87,7 +85,6 @@ const ListObject = () => {
     <div className='objects-container'>
       {objects && objects.map((item) => (
         <div key={item._id}>
-          {/* <NavLink to={`/object/${item._id}`}> */}
             <div className='object'>
               
               <img src={item.image} alt={item.name} />
@@ -108,7 +105,6 @@ const ListObject = () => {
             Edit
           </button>
             </div>
-          {/* </NavLink> */}
 
         </div>
       ))}
