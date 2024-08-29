@@ -22,3 +22,4 @@ const Layout = ({ isLoggedIn, isAdmin }) => {
 };
 
 export default Layout;
+

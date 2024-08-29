@@ -488,15 +488,23 @@ footer {
   font-family: "Arial", sans-serif;
 }
 
---------------------------------
-/* Calendar Form */
 
-/* .object-detail {
-  padding: 20px;
-  background-color: #fff;
-  border-radius: 8px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-} */
+.admin-container-calendar{
+  padding: 10px;
+  background-color: #6d6d6d;
+  position: relative;
+}
+
+.demo{
+  background-color: #f3f3f3;
+  color: #ffffff;
+  width: fit-content;
+  position: relative;
+  top: 73px;
+  z-index: 10;
+}
+
+
 
 .calendar-section {
   margin-top: 20px;
