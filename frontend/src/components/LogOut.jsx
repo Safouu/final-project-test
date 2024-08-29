@@ -5,14 +5,12 @@ const Logout = ({ setIsLoggedIn, setIsAdmin }) => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    // Clear localStorage and update states
     localStorage.removeItem('isAdmin');
     localStorage.removeItem('userToken');
     
     setIsLoggedIn(false);
     setIsAdmin(false);
     
-    // Navigate to the login page
     navigate('/');
   }, [navigate, setIsLoggedIn, setIsAdmin]);
 

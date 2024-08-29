@@ -1,6 +1,12 @@
 import { useState, useEffect } from "react";
 import AddGuest from "./AddGuest"; 
 
+const formatDate = (dateString) => {
+  const options = { year: 'numeric', month: '2-digit', day: '2-digit' };
+  const date = new Date(dateString);
+  return date.toLocaleDateString(undefined, options);
+};
+
 const GuestList = () => {
   const [reservations, setReservations] = useState([]);
   const [selectedReservation, setSelectedReservation] = useState(null);
@@ -66,8 +72,8 @@ const GuestList = () => {
               <td>{reservation.lastName}</td>
               <td>{reservation.email}</td>
               <td>{reservation.phone}</td>
-              <td>{reservation.checkin}</td>
-              <td>{reservation.checkout}</td>
+              <td>{formatDate(reservation.checkin)}</td>
+              <td>{formatDate(reservation.checkout)}</td>
               <td>{reservation.people}</td>
               <td>{reservation.children}</td>
               <td>{reservation.pets}</td>
