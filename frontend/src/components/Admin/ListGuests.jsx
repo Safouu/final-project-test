@@ -9,7 +9,7 @@ const GuestList = () => {
 
   const fetchReservations = async () => {
     try {
-      const response = await fetch("http://localhost:3232/reservations");
+      const response = await fetch("http://localhost:3232/reservation");
       const data = await response.json();
       setReservations(data);
     } catch (error) {
@@ -18,7 +18,7 @@ const GuestList = () => {
   };
 
   return (
-    <div>
+    <div className="reservations-table">
       <h2>Guest List</h2>
       <table>
         <thead>
@@ -35,6 +35,7 @@ const GuestList = () => {
             <th>Price per Day</th>
             <th>Total Price</th>
             <th>Advance Payment</th>
+            <th>Apartment</th>
           </tr>
         </thead>
         <tbody>
@@ -52,6 +53,7 @@ const GuestList = () => {
               <td>${reservation.pricePerDay}</td>
               <td>${reservation.totalPrice}</td>
               <td>${reservation.advancePayment}</td>
+              <td>{reservation.selectedObject?.name}</td>
             </tr>
           ))}
         </tbody>
@@ -61,3 +63,4 @@ const GuestList = () => {
 };
 
 export default GuestList;
+

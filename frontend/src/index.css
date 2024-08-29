@@ -986,3 +986,32 @@ input[type="number"] {
 
 }
 
+/* reservations-table */
+.reservations-table{
+  padding: 10px;
+
+  table{
+    border-collapse: collapse;
+    border: solid 2px black;
+    padding: 20px;
+    width: 100%;
+    thead{
+      background-color: #3f3f3f;
+      color: white;
+      font-size: 1.3rem;
+    }
+    tbody{
+      tr:nth-child(even){
+        background-color: rgb(87, 87, 87);
+        color: white;
+      }
+      tr:hover{
+        background-color: #beb50b;
+        color: white;
+      }
+      td{
+        padding: 10px;
+      }
+    }
+  }
+}

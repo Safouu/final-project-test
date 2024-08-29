@@ -38,16 +38,7 @@ app.get("/contacts", async (req, res) => {
     res.status(500).json({ error: 'Failed to fetch contacts' });
   }
 });
-app.get("/reservations", async (req, res) => {
-  try {
-    await connect();
-    const reservations = await Reservation.find();
-    res.status(200).json(reservations);
-  } catch (error) {
-    console.error('Error fetching reservations:', error);
-    res.status(500).json({ error: 'Failed to fetch reservations' });
-  }
-});
+
 
 
 app.post("/login", async (req, res) => {
@@ -111,10 +102,7 @@ app.post("/objects", async (req, res) => {
   }
 });
 
-
-
-
-app.post("/reserve", async (req, res) => {
+app.post("/reservation", async (req, res) => {
   try {
     await connect();
     const {
@@ -131,6 +119,7 @@ app.post("/reserve", async (req, res) => {
       days,
       totalPrice,
       advancePayment,
+      selectedObject
     } = req.body;
 
     const newReservation = new Reservation({
@@ -147,6 +136,7 @@ app.post("/reserve", async (req, res) => {
       days,
       totalPrice,
       advancePayment,
+      selectedObject
     });
 
     
@@ -159,6 +149,18 @@ app.post("/reserve", async (req, res) => {
     res.status(500).json({ error: "Failed to create reservation." });
   }
 });
+
+app.get("/reservation", async (req, res) => {
+  try {
+    await connect();
+    const reservations = await Reservation.find().populate('selectedObject', 'name');
+    res.status(200).json(reservations);
+  } catch (error) {
+    console.error('Error fetching reservations:', error);
+    res.status(500).json({ error: 'Failed to fetch reservations' });
+  }
+});
+
 
 
 app.get("/objects/:id", async (req, res) => {
