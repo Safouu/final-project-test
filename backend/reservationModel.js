@@ -13,6 +13,18 @@ const reservationSchema = new mongoose.Schema({
       type: String,
       required: true,
     },
+    phone: {
+      type: String,
+      required: true,
+    },
+    checkin: {
+      type: String,
+      required: true,
+    },
+    checkout: {
+      type: String,
+      required: true,
+    },
     people: {
       type: Number,
       required: true,
