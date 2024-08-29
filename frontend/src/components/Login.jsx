@@ -25,8 +25,8 @@ const Login = ({ setIsLoggedIn, setIsAdmin }) => {
         setMessage('Login successful!');
         
         localStorage.setItem('isAdmin', data.isAdmin);
-        setIsLoggedIn(true);  // Update the logged-in state
-        setIsAdmin(data.isAdmin);  // Update the admin state if applicable
+        setIsLoggedIn(true); 
+        setIsAdmin(data.isAdmin);  
         
         if (data.isAdmin) {
           navigate('/admin');

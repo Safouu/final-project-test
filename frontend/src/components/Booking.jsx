@@ -29,7 +29,6 @@ function Booking() {
   const [isBookingValid, setIsBookingValid] = useState(false);
   const [errorMessage, setErrorMessage] = useState('');
 
-  // Calculate the number of days and validate booking
   useEffect(() => {
     const start = dateRange[0].startDate;
     const end = dateRange[0].endDate;
@@ -48,7 +47,6 @@ function Booking() {
     }
   }, [dateRange]);
 
-  // Calculate total price and advance payment
   useEffect(() => {
     const totalPrice = formData.pricePerDay * formData.days;
     const advancePayment = totalPrice * 0.3;
@@ -85,7 +83,6 @@ function Booking() {
   const handleSubmit = (e) => {
     e.preventDefault();
     console.log(formData);
-    // Handle form submission (e.g., send data to server)
   };
 
   return (
@@ -161,7 +158,6 @@ function Booking() {
           </div>
         </div>
 
-        {/* Calculator Section */}
         <div className="calculator">
           <h3>Price Calculator</h3>
           <div>
