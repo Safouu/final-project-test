@@ -25,6 +25,17 @@ const GuestList = () => {
     setIsAdding(false); 
   };
 
+  const handleDelete = async (id) => {
+    try {
+      await fetch(`http://localhost:3232/reservation/${id}`, {
+        method: "DELETE",
+      });
+      fetchReservations();
+    } catch (error) {
+      console.error("Error deleting reservation:", error);
+    }
+  }
+
   const handleAdd = () => {
     setSelectedReservation(null);
     setIsAdding(true); 
@@ -56,7 +67,8 @@ const GuestList = () => {
             <th>Total Price</th>
             <th>Advance Payment</th>
             <th>Apartment</th>
-            <th>Actions</th>
+            <th></th>
+            <th></th>
           </tr>
         </thead>
         <tbody>
@@ -78,6 +90,9 @@ const GuestList = () => {
               <td>
                 <button onClick={() => handleEdit(reservation)}>Edit</button>
               </td>
+              <td>
+                <button onClick={() => handleDelete(reservation._id)}>Delete</button>
+              </td>
             </tr>
           ))}
         </tbody>
@@ -88,6 +103,8 @@ const GuestList = () => {
           onClose={handleClose}
         />
       )}
+
+
     </div>
   );
 };
