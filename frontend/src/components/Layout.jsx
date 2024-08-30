@@ -5,7 +5,7 @@ import Footer from './Footer';
 const Layout = ({ isLoggedIn, isAdmin }) => {
   return (
     <>
-    <div className='layout'>
+
 
       <Header isLoggedIn={isLoggedIn} isAdmin={isAdmin} />
       
@@ -15,8 +15,7 @@ const Layout = ({ isLoggedIn, isAdmin }) => {
 
       <Footer/>
 
-    </div>
-
+   
     </>
   );
 };

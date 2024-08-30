@@ -37,17 +37,7 @@ const Contact = () => {
 
   return (
 
-    <div className="contact-container">
-      <div className="company-details">
-        <p>World Wide Vecation GmbH 123</p>
-        <p>Berliner Strasse 2b, Berlin, Germany</p>
-        <p>(+49) 1456-7890</p>
-        <p>
-          <a href="https://www.wwv.com" target="_blank" rel="noopener noreferrer">
-            www.wwv.com
-          </a>
-        </p>
-      </div>
+    <div className="home">
 
       <form className="contact-form" onSubmit={handleSubmit}>
         <h2>Contact Us</h2>
@@ -74,6 +64,16 @@ const Contact = () => {
         />
         <button type="submit">Send Message</button>
       </form>
+      <div className="company-details">
+        <p>World Wide Vecation GmbH 123</p>
+        <p>Berliner Strasse 2b, Berlin, Germany</p>
+        <p>(+49) 1456-7890</p>
+        <p>
+          <a href="https://www.wwv.com" target="_blank" rel="noopener noreferrer">
+            www.wwv.com
+          </a>
+        </p>
+      </div>
     </div>
   );
 };

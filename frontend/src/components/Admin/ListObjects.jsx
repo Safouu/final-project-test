@@ -86,24 +86,26 @@ const ListObject = () => {
       {objects && objects.map((item) => (
         <div key={item._id}>
             <div className='object'>
-              
               <img src={item.image} alt={item.name} />
-              <h4>ID: {item._id}</h4>
+              {/* <h4>ID: {item._id}</h4> */}
+              <div className='object-details'>
               <h1>{item.name}</h1>
               <h3>{item.description}</h3>
-              <h4>{item.price} $</h4>
-              <button
+              <p>{item.price} $</p>
+        <button
             style={{ background: 'red', color: 'white', cursor: 'pointer', padding: '5px 10px' }}
             onClick={() => handleDelete(item._id)}
           >
             Delete
-          </button>
-          <button
+        </button>
+        <button
             style={{ background: 'green', color: 'white', cursor: 'pointer', padding: '5px 10px' }}
             onClick={() => handleEditClick(item)}
           >
             Edit
-          </button>
+        </button>
+              </div>
+
             </div>
 
         </div>

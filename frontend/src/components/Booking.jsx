@@ -86,11 +86,11 @@ function Booking() {
   };
 
   return (
-    <div className="Booking">
-      <h2>Reservation</h2>
+    <div className="home">
+      {/* <h2>Reservation</h2> */}
       <form onSubmit={handleSubmit}>
         <div className="calendar-section">
-          <h3>Select Your Stay:</h3>
+          {/* <h3>Select Your Stay:</h3> */}
           <DateRange
             editableDateInputs={true}
             onChange={item => setDateRange([item.selection])}

@@ -8,18 +8,18 @@ import Messages from './Messages';
 
 const Admin = () => {
   return (
-    <div className="admin-container">
+    <div className="home">
       <div className="admin-sidebar">
-        <h2>Admin Panel</h2>
-        <ul>
-          <li><NavLink to="objects">All Apartments</NavLink></li>
-          <li><NavLink to="add-object">Add Apartment +</NavLink></li>
-          <li><NavLink to="add-guest">Add Guest +</NavLink></li>
-          <li><NavLink to="calendar">Admin-Calendar</NavLink></li>
-          <li><NavLink to="guests">All Guests</NavLink></li>
-          <li><NavLink to="messages">Messages</NavLink></li> 
-        </ul>
+      
+        <NavLink to="objects">Apartments</NavLink>
+        <NavLink to="add-object">Apartment +</NavLink>
+        <NavLink to="add-guest">Guest +</NavLink>
+        <NavLink to="calendar">Calendar</NavLink>
+        <NavLink to="guests">Guests</NavLink>
+        <NavLink to="messages">Messages</NavLink>
+        
       </div>
+
       <div className="admin-content">
         <Routes>
           <Route path="calendar" element={<AdminCalendar />} />

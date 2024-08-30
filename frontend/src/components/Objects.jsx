@@ -20,7 +20,7 @@ const Objects = () => {
             <img src={item.image} alt={item.name} />
           <div className='object-details'>
             <h1>{item.name}</h1>
-            <h3>{item.description}</h3>
+            <h3>{item.description}...</h3>
             <p>{item.price} $</p>
           </div>
 

@@ -26,32 +26,29 @@ const ObjectDetail = () => {
   };
 
   return (
-    <div className='object-detail'>
+    <div>
   
       {object ? (
         object.error ? (
           <p>{object.error}</p>
         ) : (
-          <div>
-            <img 
-              src={object.image} 
-              alt={object.name} 
-              onError={(e) => {
+          <div >
+            <img src={object.image} alt={object.name} onError={(e) => {
                 console.error("Image failed to load:", e.target.src);
                 e.target.onerror = null; 
-                e.target.src = "/path-to-fallback-image.jpg";
-              }} 
+                e.target.src = "/path-to-fallback-image.jpg";}} 
             />
+            <div>
             <h1>{object.name}</h1>
             <h3>{object.description}</h3>
-            <h4>{object.price} $</h4>
+            <p>{object.price} $</p>
 
-            <button
-              className="booking-button"
-              onClick={handleBooking}
-            >
+          </div>
+
+          <button className="booking-button" onClick={handleBooking}>
               Book Now
-            </button>
+          </button>
+
           </div>
         )
       ) : (

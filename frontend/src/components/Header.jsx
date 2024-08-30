@@ -3,16 +3,26 @@ import { NavLink } from "react-router-dom";
 const Header = ({ isLoggedIn, isAdmin }) => {
   return (
     <header className="header">
-      <NavLink to="/" className="nav-link">Home</NavLink>
-      <NavLink to="/contact" className="nav-link">Contact</NavLink>
-      {isLoggedIn ? (
+      
+        <div className='logo'>
+            <NavLink to="/">LOGO</NavLink>
+        </div>
+
+        <nav>
+
+        <NavLink to="/" >Home</NavLink>
+        <NavLink to="/contact">Contact</NavLink>
+           {isLoggedIn ? (
         <>
-          {isAdmin && <NavLink to="/admin" className="nav-link">Admin</NavLink>}
-          <NavLink to="/logout" className="nav-link">Logout</NavLink>
+           {isAdmin && <NavLink to="/admin">Admin</NavLink>}
+        <NavLink to="/logout" className="logout">Logout</NavLink>
         </>
-      ) : (
-        <NavLink to="/login" className="nav-link">Login</NavLink>
-      )}
+        ) : (
+        <NavLink to="/login">Login</NavLink>
+        )}
+
+         </nav>
+
     </header>
   );
 };
