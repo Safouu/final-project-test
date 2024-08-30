@@ -25,6 +25,7 @@ const Admin = () => {
           <Route path="calendar" element={<AdminCalendar />} />
           <Route path="guests" element={<ListGuests />} />
           {/* <Route index element={<ListObjects />} /> */}
+          <Route path="/" element={<ListObjects />} />
           <Route path="objects" element={<ListObjects />} />
           <Route path="add-object" element={<AddObject />} />
           <Route path="add-guest" element={<AddGuest />} />
