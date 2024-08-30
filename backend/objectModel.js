@@ -15,8 +15,17 @@ const ObjectSchema = new mongoose.Schema({
     },
     image: {
       type: String,
-      
     },
+    image1: {
+      type: String,
+    },
+    image2: {
+      type: String,
+    },
+    image3: {
+      type: String,
+    },
+
     reservation: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Reservation' }],
   });
   

@@ -11,8 +11,8 @@ const ObjectDetail = () => {
       .then((res) => res.json())
       .then((data) => {
         setObject(data);
-        console.log('Fetched object:', data);
-        console.log('Image URL:', data.image);
+        // console.log('Fetched object:', data);
+        // console.log('Image URL:', data.image);
       })
       .catch((error) => {
         console.error('There was a problem with the fetch operation:', error);
@@ -33,11 +33,15 @@ const ObjectDetail = () => {
           <p>{object.error}</p>
         ) : (
           <div >
-            <img src={object.image} alt={object.name} onError={(e) => {
-                console.error("Image failed to load:", e.target.src);
-                e.target.onerror = null; 
-                e.target.src = "/path-to-fallback-image.jpg";}} 
+            <img src={object.image} alt={object.name} 
+            // onError={(e) => {
+            //     console.error("Image failed to load:", e.target.src);
+            //     e.target.onerror = null; 
+            //     e.target.src = "/path-to-fallback-image.jpg";}} 
             />
+            <img src={object.image1} />
+            <img src={object.image2} />
+            <img src={object.image3} />
             <div>
             <h1>{object.name}</h1>
             <h3>{object.description}</h3>

@@ -1,4 +1,3 @@
-import { NavLink } from 'react-router-dom';
 import { useState, useEffect } from 'react';
 
 const ListObject = () => {
@@ -36,14 +35,14 @@ const ListObject = () => {
     setEditingObject(object);
   };
 
-  const handleFileChange = (e) => {
+  const handleFileChange = (e, imageField) => {
     const file = e.target.files[0];
     if (file) {
       const reader = new FileReader();
       reader.onloadend = () => {
         setEditingObject((prevObject) => ({
           ...prevObject,
-          image: reader.result,
+          [imageField]: reader.result,
         }));
       };
       reader.readAsDataURL(file);
@@ -63,6 +62,9 @@ const ListObject = () => {
           description: editingObject.description,
           price: editingObject.price,
           image: editingObject.image,
+          image1: editingObject.image1,
+          image2: editingObject.image2,
+          image3: editingObject.image3,
         }),
       });
 
@@ -84,83 +86,130 @@ const ListObject = () => {
   return (
     <div className='objects-container'>
       {objects && objects.map((item) => (
-        <div key={item._id}>
-            <div className='object'>
-              <img src={item.image} alt={item.name} />
-              {/* <h4>ID: {item._id}</h4> */}
-              <div className='object-details'>
+        <div key={item._id} >
+          <div className='object'>
+            <img src={item.image} alt={item.name} />
+            <img src={item.image1} alt={item.name} />
+            <img src={item.image2} alt={item.name} />
+            <img src={item.image3} alt={item.name} />
+            <div className='object-details'>
               <h1>{item.name}</h1>
-              <h3>{(item.description).slice(0,30)}...</h3>
+              <h3>{(item.description).slice(0, 30)}...</h3>
               <p>{item.price} $</p>
-        <button
-            style={{ background: 'red', color: 'white', cursor: 'pointer', padding: '5px 10px' }}
-            onClick={() => handleDelete(item._id)}
-          >
-            Delete
-        </button>
-        <button
-            style={{ background: 'green', color: 'white', cursor: 'pointer', padding: '5px 10px' }}
-            onClick={() => handleEditClick(item)}
-          >
-            Edit
-        </button>
-              </div>
-
+              <button
+                style={{ background: 'red', color: 'white', cursor: 'pointer', padding: '5px 10px' }}
+                onClick={() => handleDelete(item._id)}
+              >
+                Delete
+              </button>
+              <button
+                style={{ background: 'green', color: 'white', cursor: 'pointer', padding: '5px 10px' }}
+                onClick={() => handleEditClick(item)}
+              >
+                Edit
+              </button>
             </div>
-
+          </div>
         </div>
       ))}
 
       {editingObject && (
         <div className='edit-modal'>
           <form onSubmit={handleEditSubmit}>
-            <label>
-              Name:
-              <input
-                type='text'
-                name='name'
-                value={editingObject.name}
-                onChange={handleEditChange}
-              />
-            </label>
-            <label>
-              Description:
-              <input
-                type='text'
-                name='description'
-                value={editingObject.description}
-                onChange={handleEditChange}
-              />
-            </label>
-            <label>
-              Price:
-              <input
-                type='number'
-                name='price'
-                value={editingObject.price}
-                onChange={handleEditChange}
-              />
-            </label>
-            <label>
-              Image:
-              <input
-                type='file'
-                accept='image/*'
-                onChange={handleFileChange}
-              />
-            </label>
-            {editingObject.image && (
-              <div>
-                <img src={editingObject.image} alt="Preview"  />
+            <div className='form-top'>
+              <label>
+                Name:
+                <input
+                  type='text'
+                  name='name'
+                  value={editingObject.name}
+                  onChange={handleEditChange}
+                />
+              </label>
+              <label>
+                Description:
+                <input
+                  type='text'
+                  name='description'
+                  value={editingObject.description}
+                  onChange={handleEditChange}
+                />
+              </label>
+              <label>
+                Price:
+                <input
+                  type='number'
+                  name='price'
+                  value={editingObject.price}
+                  onChange={handleEditChange}
+                />
+              </label>
+
+              {/* File inputs for all images */}
+              <label>
+                Image 1:
+                <input
+                  type='file'
+                  accept='image/*'
+                  onChange={(e) => handleFileChange(e, 'image')}
+                />
+              </label>
+              {editingObject.image && (
+                <div>
+                  <img src={editingObject.image} alt="Preview" />
+                </div>
+              )}
+
+              <label>
+                Image 2:
+                <input
+                  type='file'
+                  accept='image/*'
+                  onChange={(e) => handleFileChange(e, 'image1')}
+                />
+              </label>
+              {editingObject.image1 && (
+                <div>
+                  <img src={editingObject.image1} alt="Preview" />
+                </div>
+              )}
+
+              <label>
+                Image 3:
+                <input
+                  type='file'
+                  accept='image/*'
+                  onChange={(e) => handleFileChange(e, 'image2')}
+                />
+              </label>
+              {editingObject.image2 && (
+                <div>
+                  <img src={editingObject.image2} alt="Preview" />
+                </div>
+              )}
+
+              <label>
+                Image 4:
+                <input
+                  type='file'
+                  accept='image/*'
+                  onChange={(e) => handleFileChange(e, 'image3')}
+                />
+              </label>
+              {editingObject.image3 && (
+                <div>
+                  <img src={editingObject.image3} alt="Preview" />
+                </div>
+              )}
+
+              <div className='edit-delete-btn'>
+                <button type='submit'>
+                  Save
+                </button>
+                <button type='button' onClick={() => setEditingObject(null)}>
+                  Cancel
+                </button>
               </div>
-            )}
-            <div className='edit-delete-btn'>            
-            <button type='submit' >
-              Save
-            </button>
-            <button type='button' onClick={() => setEditingObject(null)}>
-              Cancel
-            </button>
             </div>
           </form>
         </div>

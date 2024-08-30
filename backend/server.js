@@ -92,8 +92,8 @@ app.post("/contact", async (req, res) => {
 app.post("/objects", async (req, res) => {
   try {
     await connect();
-    const { name, price, description, image } = req.body;
-    const newObject = new Object({ name, price, description, image });
+    const { name, price, description, image,image1, image2, image3  } = req.body;
+    const newObject = new Object({ name, price, description, image, image1, image2, image3 });
     await newObject.save();
     res.status(201).json(newObject);
   } catch (e) {
