@@ -66,9 +66,9 @@ const AddObject = () => {
   };
 
   return (
-    <div className="container">
-      <form className="login-form" onSubmit={handleSubmit}>
-        <h2>Add Object</h2>
+    <div>
+      <form className='add-apartment' onSubmit={handleSubmit}>
+        <label>Name</label>
         <input
           type="text"
           placeholder="Object Name"
@@ -76,6 +76,7 @@ const AddObject = () => {
           onChange={(e) => setName(e.target.value)}
           required
         />
+        <label>Price</label>
         <input
           type="text"
           placeholder="Price $"
@@ -83,6 +84,7 @@ const AddObject = () => {
           onChange={(e) => setPrice(e.target.value)}
           required
         />
+        <label>Description</label>
         <input
           type="text"
           placeholder="Description"
@@ -91,7 +93,7 @@ const AddObject = () => {
           required
         />
 
-        {/* Image 1 */}
+        <label>Main image</label>
         <input
           type="text"
           placeholder="Image URL"
@@ -112,8 +114,8 @@ const AddObject = () => {
             />
           </div>
         )}
-
-        {/* Image 2 */}
+        
+        <label>Image 1</label>
         <input
           type="text"
           placeholder="Image URL 1"
@@ -135,7 +137,7 @@ const AddObject = () => {
           </div>
         )}
 
-        {/* Image 3 */}
+        <label>Image 2</label>
         <input
           type="text"
           placeholder="Image URL 2"
@@ -156,8 +158,8 @@ const AddObject = () => {
             />
           </div>
         )}
-
-        {/* Image 4 */}
+        
+        <label>Image 3</label>
         <input
           type="text"
           placeholder="Image URL 3"

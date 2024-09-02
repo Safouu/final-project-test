@@ -89,9 +89,7 @@ const ListObject = () => {
         <div key={item._id} >
           <div className='object'>
             <img src={item.image} alt={item.name} />
-            <img src={item.image1} alt={item.name} />
-            <img src={item.image2} alt={item.name} />
-            <img src={item.image3} alt={item.name} />
+  
             <div className='object-details'>
               <h1>{item.name}</h1>
               <h3>{(item.description).slice(0, 30)}...</h3>

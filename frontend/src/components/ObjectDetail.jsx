@@ -26,28 +26,33 @@ const ObjectDetail = () => {
   };
 
   return (
-    <div>
+    <div className='apart-details'>
   
       {object ? (
         object.error ? (
           <p>{object.error}</p>
         ) : (
-          <div >
-            <img src={object.image} alt={object.name} 
-            // onError={(e) => {
-            //     console.error("Image failed to load:", e.target.src);
-            //     e.target.onerror = null; 
-            //     e.target.src = "/path-to-fallback-image.jpg";}} 
-            />
-            <img src={object.image1} />
-            <img src={object.image2} />
-            <img src={object.image3} />
-            <div>
-            <h1>{object.name}</h1>
-            <h3>{object.description}</h3>
-            <p>{object.price} $</p>
+          <div className='single-apart'>
 
-          </div>
+            <div className='single-top'>
+               <div className='single-main-img'>
+                <img src={object.image} alt={object.name} />
+               </div>
+
+               <div className='single-images'>
+                 <img src={object.image1} />
+                 <img src={object.image2} />
+                 <img src={object.image3} />
+               </div>
+               
+            </div>
+
+
+            <div className='single-description'>
+              <h2>{object.name}</h2>
+              <p>{object.description}</p>
+              <p>{object.price} $</p>
+            </div>
 
           <button className="booking-button" onClick={handleBooking}>
               Book Now
