@@ -4,9 +4,11 @@ const Header = ({ isLoggedIn, isAdmin }) => {
   return (
     <header className="header">
       
-        <div className='logo'>
-            <NavLink to="/">LOGO</NavLink>
-        </div>
+      <div className="logo">
+    <a href="/">
+      <img src="./public/images/Dream.png" alt="Logo" className="logo-image" />
+    </a>
+  </div>
 
         <nav>
 
