@@ -10,11 +10,18 @@ import Register from "./components/Register";
 import Admin from "./components/Admin/Admin";
 import Booking from "./components/Booking";
 import Logout from './components/LogOut'; 
-import ListGuests from "./components/Admin/ListGuests";
+// import ListGuests from "./components/Admin/ListGuests";
+import UserProfile from './components/User/UserProfile';
+
+
+
+
 
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [isAdmin, setIsAdmin] = useState(false);
+  const [isUser, setIsUser] = useState(false);
+
 
   useEffect(() => {
     const adminStatus = localStorage.getItem('isAdmin');
@@ -27,12 +34,14 @@ function App() {
   return (
     <BrowserRouter>
       <Routes>
-        <Route path="/" element={<Layout isLoggedIn={isLoggedIn} isAdmin={isAdmin} />}>
+        <Route path="/" element={<Layout isLoggedIn={isLoggedIn} isAdmin={isAdmin} isUser={isUser} />}>
           <Route index element={<Home />} />
-          <Route path="login" element={<Login setIsLoggedIn={setIsLoggedIn} setIsAdmin={setIsAdmin} />} />
-          <Route path="logout" element={<Logout setIsLoggedIn={setIsLoggedIn} setIsAdmin={setIsAdmin} />} /> 
+          <Route path="login" element={<Login setIsLoggedIn={setIsLoggedIn} setIsAdmin={setIsAdmin} setIsUser={setIsUser} />} />
+          <Route path="logout" element={<Logout setIsLoggedIn={setIsLoggedIn} setIsAdmin={setIsAdmin} setIsUser={setIsUser} />} /> 
           <Route path="/admin/*" element={<ProtectedRoute><Admin /></ProtectedRoute>} />
+          <Route path="userProfile" element={<ProtectedRoute><UserProfile />  </ProtectedRoute>} />
           {/* <Route path="/admin/guests" element={<ProtectedRoute><ListGuests /></ProtectedRoute>} />  */}
+          {/* <Route path="userProfile" element={ <UserProfile />  } /> */}
           <Route path="register" element={<Register />} />
           <Route path="contact" element={<Contact />} />
           <Route path="booking" element={<Booking />} />
