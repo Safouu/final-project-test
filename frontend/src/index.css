@@ -108,7 +108,9 @@ header .logout {
   align-items: center;
   overflow: hidden;
   gap: 40px;
-  padding-bottom: 40px;
+  /* padding-bottom: 20px; */
+  margin-bottom: 20px;
+  margin-top: 40px;
 }
 
 .home .top {
@@ -193,6 +195,7 @@ footer {
   align-items: center;
   justify-content: center;
   height: 100%;
+  margin-top: 20px;
 }
 
 .single-apart{
@@ -234,7 +237,8 @@ footer {
   justify-content: center;
   gap: 80px;
   padding: 1rem;
-  margin-top: 20px;
+
+ 
 
 }
 
@@ -258,6 +262,54 @@ footer {
   label {
     font-weight: bold;
   }
+}
+
+.add-guest{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 5px;
+  
+ 
+}
+.add-guest input{
+  width: 100%;
+  padding: 5px;
+  background-color: var(--secondary-color);
+  border-radius: 5px;
+  border: 1px solid #ccc;
+}
+
+ .reservations-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 20px 20px 20px;
+}
+.object-message{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+}
+.object-message h1{
+  margin-left: 20px;
+  font-size: 2rem;
+  color: #333;
+ 
+}
+
+.object-message table th,
+.object-message table td {
+  border: 1px solid #bbb0b0;
+  padding: 8px;
+  text-align: center;
+}
+
+.reservations-table th,
+.reservations-table td {
+  border: 1px solid #ddd;
+  padding: 8px;
+  text-align: center;
 }
 
 .admin-container-calendar{

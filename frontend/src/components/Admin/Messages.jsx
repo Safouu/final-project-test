@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 
 const Messages = () => {
   const [messages, setMessages] = useState([]);
@@ -22,7 +22,9 @@ const Messages = () => {
 
   return (
     <div>
-      <h1>Contact Messages</h1>
+    <h1>Contact Messages</h1>
+    <div className='object-message'>
+     
       <table>
         <thead>
           <tr>
@@ -41,6 +43,7 @@ const Messages = () => {
           ))}
         </tbody>
       </table>
+    </div>
     </div>
   );
 };
