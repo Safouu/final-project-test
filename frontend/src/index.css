@@ -206,8 +206,6 @@ footer {
   }
 }
 
-
-
 .admin-sidebar {
   width: 100%;
   display: flex;
@@ -240,6 +238,9 @@ footer {
   }
 }
 
+.admin-container-calendar{
+  width: 89vw;
+}
 
 @media (max-width: 768px) {
   header {

@@ -153,6 +153,7 @@ const AddGuest = ({ reservationToEdit, onClose }) => {
       setSubmitMessage("An error occurred during reservation.");
       console.error("Error during reservation:", error);
     }
+    console.log(formData.checkin, formData.checkout);
   };
 
   const handelEdit = async (id) => {
