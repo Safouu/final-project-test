@@ -3,8 +3,13 @@
 
 :root {
   --font: Montserrat, Arial, sans-serif, 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif;
-  --main-color: #09684b;
-  --secondary-color: #0dc9a9;
+  --main-color: #758807;
+  --secondary-color: #c3c4be;
+  --hover-color: #e7f1a8;
+  --color: #080808;
+  --font-size-small: 1rem;
+  --font-size-medium: 1.5rem;
+  --font-size-large: 2rem;
 }
 
 body, html {
@@ -16,17 +21,17 @@ body, html {
 }
 
 main {
-  padding-bottom: 20px;
+  padding-bottom: 350px;
+  margin-top: 100px;
 }
 
  
-
-
 #root {
   display: grid;
   grid-template-rows: auto 1fr auto;
   min-height: 100vh;
 }
+
 
 header {
   display: flex;
@@ -34,52 +39,67 @@ header {
   align-items: center;
   padding: 1rem;
   background-color: var(--main-color);
-  color: white;
+  color: var(--secondary-color);
   flex-wrap: wrap;
-  border-bottom: 8px solid var(--secondary-color);
+  border-bottom: 10px solid var(--secondary-color);
+  position: fixed; 
+  top: 0; 
+  left: 0;
+  width: 100%; 
+  z-index: 1;
 }
-
 header nav {
   display: flex;
-  gap: 3rem;
+  gap: 2.5rem;
   align-items: center;
+  margin-right: 3rem;
 }
 
 header nav a {
   text-decoration: none;
-  color: white;
+  color: var(--color);
   font-size: 1.5rem;
+ 
 }
 
 header nav .active {
-  color: #0dc9a9;
+  color: var(--hover-color);
   font-weight: bold;
 }
-
-header .logo {
+/* header .logo {
   flex: 1;
+  display: flex;
+  align-items: center;
+} */
+
+
+header .logo a img.logo-image {
+  height: 70px; 
 }
-header .logo a {
+/* header .logo {
+  flex: 1;
+} */
+/* header .logo a {
   text-decoration: none;
   color: white;
   font-size: 2rem;
-}
+} */
 
 header .logout {
-  background-color: transparent;
-  font-size: medium;
-  color: white;
+  background-color: var(--hover-color);
+  font-size: var(--font-size-medium);
+  color: var(--color);
   padding: 5px;
   border: none;
   border-radius: 5px;
   cursor: pointer;
-  border: solid 2px wheat;
+  
 }
 
-header .logout:hover {
+/* header .logout:hover {
   background-color: wheat;
-  color: black;
-}
+  color: var(---color);
+} */
 
 
 .home {
@@ -206,7 +226,7 @@ footer {
   }
 }
 
-
+/*Admin*/
 
 .admin-sidebar {
   width: 100%;
@@ -215,6 +235,7 @@ footer {
   justify-content: center;
   gap: 80px;
   padding: 1rem;
+  margin-top: 20px;
 
 }
 
