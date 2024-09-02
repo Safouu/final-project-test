@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { NavLink, useNavigate } from 'react-router-dom';
 
-const Login = ({ setIsLoggedIn, setIsAdmin }) => {
+const Login = ({ setIsLoggedIn, setIsAdmin, setIsUser }) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [message, setMessage] = useState('');
@@ -26,11 +26,16 @@ const Login = ({ setIsLoggedIn, setIsAdmin }) => {
         
         localStorage.setItem('isAdmin', data.isAdmin);
         setIsLoggedIn(true); 
-        setIsAdmin(data.isAdmin);  
+        setIsAdmin(data.isAdmin);
+        setIsUser(data.isUser);
         
         if (data.isAdmin) {
           navigate('/admin');
-        } else {
+        }
+        if (data.isUser) {
+          navigate('/userProfile');
+        }
+        else {
           navigate('/');
         }
       } else {
