@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
-import { LoadScript, GoogleMap, Marker } from '@react-google-maps/api';
+//import { LoadScript, GoogleMap, Marker } from '@react-google-maps/api';
 
 const ObjectDetail = () => {
   const { id } = useParams();
@@ -25,16 +25,16 @@ const ObjectDetail = () => {
     if (!object) return;
     navigate('/booking', { state: { object } });
   };
-  const containerStyle = {
-    width: '100%',
-    height: '400px',
-    marginTop: '2rem'
-  };
+  // const containerStyle = {
+  //   width: '100%',
+  //   height: '400px',
+  //   marginTop: '2rem'
+  // };
 
-  const center = object ? {
-    lat: object.latitude, // Geografische Breite des Objekts
-    lng: object.longitude // Geografische Länge des Objekts
-  } : { lat: 0, lng: 0 }; // Standardkoordinaten, falls die Daten noch nicht geladen sind
+  // const center = object ? {
+  //   lat: object.latitude, // Geografische Breite des Objekts
+  //   lng: object.longitude // Geografische Länge des Objekts
+  // } : { lat: 0, lng: 0 }; // Standardkoordinaten, falls die Daten noch nicht geladen sind
 
   return (
     <div className='apart-details'>
@@ -67,7 +67,7 @@ const ObjectDetail = () => {
 
           
 
-  {/* Google Maps Karte */}
+  {/* Google Maps Karte
           <LoadScript googleMapsApiKey="YOUR_GOOGLE_MAPS_API_KEY">
               <GoogleMap
                 mapContainerStyle={containerStyle}
@@ -76,7 +76,7 @@ const ObjectDetail = () => {
               >
                 <Marker position={center} />
               </GoogleMap>
-            </LoadScript>
+            </LoadScript> */}
 
             <button className="booking-button" onClick={handleBooking}>
               Book Now
