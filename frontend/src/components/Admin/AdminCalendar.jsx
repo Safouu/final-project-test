@@ -110,15 +110,20 @@ const AdminCalendar = () => {
   };
 
   return (
-    <div className="admin-container-calendar">
-      <div className='demo'>ADMIN</div>
+    <div>
+      
+      <div  className="admin-container-calendar">
+      {/* <div className='demo'>ADMIN</div> */}
       <h1>Admin Scheduler</h1>
+
       <DayPilotScheduler
         {...config}
         events={events}
         resources={objects}
         ref={setScheduler}
       />
+      </div>
+
     </div>
   );
 };
