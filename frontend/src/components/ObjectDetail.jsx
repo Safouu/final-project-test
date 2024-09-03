@@ -25,16 +25,7 @@ const ObjectDetail = () => {
     if (!object) return;
     navigate('/booking', { state: { object } });
   };
-  // const containerStyle = {
-  //   width: '100%',
-  //   height: '400px',
-  //   marginTop: '2rem'
-  // };
-
-  // const center = object ? {
-  //   lat: object.latitude, // Geografische Breite des Objekts
-  //   lng: object.longitude // Geografische Länge des Objekts
-  // } : { lat: 0, lng: 0 }; // Standardkoordinaten, falls die Daten noch nicht geladen sind
+  
 
   return (
     <div className='apart-details'>

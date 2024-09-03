@@ -9,9 +9,7 @@ return (
 
 <img src="./public/images/niceView.jpg" alt="Villa" />
 
-{/* <div className='top-text'>
-World Wide Vacation
-</div> */}
+
 
 </div>
 
