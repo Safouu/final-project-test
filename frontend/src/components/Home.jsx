@@ -14,7 +14,7 @@ return (
     <div className="video-background">
      <video autoPlay loop muted>
       <source src="./public/images/blue-sky-mowe.mp4" type="video/mp4" />
-      Your browser does not support the video tag.
+     
     </video> 
   </div>
       
