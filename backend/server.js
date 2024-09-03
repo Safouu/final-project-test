@@ -28,18 +28,6 @@ app.get("/objects", async (req, res) => {
   }
 });
 
-app.get("/contacts", async (req, res) => {
-  try {
-    await connect();
-    const contacts = await Contact.find();
-    res.status(200).json(contacts);
-  } catch (err) {
-    console.error('Error fetching contacts:', err);
-    res.status(500).json({ error: 'Failed to fetch contacts' });
-  }
-});
-
-
 
 app.post("/login", async (req, res) => {
   try {
@@ -74,7 +62,16 @@ app.post("/register", async (req, res) => {
   }
 });
 
-
+app.get("/contacts", async (req, res) => {
+  try {
+    await connect();
+    const contacts = await Contact.find();
+    res.status(200).json(contacts);
+  } catch (err) {
+    console.error('Error fetching contacts:', err);
+    res.status(500).json({ error: 'Failed to fetch contacts' });
+  }
+});
 
 app.post("/contact", async (req, res) => {
   try {
@@ -88,6 +85,33 @@ app.post("/contact", async (req, res) => {
     res.status(500).json({ error: 'Failed to save contact message' });
   }
 });
+
+
+app.delete("/contact/:id", async (req, res) => {
+  const id = req.params.id;
+  try {
+    await connect();
+    await Contact.findByIdAndDelete(id);
+    res.status(204).send();
+  } catch (error) {
+    console.error('Error deleting reservation:', error);
+    res.status(500).json({ error: 'Failed to delete reservation' });
+  }
+})
+
+app.delete("/contacts", async (req, res) => {
+  try {
+    await connect();
+    await Contact.deleteMany();
+    res.status(204).send();
+  } catch (error) {
+    console.error('Error deleting contacts:', error);
+    res.status(500).json({ error: 'Failed to delete contacts' });
+  }
+})
+
+
+
 
 app.post("/objects", async (req, res) => {
   try {

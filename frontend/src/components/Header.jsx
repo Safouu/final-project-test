@@ -5,9 +5,11 @@ const Header = ({ isLoggedIn, isAdmin }) => {
     <header className="header">
       
       <div className="logo">
-    <a href="/">
+    {/* <a href="/">
       <img src="./public/images/Dream.png" alt="Logo" className="logo-image" />
-    </a>
+    </a> */}
+    <NavLink to="/" >LOGO</NavLink>
+  
   </div>
 
         <nav>
@@ -19,7 +21,7 @@ const Header = ({ isLoggedIn, isAdmin }) => {
            {isAdmin && <NavLink to="/admin">Admin</NavLink>}
            {!isAdmin && <NavLink to="/userProfile"> Profil</NavLink>}
 
-        <NavLink to="/logout" className="logout">Logout</NavLink>
+        <NavLink to="/logout" className="logout">{`=>`}</NavLink>
         </>
         ) : (
         <NavLink to="/login">Login</NavLink>

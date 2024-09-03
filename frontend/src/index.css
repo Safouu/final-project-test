@@ -67,18 +67,18 @@ header nav .active {
   align-items: center;
 } */
 
-
-header .logo a img.logo-image {
+/* header .logo a img.logo-image {
   height: 70px; 
-}
-/* header .logo {
-  flex: 1;
 } */
-/* header .logo a {
+
+header .logo {
+  flex: 1;
+}
+header .logo a {
   text-decoration: none;
   color: white;
   font-size: 2rem;
-} */
+}
 
 header .logout {
   background-color: var(--hover-color);
@@ -91,10 +91,10 @@ header .logout {
   
 }
 
-/* header .logout:hover {
-  background-color: wheat;
-  color: var(---color);
-} */
+header .logout:hover {
+  background-color: #942929;
+  color: white;
+}
 
 
 .home {

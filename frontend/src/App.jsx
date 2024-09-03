@@ -13,10 +13,6 @@ import Logout from './components/LogOut';
 // import ListGuests from "./components/Admin/ListGuests";
 import UserProfile from './components/User/UserProfile';
 
-
-
-
-
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [isAdmin, setIsAdmin] = useState(false);
@@ -39,7 +35,9 @@ function App() {
           <Route path="login" element={<Login setIsLoggedIn={setIsLoggedIn} setIsAdmin={setIsAdmin} setIsUser={setIsUser} />} />
           <Route path="logout" element={<Logout setIsLoggedIn={setIsLoggedIn} setIsAdmin={setIsAdmin} setIsUser={setIsUser} />} /> 
           <Route path="/admin/*" element={<ProtectedRoute><Admin /></ProtectedRoute>} />
-          <Route path="userProfile" element={<ProtectedRoute><UserProfile />  </ProtectedRoute>} />
+          <Route path="userProfile" element={<ProtectedRoute><UserProfile 
+          isLoggedIn={isLoggedIn}  isUser={isUser}
+          />  </ProtectedRoute>} />
           {/* <Route path="/admin/guests" element={<ProtectedRoute><ListGuests /></ProtectedRoute>} />  */}
           {/* <Route path="userProfile" element={ <UserProfile />  } /> */}
           <Route path="register" element={<Register />} />

@@ -17,8 +17,39 @@ const Messages = () => {
       }
     };
 
+    
+
     fetchMessages();
   }, []);
+
+  const handelDelete = async (id) => {
+    try {
+      const response = await fetch(`http://localhost:3232/contact/${id}`, {
+        method: 'DELETE',
+      });
+      if (!response.ok) {
+        throw new Error('Network response was not ok');
+      }
+      const updatedMessages = messages.filter((message) => message._id !== id);
+      setMessages(updatedMessages);
+    } catch (error) {
+      console.error('Error deleting message:', error);
+    }
+  }
+
+  const handelDeleteAll = async () => {
+    try {
+      const response = await fetch('http://localhost:3232/contacts', {
+        method: 'DELETE',
+      });
+      if (!response.ok) {
+        throw new Error('Network response was not ok');
+      }
+      setMessages([]);
+    } catch (error) {
+      console.error('Error deleting messages:', error);
+    }
+  }
 
   return (
     <div>
@@ -31,6 +62,11 @@ const Messages = () => {
             <th>Email</th>
             <th>Name</th>
             <th>Message</th>
+            <th>
+              <button onClick={() => handelDeleteAll(  ) }  >
+                delete all
+              </button>
+            </th>
           </tr>
         </thead>
         <tbody>
@@ -39,6 +75,10 @@ const Messages = () => {
               <td>{message.email}</td>
               <td>{message.name}</td>
               <td>{message.message}</td>
+
+              <td>
+                <button onClick={() => handelDelete(message._id)}>X</button>
+              </td>
             </tr>
           ))}
         </tbody>
