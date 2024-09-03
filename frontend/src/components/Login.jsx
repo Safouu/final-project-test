@@ -1,11 +1,13 @@
 import { useState } from 'react';
 import { NavLink, useNavigate } from 'react-router-dom';
+import { useAuth } from '../context/AuthContext';
 
-const Login = ({ setIsLoggedIn, setIsAdmin, setIsUser }) => {
+const Login = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [message, setMessage] = useState('');
   const navigate = useNavigate();
+  const { login } = useAuth();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -20,22 +22,21 @@ const Login = ({ setIsLoggedIn, setIsAdmin, setIsUser }) => {
       });
 
       const data = await response.json();
+      console.log('Login Response:', data);
 
       if (response.ok) {
-        setMessage('Login successful!');
-        
-        localStorage.setItem('isAdmin', data.isAdmin);
-        setIsLoggedIn(true); 
-        setIsAdmin(data.isAdmin);
-        setIsUser(data.isUser);
-        
+        login({
+          isAdmin: data.isAdmin,
+          isUser: data.isUser,
+          userId: data.userId, 
+        });
+
+     
         if (data.isAdmin) {
           navigate('/admin');
-        }
-        if (data.isUser) {
+        } else if (data.isUser) {
           navigate('/userProfile');
-        }
-        else {
+        } else {
           navigate('/');
         }
       } else {
@@ -46,6 +47,7 @@ const Login = ({ setIsLoggedIn, setIsAdmin, setIsUser }) => {
       setMessage('An error occurred. Please try again later.');
     }
 
+    
     setEmail('');
     setPassword('');
   };
@@ -68,10 +70,8 @@ const Login = ({ setIsLoggedIn, setIsAdmin, setIsUser }) => {
           onChange={(e) => setPassword(e.target.value)}
           required
         />
-
         <button type="submit">Login</button>
         {message && <p className="message">{message}</p>}
-
         <p>No account? <NavLink to="/register">Register</NavLink></p>
       </form>
     </div>

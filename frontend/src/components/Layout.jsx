@@ -2,23 +2,16 @@ import Header from './Header';
 import { Outlet } from 'react-router-dom';
 import Footer from './Footer';
 
-const Layout = ({ isLoggedIn, isAdmin }) => {
+const Layout = () => {
   return (
     <>
-
-
-      <Header isLoggedIn={isLoggedIn} isAdmin={isAdmin} />
-      
+      <Header />
       <main>
         <Outlet />
       </main>
-
-      <Footer/>
-
-   
+      <Footer />
     </>
   );
 };
 
 export default Layout;
-

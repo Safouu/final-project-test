@@ -8,6 +8,7 @@ import cors from "cors";
 import dotenv from "dotenv";
 
 
+
 dotenv.config();
 
 const app = express();
@@ -39,15 +40,56 @@ app.post("/login", async (req, res) => {
     if (!user) {
       return res.status(401).json({ message: "Invalid email or password" });
     }
+
     const adminEmails = [process.env.ADMIN1, process.env.ADMIN2, process.env.ADMIN3];
     const isAdmin = adminEmails.includes(email);
-
-    res.status(200).json({ message: "Login successful", isAdmin });
+    
+    res.status(200).json({
+      message: "Login successful",
+      isAdmin,
+      isUser: true, 
+      userId: user._id, 
+    });
   } catch (e) {
     console.error('Error during login:', e);
     res.status(500).json({ error: 'Login failed' });
   }
 });
+
+app.get('/user/:id', async (req, res) => {
+  try {
+    const userId = req.params.id;
+    const user = await Register.findById(userId);
+    if (user) {
+      res.status(200).json(user);
+    } else {
+      res.status(404).json({ error: 'User not found' });
+    }
+  } catch (error) {
+    console.error('Error fetching user data:', error);
+    res.status(500).json({ error: 'Failed to fetch user data' });
+  }
+});
+
+
+// app.get('/user/:email', async (req, res) => {
+//   try {
+//     await connect();
+//     const { email } = req.params;
+//     const user = await Register.findOne({ email });
+
+//     if (!user) {
+//       return res.status(404).json({ error: 'User not found' });
+//     }
+
+//     res.status(200).json(user);
+//   } catch (e) {
+//     console.error('Error fetching user:', e);
+//     res.status(500).json({ error: 'Failed to fetch user' });
+//   }
+// });
+
+
 
 app.post("/register", async (req, res) => {
   try {

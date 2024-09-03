@@ -1,22 +1,13 @@
 import { Navigate } from 'react-router-dom';
+import { useAuth } from '../context/AuthContext';
 import PropTypes from 'prop-types';
 
 const ProtectedRoute = ({ children }) => {
-  const isAdmin = localStorage.getItem('isAdmin') === 'true';
-  const isUser = localStorage.getItem('isAdmin') === 'false';
+  const { isLoggedIn, isAdmin, isUser } = useAuth();
 
-  // if (!isAdmin) {
-  //   return <Navigate to="/" replace />;  
-  // }
-
-  // if (!isUser) {
-  //   return <Navigate to="/" replace />;
-  // }
-
-  if (!isAdmin && !isUser) {
+  if (!isLoggedIn) {
     return <Navigate to="/" replace />;
   }
-  
 
   return children;
 };
