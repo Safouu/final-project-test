@@ -12,10 +12,10 @@ return (
     
     </div>
     <div className="video-background">
-     <video autoPlay loop muted>
+     {/* <video autoPlay loop muted>
       <source src="./public/images/blue-sky-mowe.mp4" type="video/mp4" />
      
-    </video> 
+    </video>  */}
   </div>
       
 <Objects/>
