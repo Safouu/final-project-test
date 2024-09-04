@@ -39,8 +39,10 @@ const Contact = () => {
 
     <div className="home">
 
+      <div className="contact-container">
+      <h2>Contact Us</h2>
       <form className="contact-form" onSubmit={handleSubmit}>
-        <h2>Contact Us</h2>
+        
         {submitted && <p className="success-message">Thank you for your message!</p>}
         
         <input
@@ -65,12 +67,14 @@ const Contact = () => {
         />
         <button type="submit">Send Message</button>
       </form>
+
+      </div>
       <div className="company-details">
         <p>World Wide Vecation GmbH 123</p>
         <p>Berliner Strasse 2b, Berlin, Germany</p>
         <p>(+49) 1456-7890</p>
         <p>
-          <a href="https://www.wwv.com" target="_blank" rel="noopener noreferrer">
+          <a href="https://dream-voacation.com" target="_blank" rel="noopener noreferrer">
             www.wwv.com
           </a>
         </p>

@@ -1,5 +1,4 @@
 import mongoose from "mongoose";
-
 const reservationSchema = new mongoose.Schema({
     firstName: {
       type: String,

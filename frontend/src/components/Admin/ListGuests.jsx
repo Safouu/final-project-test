@@ -1,21 +1,17 @@
 import { useState, useEffect } from "react";
-import AddGuest from "./AddGuest"; 
-
+import AddGuest from "./AddGuest";
 const formatDate = (dateString) => {
   const options = { year: 'numeric', month: '2-digit', day: '2-digit' };
   const date = new Date(dateString);
   return date.toLocaleDateString(undefined, options);
 };
-
 const GuestList = () => {
   const [reservations, setReservations] = useState([]);
   const [selectedReservation, setSelectedReservation] = useState(null);
-  const [isAdding, setIsAdding] = useState(false); 
-
+  const [isAdding, setIsAdding] = useState(false);
   useEffect(() => {
     fetchReservations();
   }, []);
-
   const fetchReservations = async () => {
     try {
       const response = await fetch("http://localhost:3232/reservation");
@@ -25,12 +21,10 @@ const GuestList = () => {
       console.error("Error fetching reservations:", error);
     }
   };
-
   const handleEdit = (reservation) => {
     setSelectedReservation(reservation);
-    setIsAdding(false); 
+    setIsAdding(false);
   };
-
   const handleDelete = async (id) => {
     try {
       await fetch(`http://localhost:3232/reservation/${id}`, {
@@ -41,18 +35,15 @@ const GuestList = () => {
       console.error("Error deleting reservation:", error);
     }
   }
-
   const handleAdd = () => {
     setSelectedReservation(null);
-    setIsAdding(true); 
+    setIsAdding(true);
   };
-
   const handleClose = () => {
     setSelectedReservation(null);
     setIsAdding(false);
-    fetchReservations(); 
+    fetchReservations();
   };
-
   return (
     <div className="reservations-table">
       <h2>Guest List</h2>
@@ -109,10 +100,7 @@ const GuestList = () => {
           onClose={handleClose}
         />
       )}
-
-
     </div>
   );
 };
-
 export default GuestList;
