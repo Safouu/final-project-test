@@ -181,7 +181,10 @@ app.post("/reservation", async (req, res) => {
     res.status(500).json({ error: "Failed to create reservation." });
   }
 });
-app.get("/reservation", async (req, res) => {
+
+
+
+app.get('/reservation', async (req, res) => {
   try {
     await connect();
     const reservations = await Reservation.find().populate('selectedObject', 'name');
@@ -205,21 +208,23 @@ app.get("/reservation", async (req, res) => {
     res.status(500).json({ error: 'Failed to update reservation' });
   }
 });
-app.patch("/reservation/:id", async (req, res) => {
-  const id = req.params.id;
-  try {
-    await connect();
-    const reservation = await Reservation.findByIdAndUpdate(id, req.body , { new: true });
-    if (reservation) {
-      res.status(200).json(reservation);
-    } else {
-      res.status(404).json({ error: 'Reservation not found' });
-    }
-  } catch (error) {
-    console.error('Error updating reservation:', error);
-    res.status(500).json({ error: 'Failed to update reservation' });
-  }
-})
+
+// app.patch("/reservation/:id", async (req, res) => {
+//   const id = req.params.id;
+//   try {
+//     await connect();
+//     const reservation = await Reservation.findByIdAndUpdate(id, req.body , { new: true });
+//     if (reservation) {
+//       res.status(200).json(reservation);
+//     } else {
+//       res.status(404).json({ error: 'Reservation not found' });
+//     }
+//   } catch (error) {
+//     console.error('Error updating reservation:', error);
+//     res.status(500).json({ error: 'Failed to update reservation' });
+//   }
+// })
+
 app.delete("/reservation/:id", async (req, res) => {
   const id = req.params.id;
   try {
@@ -231,6 +236,7 @@ app.delete("/reservation/:id", async (req, res) => {
     res.status(500).json({ error: 'Failed to delete reservation' });
   }
 })
+
 app.get("/objects/:id", async (req, res) => {
   const id = req.params.id;
   try {

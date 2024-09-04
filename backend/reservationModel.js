@@ -66,5 +66,5 @@ const reservationSchema = new mongoose.Schema({
         },
         selectedObject: { type: mongoose.Schema.Types.ObjectId, ref: 'Object' },
   });
+  
   export const Reservation = mongoose.model("Reservation", reservationSchema);
-

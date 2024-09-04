@@ -42,6 +42,7 @@ const Contact = () => {
       <form className="contact-form" onSubmit={handleSubmit}>
         <h2>Contact Us</h2>
         {submitted && <p className="success-message">Thank you for your message!</p>}
+        
         <input
           type="text"
           placeholder="Your Name"

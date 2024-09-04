@@ -53,7 +53,10 @@ const Register = () => {
   };
 
   return (
-    <div className="container">
+    <div className="home">
+
+    <div className="login-container">
+
       <form className="login-form" onSubmit={handleSubmit}>
         <h2>Register</h2>
         <input
@@ -119,6 +122,7 @@ const Register = () => {
           Already have an account? <NavLink to="/login">Login</NavLink>
         </p>
       </form>
+    </div>
     </div>
   );
 };
