@@ -3,7 +3,6 @@ import { useLocation } from "react-router-dom";
 import { DateRange } from 'react-date-range';
 import 'react-date-range/dist/styles.css';
 import 'react-date-range/dist/theme/default.css';
-import axios from 'axios'; 
 import { useAuth } from "../context/AuthContext";
 
 function Booking() {
@@ -97,13 +96,19 @@ function Booking() {
     }
 
     try {
-      const response = await axios.post('http://localhost:3232/genreservation', {
-        user: userId, 
-        apartment: object._id, 
-        startDate: dateRange[0].startDate.toISOString(),
-        endDate: dateRange[0].endDate.toISOString(),
-        totalPrice: formData.totalPrice,
-        advancePayment: formData.advancePayment,
+      const response = await fetch ('http://localhost:3232/genreservation', {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ 
+          user: userId,
+           apartment: object._id,
+            startDate: dateRange[0].startDate.toISOString(),
+            endDate: dateRange[0].endDate.toISOString(), 
+            totalPrice: formData.totalPrice, 
+            advancePayment: formData.advancePayment, 
+            }),
       });
 
       if (response.status === 201) {
