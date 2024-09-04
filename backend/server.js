@@ -43,18 +43,21 @@ app.post("/login", async (req, res) => {
 
     const adminEmails = [process.env.ADMIN1, process.env.ADMIN2, process.env.ADMIN3];
     const isAdmin = adminEmails.includes(email);
+    const isUser = !isAdmin;
     
-    res.status(200).json({
-      message: "Login successful",
-      isAdmin,
-      isUser: true, 
+    res.status(200).json({ 
+      message: "Login successful", 
+      isAdmin, 
+      isUser, 
       userId: user._id, 
+      firstName: user.firstName 
     });
   } catch (e) {
     console.error('Error during login:', e);
     res.status(500).json({ error: 'Login failed' });
   }
 });
+
 
 app.get('/user/:id', async (req, res) => {
   try {

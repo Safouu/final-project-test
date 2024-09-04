@@ -2,9 +2,9 @@ import { NavLink } from "react-router-dom";
 import { useAuth } from '../context/AuthContext';
 
 const Header = () => {
-  const { isLoggedIn, isAdmin, isUser, userId, logout } = useAuth();
+  const { isLoggedIn, isAdmin, isUser, firstName, logout } = useAuth();
 
-  console.log('Header Render - isLoggedIn:', isLoggedIn, 'isAdmin:', isAdmin, 'isUser:', isUser, 'userId:', userId);
+  console.log('Header - isLoggedIn:', isLoggedIn, 'isAdmin:', isAdmin, 'isUser:', isUser, 'firstName:', firstName);
 
   return (
     <header className="header">
@@ -18,8 +18,7 @@ const Header = () => {
         {isLoggedIn ? (
           <>
             {isAdmin && <NavLink to="/admin">Admin</NavLink>}
-            {isUser && <NavLink to="/userProfile">User Profile</NavLink>}
-            {userId && <p>User ID: {userId}</p>}
+            {isUser && <NavLink to="/userProfile">{firstName} </NavLink>}
             <button onClick={logout} className="logout">{`=>`}</button>
           </>
         ) : (
