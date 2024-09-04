@@ -41,23 +41,12 @@ const reservationSchema = new mongoose.Schema({
       type: Number,
       required: true,
     },
-    phone: {
-      type: String,
-      required: true,
-    },
-    checkin: {
-      type: Date,
-      required: true,
-    },
-    checkout: {
-      type: Date,
-      required: true,
-    },
     days: {
         type: Number,
         required: true,
         },
     totalPrice: {
+      
         type: Number,
         required: true,
         },
@@ -65,7 +54,7 @@ const reservationSchema = new mongoose.Schema({
             type: Number,
             required: true,
         },
+    selectedObject: { type: mongoose.Schema.Types.ObjectId, ref: 'Object' },
   });
   
   export const Reservation = mongoose.model("Reservation", reservationSchema);
-
