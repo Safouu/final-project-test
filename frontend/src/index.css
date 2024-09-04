@@ -7,6 +7,7 @@
   --secondary-color: #1d1d4e;
   --hover-color: #e2e4d4;
   --color: #080808;
+  --color-white: #fff;
   --font-size-small: 1rem;
   --font-size-medium: 1.5rem;
   --font-size-large: 2rem;
@@ -44,9 +45,56 @@ main {
 display: flex;
 flex-direction: column;
 align-items: center;
-gap: 10px;
+gap: 30px;
 margin-top: 20px;
 }
+
+.contact-form input {
+width: 100%;
+padding: 5px;
+background-color: var(--main-color);
+color: var(--color-white);
+font-size: var(--font-size-small);
+border-radius: 5px;
+border: 1px solid #ccc;
+}
+
+.contact-form textarea {
+width: 100%;
+padding: 5px;
+background-color: var(--main-color);
+color: var(--color-white);
+font-size: var(--font-size-small);
+border-radius: 5px;
+border: 5px solid #ccc;
+}
+
+
+.contact-form button {
+width: 80%;
+height: 40px;
+padding: 5px;
+background-color: var(--main-color);
+color: white;
+font-size: var(--font-size-small);
+border: none;
+border-radius: 5px;
+cursor: pointer;
+}
+
+.contact-form button:hover {
+background-color: var(--secondary-color);
+}
+
+.company-details  {
+display: flex;
+flex-direction: column;
+align-items: center;
+margin-top: 150px;
+}
+
+
+
 
 
 /*Footer*/
@@ -73,6 +121,7 @@ header {
   position: fixed; 
   width: 100%; 
   z-index: 1;
+  
 }
 
 header nav {
@@ -175,9 +224,8 @@ header .logout {
   flex-direction: column;
   align-items: center;
   overflow: hidden;
-  gap: 40px;
-  /* padding-bottom: 20px; */
-  margin-bottom: 20px;
+  gap: 30px;
+  padding-bottom: 20px;
   position:relative;
 
   
@@ -386,7 +434,8 @@ header .logout {
   color: rgb(0, 0, 0);
   font-size: 1.4rem;
   padding: 0.5rem;
-  /* border-bottom: 2px solid black; */
+ 
+  /* border-bottom: 2px solid black;  */
 }
 
 .admin-sidebar .active {
@@ -495,6 +544,15 @@ header .logout {
   header .logo a {
     font-size: 1.5rem;
   }
+
+
+}
+
+.home h1 {
+  font-size: --var(--font-size-extra-large);
+  top: 10%;
+  left: 35%;
+  transform: translate(-50%, -40%);
 }
 
 @media (max-width: 480px) {
@@ -520,50 +578,32 @@ header .logout {
   header nav a {
     font-size: 1rem;
   }
+
+  header nav {
+    gap: 1rem;
+    }
+    
+    header .logout {
+    padding: 4px;
+    }
+    
+    header nav a {
+    font-size: 1.2rem;
+    }
+    
+    header .logo a {
+    font-size: 1.5rem;
+    }
+
+  
+  .home h1 {
+    font-size: --var(--font-size-extra-large);
+    align-items: center;
+  }
+
+
 }
 
 
 
-header nav {
-gap: 1rem;
-}
 
-header .logout {
-padding: 4px;
-}
-
-header nav a {
-font-size: 1.2rem;
-}
-
-header .logo a {
-font-size: 1.5rem;
-}
-
-
-@media (max-width: 480px) {
-header {
-padding: 0.7rem;
-}
-
-header .logout {
-font-size: small;
-padding: 2px;
-}
-
-header .logo a {
-font-size: 1.2rem;
-}
-
-header nav {
-flex-direction: column;
-align-items: flex-start;
-gap: 0.5rem;
-}
-
-header nav a {
-font-size: 1rem;
-}
-}
-
-   
