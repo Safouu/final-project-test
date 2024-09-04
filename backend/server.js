@@ -6,18 +6,11 @@ import { Contact } from "./contactModel.js";
 import { Reservation } from "./reservationModel.js";
 import cors from "cors";
 import dotenv from "dotenv";
-
-
-
 dotenv.config();
-
 const app = express();
-
-
-app.use(express.json({ limit: '10mb' })); 
-app.use(express.urlencoded({ limit: '10mb', extended: true })); 
+app.use(express.json({ limit: '10mb' }));
+app.use(express.urlencoded({ limit: '10mb', extended: true }));
 app.use(cors());
-
 app.get("/objects", async (req, res) => {
   try {
     await connect();
@@ -28,37 +21,29 @@ app.get("/objects", async (req, res) => {
     res.status(500).json({ error: 'Failed to fetch objects' });
   }
 });
-
-
 app.post("/login", async (req, res) => {
   try {
     await connect();
     const { email, password } = req.body;
-
     const user = await Register.findOne({ email, password });
-
     if (!user) {
       return res.status(401).json({ message: "Invalid email or password" });
     }
-
     const adminEmails = [process.env.ADMIN1, process.env.ADMIN2, process.env.ADMIN3];
     const isAdmin = adminEmails.includes(email);
     const isUser = !isAdmin;
-    
-    res.status(200).json({ 
-      message: "Login successful", 
-      isAdmin, 
-      isUser, 
-      userId: user._id, 
-      firstName: user.firstName 
+    res.status(200).json({
+      message: "Login successful",
+      isAdmin,
+      isUser,
+      userId: user._id,
+      firstName: user.firstName
     });
   } catch (e) {
     console.error('Error during login:', e);
     res.status(500).json({ error: 'Login failed' });
   }
 });
-
-
 app.get('/user/:id', async (req, res) => {
   try {
     const userId = req.params.id;
@@ -73,27 +58,20 @@ app.get('/user/:id', async (req, res) => {
     res.status(500).json({ error: 'Failed to fetch user data' });
   }
 });
-
-
 // app.get('/user/:email', async (req, res) => {
 //   try {
 //     await connect();
 //     const { email } = req.params;
 //     const user = await Register.findOne({ email });
-
 //     if (!user) {
 //       return res.status(404).json({ error: 'User not found' });
 //     }
-
 //     res.status(200).json(user);
 //   } catch (e) {
 //     console.error('Error fetching user:', e);
 //     res.status(500).json({ error: 'Failed to fetch user' });
 //   }
 // });
-
-
-
 app.post("/register", async (req, res) => {
   try {
     await connect();
@@ -106,7 +84,6 @@ app.post("/register", async (req, res) => {
     res.status(500).json({ error: 'Registration failed' });
   }
 });
-
 app.get("/contacts", async (req, res) => {
   try {
     await connect();
@@ -117,7 +94,6 @@ app.get("/contacts", async (req, res) => {
     res.status(500).json({ error: 'Failed to fetch contacts' });
   }
 });
-
 app.post("/contact", async (req, res) => {
   try {
     await connect();
@@ -130,8 +106,6 @@ app.post("/contact", async (req, res) => {
     res.status(500).json({ error: 'Failed to save contact message' });
   }
 });
-
-
 app.delete("/contact/:id", async (req, res) => {
   const id = req.params.id;
   try {
@@ -143,7 +117,6 @@ app.delete("/contact/:id", async (req, res) => {
     res.status(500).json({ error: 'Failed to delete reservation' });
   }
 })
-
 app.delete("/contacts", async (req, res) => {
   try {
     await connect();
@@ -154,10 +127,6 @@ app.delete("/contacts", async (req, res) => {
     res.status(500).json({ error: 'Failed to delete contacts' });
   }
 })
-
-
-
-
 app.post("/objects", async (req, res) => {
   try {
     await connect();
@@ -170,7 +139,6 @@ app.post("/objects", async (req, res) => {
     res.status(500).json({ error: 'Failed to save object' });
   }
 });
-
 app.post("/reservation", async (req, res) => {
   try {
     await connect();
@@ -190,7 +158,6 @@ app.post("/reservation", async (req, res) => {
       advancePayment,
       selectedObject
     } = req.body;
-
     const newReservation = new Reservation({
       firstName,
       lastName,
@@ -207,11 +174,7 @@ app.post("/reservation", async (req, res) => {
       advancePayment,
       selectedObject
     });
-
-    
     await newReservation.save();
-
-    
     res.status(201).json({ message: "Reservation created successfully!", reservation: newReservation });
   } catch (error) {
     console.error("Error creating reservation:", error);
@@ -221,7 +184,7 @@ app.post("/reservation", async (req, res) => {
 
 
 
-app.get("/reservation", async (req, res) => {
+app.get('/reservation', async (req, res) => {
   try {
     await connect();
     const reservations = await Reservation.find().populate('selectedObject', 'name');
@@ -233,7 +196,7 @@ app.get("/reservation", async (req, res) => {
 });app.patch("/reservation/:id", async (req, res) => {
   const id = req.params.id;
   try {
-    await connect(); 
+    await connect();
     const reservation = await Reservation.findByIdAndUpdate(id, req.body, { new: true });
     if (reservation) {
       res.status(200).json(reservation);
@@ -246,21 +209,21 @@ app.get("/reservation", async (req, res) => {
   }
 });
 
-app.patch("/reservation/:id", async (req, res) => {
-  const id = req.params.id;
-  try {
-    await connect();
-    const reservation = await Reservation.findByIdAndUpdate(id, req.body , { new: true });
-    if (reservation) {
-      res.status(200).json(reservation);
-    } else {
-      res.status(404).json({ error: 'Reservation not found' });
-    }
-  } catch (error) {
-    console.error('Error updating reservation:', error);
-    res.status(500).json({ error: 'Failed to update reservation' });
-  }
-})
+// app.patch("/reservation/:id", async (req, res) => {
+//   const id = req.params.id;
+//   try {
+//     await connect();
+//     const reservation = await Reservation.findByIdAndUpdate(id, req.body , { new: true });
+//     if (reservation) {
+//       res.status(200).json(reservation);
+//     } else {
+//       res.status(404).json({ error: 'Reservation not found' });
+//     }
+//   } catch (error) {
+//     console.error('Error updating reservation:', error);
+//     res.status(500).json({ error: 'Failed to update reservation' });
+//   }
+// })
 
 app.delete("/reservation/:id", async (req, res) => {
   const id = req.params.id;
@@ -273,9 +236,6 @@ app.delete("/reservation/:id", async (req, res) => {
     res.status(500).json({ error: 'Failed to delete reservation' });
   }
 })
-
-
-
 
 app.get("/objects/:id", async (req, res) => {
   const id = req.params.id;
@@ -292,24 +252,22 @@ app.get("/objects/:id", async (req, res) => {
     res.status(500).json({ error: 'Failed to fetch object' });
   }
 });
-
 app.delete("/objects/:id", async (req, res) => {
   const id = req.params.id;
   try {
     await connect();
     await Object.findByIdAndDelete(id);
-    res.status(204).send(); 
+    res.status(204).send();
   } catch (e) {
     console.error('Error deleting object:', e);
     res.status(500).json({ error: 'Failed to delete object' });
   }
 });
-
 app.patch("/objects/:id", async (req, res) => {
   const id = req.params.id;
   try {
     await connect();
-    const object = await Object.findByIdAndUpdate(id, req.body, { new: true }); 
+    const object = await Object.findByIdAndUpdate(id, req.body, { new: true });
     if (object) {
       res.status(200).json(object);
     } else {
@@ -320,7 +278,6 @@ app.patch("/objects/:id", async (req, res) => {
     res.status(500).json({ error: 'Failed to update object' });
   }
 });
-
 // app.post("/add-guest", async (req, res) => {
 //   try {
 //     await connect();
@@ -333,7 +290,6 @@ app.patch("/objects/:id", async (req, res) => {
 //     res.status(500).json({ error: 'Failed to save reservation' });
 //   }
 // })
-
 app.listen(process.env.PORT, () => {
   console.log(
     `Server is listening on http://localhost:${process.env.PORT}`
