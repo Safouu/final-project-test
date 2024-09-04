@@ -3,10 +3,14 @@ import { useLocation } from "react-router-dom";
 import { DateRange } from 'react-date-range';
 import 'react-date-range/dist/styles.css';
 import 'react-date-range/dist/theme/default.css';
+import axios from 'axios'; 
+import { useAuth } from "../context/AuthContext";
 
 function Booking() {
+  const { isLoggedIn, userId } = useAuth();
   const location = useLocation();
   const { object } = location.state || {};
+  const storedFirstName = localStorage.getItem('firstName');
 
   const [dateRange, setDateRange] = useState([
     {
@@ -24,6 +28,9 @@ function Booking() {
     days: 0,
     totalPrice: "",
     advancePayment: "",
+    selectedObject: object ? object.name : "",
+    userId: userId,
+    storedFirstName: storedFirstName
   });
 
   const [isBookingValid, setIsBookingValid] = useState(false);
@@ -80,9 +87,32 @@ function Booking() {
     });
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log(formData);
+
+    
+    if (!isLoggedIn || !userId || !object) {
+      alert('You must be logged in and have selected an object.');
+      return;
+    }
+
+    try {
+      const response = await axios.post('http://localhost:3232/genreservation', {
+        user: userId, 
+        apartment: object._id, 
+        startDate: dateRange[0].startDate.toISOString(),
+        endDate: dateRange[0].endDate.toISOString(),
+        totalPrice: formData.totalPrice,
+        advancePayment: formData.advancePayment,
+      });
+
+      if (response.status === 201) {
+        alert('Reservation created successfully!');
+      }
+    } catch (error) {
+      console.error('Error creating reservation:', error);
+      alert(`Failed to create reservation: ${error.response?.data?.error || 'Unknown error'}`);
+    }
   };
 
   return (

@@ -4,6 +4,7 @@ import { connect } from "./db.js";
 import { Register } from "./RegisterModel.js";
 import { Contact } from "./contactModel.js";
 import { Reservation } from "./reservationModel.js";
+import { GenReservation } from "./genralResModel.js";
 import cors from "cors";
 import dotenv from "dotenv";
 
@@ -28,6 +29,46 @@ app.get("/objects", async (req, res) => {
     res.status(500).json({ error: 'Failed to fetch objects' });
   }
 });
+app.post("/genreservation", async (req, res) => {
+  try {
+    await connect(); 
+   
+    const {
+      user,
+      apartment,
+      startDate,
+      endDate,
+      totalPrice,
+      advancePayment,
+    } = req.body;
+
+    if (!user || !apartment || !startDate || !endDate || !totalPrice || !advancePayment) {
+      return res.status(400).json({ error: "Missing required fields" });
+    }
+
+    const newGenReservation = new GenReservation({
+      user,
+      apartment,
+      startDate: new Date(startDate),
+      endDate: new Date(endDate),
+      totalPrice,
+      advancePayment,
+    });
+
+    await newGenReservation.save();
+
+    res.status(201).json({
+      message: "Reservation created successfully!",
+      reservation: newGenReservation,
+    });
+  } catch (error) {
+    console.error("Error creating reservation:", error);
+    res.status(500).json({ error: "Failed to create reservation." });
+  }
+});
+
+
+
 
 
 app.post("/login", async (req, res) => {
