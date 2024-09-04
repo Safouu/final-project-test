@@ -55,14 +55,13 @@ const UserProfile = () => {
 
   return (
     <div>
-      <h1>User Profile</h1>
+      <h1>{user.firstName} Profile</h1>
       <p><strong>First Name:</strong> {user.firstName}</p>
       <p><strong>Last Name:</strong> {user.lastName}</p>
       <p><strong>Email:</strong> {user.email}</p>
       <p><strong>Address:</strong> {user.address}</p>
       <p><strong>City:</strong> {user.city}</p>
       <p><strong>Country:</strong> {user.country}</p>
-
     </div>
   );
 };

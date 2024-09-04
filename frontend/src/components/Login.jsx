@@ -28,7 +28,8 @@ const Login = () => {
         login({
           isAdmin: data.isAdmin,
           isUser: data.isUser,
-          userId: data.userId, 
+          userId: data.userId,
+          firstName: data.firstName,
         });
 
      

@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import { DateRange } from "react-date-range";
 import "react-date-range/dist/styles.css";
 import "react-date-range/dist/theme/default.css";
+import { Reservation } from "../../../../backend/reservationModel";
 
 const AddGuest = ({ reservationToEdit, onClose }) => {
   const [formData, setFormData] = useState({
@@ -125,7 +126,7 @@ const AddGuest = ({ reservationToEdit, onClose }) => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
+    console.log(formData.selectedObject)
     const method = reservationToEdit ? "PATCH" : "POST";
     const url = reservationToEdit
       ? `http://localhost:3232/reservation/${reservationToEdit._id}`
