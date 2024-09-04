@@ -162,7 +162,7 @@ const AddGuest = ({ reservationToEdit, onClose }) => {
   return (
     <div className="add-guest">
       <h2>{reservationToEdit ? "Edit Reservation" : "New Reservation"}</h2>
-
+      <form onSubmit={handleSubmit}>
       <div>
         <label>Select Object:</label>
         <select
@@ -182,7 +182,6 @@ const AddGuest = ({ reservationToEdit, onClose }) => {
         </select>
       </div>
 
-      <form onSubmit={handleSubmit}>
         <div>
           <label>First Name:</label>
           <input
@@ -227,7 +226,7 @@ const AddGuest = ({ reservationToEdit, onClose }) => {
           />
         </div>
 
-        <div className="calendar-section">
+        {/* <div className="calendar-section">
           <h3>Select Your Stay:</h3>
           <DateRange
             editableDateInputs={true}
@@ -238,13 +237,14 @@ const AddGuest = ({ reservationToEdit, onClose }) => {
             minDate={new Date()}
           />
           {errorMessage && <p style={{ color: "red" }}>{errorMessage}</p>}
-        </div>
+        </div> */}
 
-        <div className="people">
+        <div className="people-container">
+          <div className="people-group">
           <label>Adults:</label>
           <div className="input-group">
             <button type="button" onClick={() => handleDecrement("people")}>
-              -
+              +
             </button>
             <input
               type="number"
@@ -253,7 +253,7 @@ const AddGuest = ({ reservationToEdit, onClose }) => {
               readOnly
             />
             <button type="button" onClick={() => handleIncrement("people")}>
-              +
+              -
             </button>
           </div>
         </div>
@@ -262,7 +262,7 @@ const AddGuest = ({ reservationToEdit, onClose }) => {
           <label>Children:</label>
           <div className="input-group">
             <button type="button" onClick={() => handleDecrement("children")}>
-              -
+              +
             </button>
             <input
               type="number"
@@ -271,25 +271,25 @@ const AddGuest = ({ reservationToEdit, onClose }) => {
               readOnly
             />
             <button type="button" onClick={() => handleIncrement("children")}>
-              +
+              -
             </button>
           </div>
         </div>
-
+         
        
         <div>
           <label>Pets:</label>
           <div className="input-group">
             <button type="button" onClick={() => handleDecrement("pets")}>
-              -
+              +
             </button>
             <input type="number" name="pets" value={formData.pets} readOnly />
             <button type="button" onClick={() => handleIncrement("pets")}>
-              +
+              -
             </button>
           </div>
         </div>
-
+        </div>
         
         <div className="calculator">
           <h3>Price Calculator</h3>

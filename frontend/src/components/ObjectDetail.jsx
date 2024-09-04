@@ -28,6 +28,7 @@ const ObjectDetail = () => {
   
 
   return (
+    <div className='home'> 
     <div className='apart-details'>
   
       {object ? (
@@ -77,6 +78,7 @@ const ObjectDetail = () => {
       ) : (
         <p>Loading...</p>
       )}
+    </div>
     </div>
   );
 };

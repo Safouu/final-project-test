@@ -52,7 +52,7 @@ const Messages = () => {
   }
 
   return (
-    <div>
+    <div className="contact-message-container">
     <h1>Contact Messages</h1>
     <div className='object-message'>
      
@@ -63,7 +63,7 @@ const Messages = () => {
             <th>Name</th>
             <th>Message</th>
             <th>
-              <button onClick={() => handelDeleteAll(  ) }  >
+              <button  className="delete-all-button" onClick={() => handelDeleteAll(  ) }  >
                 delete all
               </button>
             </th>

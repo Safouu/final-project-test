@@ -47,7 +47,7 @@ const GuestList = () => {
   return (
     <div className="reservations-table">
       <h2>Guest List</h2>
-      <button style={{ background: 'green', color: 'white', cursor: 'pointer', padding: '10px', border:"none" }} onClick={handleAdd}>Add New Reservation</button>
+      <button onClick={handleAdd}>Add New Reservation</button>
       <table>
         <thead>
           <tr>
@@ -85,10 +85,10 @@ const GuestList = () => {
               <td>${reservation.advancePayment}</td>
               <td>{reservation.selectedObject?.name}</td>
               <td>
-                <button style={{ background: 'green', color: 'white', cursor: 'pointer', padding: '2px', border:"none" }}  onClick={() => handleEdit(reservation)}>Edit</button>
+                <button onClick={() => handleEdit(reservation)}>Edit</button>
               </td>
               <td>
-                <button style={{ background: 'red', color: 'white', cursor: 'pointer', padding: '2px', border:"none" }} onClick={() => handleDelete(reservation._id)}>Delete</button>
+                <button onClick={() => handleDelete(reservation._id)}>Delete</button>
               </td>
             </tr>
           ))}
