@@ -32,7 +32,6 @@ const Register = () => {
 
       if (response.ok) {
         setMessage("Registration successful!");
-        //Beispiel: ////////////////////////////////////////
         navigate('/login');
       } else {
         setMessage(data.message || "Registration failed!");
@@ -42,7 +41,6 @@ const Register = () => {
       setMessage("An error occurred. Please try again later.");
     }
 
-    // Felder zurücksetzen
     setFirstName("");
     setLastName("");
     setEmail("");

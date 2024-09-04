@@ -86,7 +86,7 @@ const AdminCalendar = () => {
     },
     onBeforeEventRender: args => {
       const resource = objects.find(o => o.id === args.data.resource);
-      const color = resource ? resource.color : "#93c47d"; // Default color
+      const color = resource ? resource.color : "#93c47d"; 
       args.data.backColor = color;
     },
     contextMenu: new DayPilot.Menu({
@@ -96,13 +96,10 @@ const AdminCalendar = () => {
           onClick: async args => {
             const modal = await DayPilot.Modal.confirm("Do you want to delete this event?");
             if (modal.canceled) return;
-          //  scheduler.events.remove(args.source);
-           // setEvents(prevEvents => prevEvents.filter(event => event.id !== args.source.id));
+         
            console.log("Deleted", args.source);
         
-           // Optionally, you can show a message to the user indicating the action was confirmed
-           //DayPilot.Modal.alert();
-    
+        
           }
         }
       ]

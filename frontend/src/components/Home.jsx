@@ -4,17 +4,20 @@ import Objects from './Objects';
 const Home = () => {
 return (
 <div className='home'>
-
-<div className='top'>
-
-<img src="./public/images/niceView.jpg" alt="Villa" />
-
-{/* <div className='top-text'>
-World Wide Vacation
-</div> */}
-
-</div>
-
+  <div className='top'>
+    <h1>Welcome to Dream Vocation</h1>
+   <video autoPlay loop muted>
+      <source src="./public/images/video.mp4" type="video/mp4" />
+    </video>
+    
+    </div>
+    <div className="video-background">
+     {/* <video autoPlay loop muted>
+      <source src="./public/images/blue-sky-mowe.mp4" type="video/mp4" />
+     
+    </video>  */}
+  </div>
+      
 <Objects/>
 
 </div>
@@ -22,4 +25,5 @@ World Wide Vacation
 };
 
 export default Home;
+
 

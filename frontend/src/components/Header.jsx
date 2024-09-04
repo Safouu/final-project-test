@@ -8,10 +8,11 @@ const Header = () => {
 
   return (
     <header className="header">
-      <div className="logo">
-        <NavLink to="/">LOGO</NavLink>
+       <div className="logo">
+        <a href="/">
+          <img src="./public/images/Dream .png" alt="Logo" className="logo-image" />
+        </a>
       </div>
-
       <nav>
         <NavLink to="/">Home</NavLink>
         <NavLink to="/contact">Contact</NavLink>

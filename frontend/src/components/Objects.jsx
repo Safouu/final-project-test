@@ -18,9 +18,7 @@ const Objects = () => {
         <NavLink to={`/object/${item._id}`} key={item._id}>
           <div className='object'>
             <img src={item.image} alt={item.name} />
-            {/* <img src={item.image1} />
-            <img src={item.image2} />
-            <img src={item.image3} /> */}
+           
           <div className='object-details'>
             <h1>{item.name}</h1>
             <h3>{(item.description).slice(0,30)}...</h3>
