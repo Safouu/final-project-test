@@ -14,17 +14,23 @@ const GuestList = () => {
   }, []);
   const fetchReservations = async () => {
     try {
-      const response = await fetch("http://localhost:3232/reservation");
+      const response = await fetch("http://localhost:3232/genReservation");
       const data = await response.json();
       setReservations(data);
+      console.log(data)
     } catch (error) {
       console.error("Error fetching reservations:", error);
     }
+    
   };
+
+
   const handleEdit = (reservation) => {
     setSelectedReservation(reservation);
     setIsAdding(false);
   };
+
+
   const handleDelete = async (id) => {
     try {
       await fetch(`http://localhost:3232/reservation/${id}`, {
@@ -35,15 +41,20 @@ const GuestList = () => {
       console.error("Error deleting reservation:", error);
     }
   }
+
+
   const handleAdd = () => {
     setSelectedReservation(null);
     setIsAdding(true);
   };
+
+
   const handleClose = () => {
     setSelectedReservation(null);
     setIsAdding(false);
     fetchReservations();
   };
+
   return (
     <div className="reservations-table">
       <h2>Guest List</h2>
@@ -71,19 +82,19 @@ const GuestList = () => {
         <tbody>
           {reservations.map((reservation) => (
             <tr key={reservation._id}>
-              <td>{reservation.firstName}</td>
-              <td>{reservation.lastName}</td>
-              <td>{reservation.email}</td>
-              <td>{reservation.phone}</td>
-              <td>{formatDate(reservation.checkin)}</td>
-              <td>{formatDate(reservation.checkout)}</td>
+              <td>{reservation.user.firstName}</td>
+              <td>{reservation.user.lastName}</td>
+              <td>{reservation.user.email}</td>
+              <td>{reservation.user.phone}</td>
+              <td>{formatDate(reservation.startDate)}</td>
+              <td>{formatDate(reservation.endDate)}</td>
               <td>{reservation.people}</td>
               <td>{reservation.children}</td>
               <td>{reservation.pets}</td>
-              <td>${reservation.pricePerDay}</td>
+              <td>${reservation.apartment.price}</td>
               <td>${reservation.totalPrice}</td>
               <td>${reservation.advancePayment}</td>
-              <td>{reservation.selectedObject?.name}</td>
+              <td>{reservation.apartment?.name}</td>
               <td>
                 <button onClick={() => handleEdit(reservation)}>Edit</button>
               </td>

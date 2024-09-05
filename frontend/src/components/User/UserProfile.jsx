@@ -4,6 +4,7 @@ import { useAuth } from '../../context/AuthContext';
 const UserProfile = () => {
   const { isLoggedIn, userId } = useAuth(); 
   const [user, setUser] = useState(null);
+  const [reservations, setReservations] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
@@ -16,7 +17,7 @@ const UserProfile = () => {
       }
 
       try {
-        const response = await fetch(`http://localhost:3232/genReservation/${userId}`, {
+        const userResponse = await fetch(`http://localhost:3232/userProfile/${userId}`, {
           method: 'GET',
           headers: {
             'Content-Type': 'application/json',
@@ -24,16 +25,29 @@ const UserProfile = () => {
           }
         });
 
-        if (!response.ok) {
+        if (!userResponse.ok) {
           throw new Error('Failed to fetch user data');
         }
 
-        const data = await response.json();
+        const userData = await userResponse.json();
 
-        setUser({ 
-          ...user, 
-          reservations: data 
+        const reservationResponse = await fetch(`http://localhost:3232/genReservation/${userId}`, {
+          method: 'GET',
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${localStorage.getItem('token')}`
+          }
         });
+
+        if (!reservationResponse.ok) {
+          throw new Error('Failed to fetch reservation data');
+        }
+
+        const reservationData = await reservationResponse.json();
+
+        setUser(userData);
+        setReservations(reservationData);
+
       } catch (err) {
         setError(err.message);
       } finally {
@@ -58,38 +72,36 @@ const UserProfile = () => {
 
   return (
     <div>
-      <h1>{user.firstName} Profile</h1>
+      <h1>{user.firstName}'s Profile</h1>
       <p><strong>First Name:</strong> {user.firstName}</p>
       <p><strong>Last Name:</strong> {user.lastName}</p>
-      <p><strong>Email:</strong> {user.email}</p>
+      {/* <p><strong>Email:</strong> {user.email}</p>
       <p><strong>Address:</strong> {user.address}</p>
       <p><strong>City:</strong> {user.city}</p>
-      <p><strong>Country:</strong> {user.country}</p>
+      <p><strong>Country:</strong> {user.country}</p> */}
   
       <h2>Reservations</h2>
       <ul>
-  {user.reservations && user.reservations.length > 0 ? (
-
-    user.reservations.map(reservation => (
-      
-      <li key={reservation._id}>
-        {reservation.apartment ? (
-          <>
-            <p><strong>Property:</strong> {reservation.apartment.name}</p>
-            <p><strong>Check-in Date:</strong> {new Date(reservation.startDate).toLocaleDateString()}</p>
-            <p><strong>Check-out Date:</strong> {new Date(reservation.endDate).toLocaleDateString()}</p>
-            <p><strong>Total Price:</strong> {reservation.totalPrice}</p>
-            <p><strong>Advance Payment:</strong> {reservation.advancePayment}</p>
-          </>
+        {reservations.length > 0 ? (
+          reservations.map(reservation => (
+            <li key={reservation._id}>
+              {reservation.apartment ? (
+                <>
+                  <p><strong>Property:</strong> {reservation.apartment.name}</p>
+                  <p><strong>Check-in Date:</strong> {new Date(reservation.startDate).toLocaleDateString()}</p>
+                  <p><strong>Check-out Date:</strong> {new Date(reservation.endDate).toLocaleDateString()}</p>
+                  <p><strong>Total Price:</strong> {reservation.totalPrice}</p>
+                  <p><strong>Advance Payment:</strong> {reservation.advancePayment}</p>
+                </>
+              ) : (
+                <p>No apartment data available for this reservation</p>
+              )}
+            </li>
+          ))
         ) : (
-          <p>No apartment data available for this reservation</p>
+          <p>No reservations found</p>
         )}
-      </li>
-    ))
-  ) : (
-    <p>No reservations found</p>
-  )}
-</ul>
+      </ul>
 
     </div>
   );
