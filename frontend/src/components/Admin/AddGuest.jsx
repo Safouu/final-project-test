@@ -2,7 +2,6 @@ import { useState, useEffect } from "react";
 import { DateRange } from "react-date-range";
 import "react-date-range/dist/styles.css";
 import "react-date-range/dist/theme/default.css";
-import { Reservation } from "../../../../backend/reservationModel";
 
 const AddGuest = ({ reservationToEdit, onClose }) => {
   const [formData, setFormData] = useState({
@@ -226,7 +225,7 @@ const AddGuest = ({ reservationToEdit, onClose }) => {
           />
         </div>
 
-        {/* <div className="calendar-section">
+        <div className="calendar-section">
           <h3>Select Your Stay:</h3>
           <DateRange
             editableDateInputs={true}
@@ -237,7 +236,7 @@ const AddGuest = ({ reservationToEdit, onClose }) => {
             minDate={new Date()}
           />
           {errorMessage && <p style={{ color: "red" }}>{errorMessage}</p>}
-        </div> */}
+        </div>
 
         <div className="people-container">
           <div className="people-group">

@@ -16,7 +16,7 @@ const UserProfile = () => {
       }
 
       try {
-        const response = await fetch(`http://localhost:3232/user/${userId}`, {
+        const response = await fetch(`http://localhost:3232/userProfile/${userId}`, {
           method: 'GET',
           headers: {
             'Content-Type': 'application/json',
