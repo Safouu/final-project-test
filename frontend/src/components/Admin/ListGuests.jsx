@@ -91,7 +91,7 @@ const GuestList = () => {
               <td>{reservation.people}</td>
               <td>{reservation.children}</td>
               <td>{reservation.pets}</td>
-              <td>${reservation.apartment.price}</td>
+              <td>{reservation.apartment?.price}</td>
               <td>${reservation.totalPrice}</td>
               <td>${reservation.advancePayment}</td>
               <td>{reservation.apartment?.name}</td>

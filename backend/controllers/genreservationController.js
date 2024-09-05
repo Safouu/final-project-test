@@ -70,3 +70,32 @@ export const getAllGenReservations = async (req, res) => {
     res.status(500).json({ error: 'Failed to fetch reservations' });
   }
 };
+
+//delete Guest
+export const deleteSingleGuest = async (req, res) => {
+  const id = req.params.id;
+  try {
+    await connect();
+    await GenReservation.findByIdAndDelete(id);
+    res.status(204).send();
+  } catch (e) {
+    console.error('Error deleting Guest:', e);
+    res.status(500).json({ error: 'Failed to delete Guest' });
+  }
+};
+
+export const updateSingleGuest = async (req, res) => {
+  const id = req.params.id;
+  try {
+    await connect();
+    const updatedGuest = await GenReservation.findByIdAndUpdate(id, req.body, { new: true });
+    if (updatedGuest) {
+      res.status(200).json(updatedGuest);
+    } else {
+      res.status(404).json({ error: 'GenReservation not found' });
+    }
+  } catch (e) {
+    console.error('Error updating GenReservation:', e);
+    res.status(500).json({ error: 'Failed to update GenReservation' });
+  }
+};
