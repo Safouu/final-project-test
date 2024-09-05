@@ -14,7 +14,7 @@ const ObjectDetail = () => {
       .then((data) => {
         setObject(data);
         setSelectedImage(data.image); 
-        // console.log('Fetched object:', data);
+        /// console.log('Fetched object:', data);
         // console.log('Image URL:', data.image);
       })
       .catch((error) => {
@@ -37,7 +37,7 @@ const ObjectDetail = () => {
     });
     setSelectedImage(clickedImage); // The main image is updated with the clicked image
   };
-  
+
 
   const handleBooking = () => {
     if (!object) return;
