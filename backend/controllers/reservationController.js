@@ -1,5 +1,5 @@
-import { connect } from "./db.js";
-import { Reservation } from './reservationModel.js';
+import { connect } from "../db.js";
+import { Reservation } from '../models/reservationModel.js';
 
 
 

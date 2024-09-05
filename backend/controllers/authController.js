@@ -1,6 +1,6 @@
-import { Register } from './RegisterModel.js';
+import { Register } from '../models/RegisterModel.js';
 import dotenv from 'dotenv';
-import { connect } from "./db.js";
+import { connect } from "../db.js";
 
 dotenv.config();
 

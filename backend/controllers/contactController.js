@@ -1,5 +1,5 @@
-import { connect } from "./db.js";
-import { Contact } from './contactModel.js';
+import { connect } from "../db.js";
+import { Contact } from '../models/contactModel.js';
 
 export const getContacts = async (req, res) => {
     try {

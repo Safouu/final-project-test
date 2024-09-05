@@ -1,5 +1,5 @@
-import { Object } from './objectModel.js';
-import { connect } from "./db.js";
+import { Object } from '../models/objectModel.js';
+import { connect } from "../db.js";
 
 export const getObjects = async (req, res) => {
     try {

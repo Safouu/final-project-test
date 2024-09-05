@@ -1,5 +1,5 @@
-import { connect } from "./db.js";
-import { GenReservation } from "./genralResModel.js";
+import { connect } from "../db.js";
+import { GenReservation } from "../models/genralResModel.js";
 
 export const genReservation = async (req, res) => {
   try {

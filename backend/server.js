@@ -1,11 +1,11 @@
 import express from "express";
 import cors from "cors";
 import dotenv from "dotenv";
-import { loginUser, registerUser, UserProfile } from './authController.js';
-import { getObjects, postObject, getSingleObject, deleteSingleObject, updateSingleObject } from './objectController.js';
-import { getContacts, deleteContacts, deleteSingleContact, PostContact } from './contactController.js';
-import { genReservation } from './genreservationController.js';
-import { postReservation,getReservation, deleteReservation, updateReservation } from './reservationController.js';
+import { loginUser, registerUser, UserProfile } from './controllers/authController.js';
+import { getObjects, postObject, getSingleObject, deleteSingleObject, updateSingleObject } from './controllers/objectController.js';
+import { getContacts, deleteContacts, deleteSingleContact, PostContact } from './controllers/contactController.js';
+import { genReservation } from './controllers/genreservationController.js';
+import { postReservation,getReservation, deleteReservation, updateReservation } from './controllers/reservationController.js';
 
 dotenv.config();
 const app = express();
