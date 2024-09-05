@@ -11,7 +11,7 @@ const Contact = () => {
     e.preventDefault();
 
     try {
-      const response = await fetch('http://localhost:3232/contact', {
+      const response = await fetch('http://localhost:3232/contacts', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

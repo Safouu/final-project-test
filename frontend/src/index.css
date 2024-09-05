@@ -162,6 +162,7 @@ z-index: 1;
 border-radius: 10px;
 opacity: 0.5 ;
 box-shadow: inset 2px 5px 20px var(--secondary-color);
+color: black;
 }
 
 .contact-form {
@@ -169,13 +170,14 @@ box-shadow: inset 2px 5px 20px var(--secondary-color);
   flex-direction: column;
   align-items: center;
   gap: 20px;
+  color: black;
 }
 
 .contact-form input {
 width: 100%;
 padding: 5px;
 background-color: var(--color-white);
-color: var(--color-white);
+color: black;
 font-size: var(--font-size-small);
 border-radius: 5px;
 border: 1px solid #ccc;

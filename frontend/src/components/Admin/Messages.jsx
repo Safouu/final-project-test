@@ -24,7 +24,7 @@ const Messages = () => {
 
   const handelDelete = async (id) => {
     try {
-      const response = await fetch(`http://localhost:3232/contact/${id}`, {
+      const response = await fetch(`http://localhost:3232/contacts/${id}`, {
         method: 'DELETE',
       });
       if (!response.ok) {
