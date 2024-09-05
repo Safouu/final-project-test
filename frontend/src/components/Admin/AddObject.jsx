@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import Map from './Map';
 
 const AddObject = () => {
   const [name, setName] = useState('');
@@ -18,6 +19,9 @@ const AddObject = () => {
   const [image4Preview, setImage4Preview] = useState('');
   const [image5Preview, setImage5Preview] = useState('');
   const [image6Preview, setImage6Preview] = useState('');
+  const [latitude, setLatitude] = useState('');
+  const [longitude, setLongitude] = useState('');
+  const [showMap, setShowMap] = useState(false);
 
   const handleInputChange = (e, setImageFunction, setImagePreviewFunction) => {
     const value = e.target.value;
@@ -65,10 +69,18 @@ const AddObject = () => {
     setImage1('');
     setImage2('');
     setImage3('');
+    setImage4('');
+    setImage5('');
+    setImage6('');
     setImagePreview('');
     setImage1Preview('');
     setImage2Preview('');
     setImage3Preview('');
+    setImage4Preview('');
+    setImage5Preview('');
+    setImage6Preview('');
+    setLatitude('');
+    setLongitude('');
   };
 
   return (
@@ -256,8 +268,27 @@ const AddObject = () => {
           </div>
 
         )}
+            <label>Latitude</label>
+        <input
+          type="text"
+          placeholder="Latitude"
+          value={latitude}
+          onChange={(e) => setLatitude(e.target.value)}
+          required
+        />
+        <label>Longitude</label>
+        <input
+          type="text"
+          placeholder="Longitude"
+          value={longitude}
+          onChange={(e) => setLongitude(e.target.value)}
+          required
+        />
+        
 
         <button type="submit">Add</button>
+
+        {showMap && <Map latitude={latitude} longitude={longitude} />}s
       </form>
     </div>
   );

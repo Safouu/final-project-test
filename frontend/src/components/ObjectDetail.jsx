@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
-//import { LoadScript, GoogleMap, Marker } from '@react-google-maps/api';
+// import { LoadScript, GoogleMap, Marker } from '@react-google-maps/api';
 
 const ObjectDetail = () => {
   const { id } = useParams();
@@ -43,6 +43,19 @@ const ObjectDetail = () => {
     if (!object) return;
     navigate('/booking', { state: { object } });
   };
+
+
+  //  // Map settings
+  //  const containerStyle = {
+  //   width: '100%',
+  //   height: '400px',
+  //   marginTop: '20px'
+  // };
+
+  // const center = {
+  //   lat: object?.latitude || 0,
+  //   lng: object?.longitude || 0,
+  // };
   
 
   return (
@@ -90,18 +103,17 @@ const ObjectDetail = () => {
               <p>{object.price} $</p>
             </div>
 
-          
-
-  {/* Google Maps Karte
-          <LoadScript googleMapsApiKey="YOUR_GOOGLE_MAPS_API_KEY">
-              <GoogleMap
-                mapContainerStyle={containerStyle}
-                center={center}
-                zoom={12}
-              >
-                <Marker position={center} />
-              </GoogleMap>
-            </LoadScript> */}
+        
+           {/* Google Maps Embed */}
+            <div className='map-container' style={{ marginTop: '20px' }}>
+                <iframe
+                  width="600"
+                  height="450"
+                  style={{ border: 0 }}
+                  loading="lazy"
+                  allowFullScreen
+                  src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d1460.489044464581!2d16.00004251108997!3d43.4961082373452!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x1335176cb9f0b42f%3A0xf0579569aa04f80e!2sVilla%20Indigo!5e0!3m2!1sen!2sus!4v1631909042232!5m2!1sen!2sus" ></iframe>
+              </div>
 
             <button className="booking-button" onClick={handleBooking}>
               Book Now
