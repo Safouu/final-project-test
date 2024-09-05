@@ -243,7 +243,7 @@ const AddGuest = ({ reservationToEdit, onClose }) => {
           <label>Adults:</label>
           <div className="input-group">
             <button type="button" onClick={() => handleDecrement("people")}>
-              +
+              -
             </button>
             <input
               type="number"
@@ -252,7 +252,7 @@ const AddGuest = ({ reservationToEdit, onClose }) => {
               readOnly
             />
             <button type="button" onClick={() => handleIncrement("people")}>
-              -
+              +
             </button>
           </div>
         </div>
@@ -261,7 +261,7 @@ const AddGuest = ({ reservationToEdit, onClose }) => {
           <label>Children:</label>
           <div className="input-group">
             <button type="button" onClick={() => handleDecrement("children")}>
-              +
+              -
             </button>
             <input
               type="number"
@@ -270,7 +270,7 @@ const AddGuest = ({ reservationToEdit, onClose }) => {
               readOnly
             />
             <button type="button" onClick={() => handleIncrement("children")}>
-              -
+              +
             </button>
           </div>
         </div>
@@ -280,11 +280,11 @@ const AddGuest = ({ reservationToEdit, onClose }) => {
           <label>Pets:</label>
           <div className="input-group">
             <button type="button" onClick={() => handleDecrement("pets")}>
-              +
+              -
             </button>
             <input type="number" name="pets" value={formData.pets} readOnly />
             <button type="button" onClick={() => handleIncrement("pets")}>
-              -
+              +
             </button>
           </div>
         </div>
