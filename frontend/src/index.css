@@ -510,6 +510,7 @@ border: 1px solid var(--secondary-color);
   justify-content: center;
   gap: 80px;
   padding: 1rem;
+  position: fixed;
   
 }
 
