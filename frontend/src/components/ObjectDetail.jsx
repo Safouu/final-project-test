@@ -6,12 +6,14 @@ const ObjectDetail = () => {
   const { id } = useParams();
   const navigate = useNavigate();
   const [object, setObject] = useState(null);
+  const [selectedImage, setSelectedImage] = useState('');
 
   useEffect(() => {
     fetch(`http://localhost:3232/objects/${id}`)
       .then((res) => res.json())
       .then((data) => {
         setObject(data);
+        setSelectedImage(data.image); 
         // console.log('Fetched object:', data);
         // console.log('Image URL:', data.image);
       })
@@ -20,6 +22,22 @@ const ObjectDetail = () => {
         setObject({ error: 'Failed to load object details' });
       });
   }, [id]);
+
+ 
+  const handleImageClick = (imageKey) => {
+    if (!object) return;
+
+    // Get the clicked image's URL
+    const clickedImage = object[imageKey];
+
+    // Swap the main image with the clicked image
+    setObject({
+      ...object,
+      [imageKey]: selectedImage, // The clicked image's place is taken by the main image
+    });
+    setSelectedImage(clickedImage); // The main image is updated with the clicked image
+  };
+  
 
   const handleBooking = () => {
     if (!object) return;
@@ -39,16 +57,31 @@ const ObjectDetail = () => {
 
             <div className='single-top'>
                <div className='single-main-img'>
-                <img src={object.image} alt={object.name} />
+                <img src={selectedImage} alt={object.name} />
                </div>
 
+
                <div className='single-images'>
-                 <img src={object.image1} />
-                 <img src={object.image2} />
-                 <img src={object.image3} />
-               </div>
-               
-            </div>
+                  {/* Loop through image keys dynamically */}
+                  {['image1', 'image2', 'image3', 'image4', 'image5', 'image6'].map((key) => (
+                    <img
+                      key={key}
+                      src={object[key]}
+                      alt={`Thumbnail ${key}`}
+                      onClick={() => handleImageClick(key)}
+                    />
+                  ))}
+                </div>
+            
+               {/* <div className='single-images'>
+                  <img src={object.image1} onClick={() => handleImageClick(object.image1)} alt="" />
+                  <img src={object.image2} onClick={() => handleImageClick(object.image2)} alt="" />
+                  <img src={object.image3} onClick={() => handleImageClick(object.image3)} alt="" />
+                  <img src={object.image4} onClick={() => handleImageClick(object.image4)} alt="" />
+                  <img src={object.image5} onClick={() => handleImageClick(object.image5)} alt="" />
+                  <img src={object.image6} onClick={() => handleImageClick(object.image6)} alt="" />
+                </div> */}
+              </div>
 
 
             <div className='single-description'>

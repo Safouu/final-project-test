@@ -25,6 +25,15 @@ const ObjectSchema = new mongoose.Schema({
     image3: {
       type: String,
     },
+    image4: {
+      type: String,
+    },
+    image5: {
+      type: String,
+    },
+    image6: {
+      type: String,
+    }
 
   });
   
