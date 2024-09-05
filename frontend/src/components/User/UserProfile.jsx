@@ -16,11 +16,10 @@ const UserProfile = () => {
       }
 
       try {
-        const response = await fetch(`http://localhost:3232/userProfile/${userId}`, {
+        const response = await fetch(`http://localhost:3232/genReservation/${userId}`, {
           method: 'GET',
           headers: {
             'Content-Type': 'application/json',
-   
             'Authorization': `Bearer ${localStorage.getItem('token')}`
           }
         });
@@ -30,7 +29,11 @@ const UserProfile = () => {
         }
 
         const data = await response.json();
-        setUser(data);
+
+        setUser({ 
+          ...user, 
+          reservations: data 
+        });
       } catch (err) {
         setError(err.message);
       } finally {
@@ -62,6 +65,32 @@ const UserProfile = () => {
       <p><strong>Address:</strong> {user.address}</p>
       <p><strong>City:</strong> {user.city}</p>
       <p><strong>Country:</strong> {user.country}</p>
+  
+      <h2>Reservations</h2>
+      <ul>
+  {user.reservations && user.reservations.length > 0 ? (
+
+    user.reservations.map(reservation => (
+      
+      <li key={reservation._id}>
+        {reservation.apartment ? (
+          <>
+            <p><strong>Property:</strong> {reservation.apartment.name}</p>
+            <p><strong>Check-in Date:</strong> {new Date(reservation.startDate).toLocaleDateString()}</p>
+            <p><strong>Check-out Date:</strong> {new Date(reservation.endDate).toLocaleDateString()}</p>
+            <p><strong>Total Price:</strong> {reservation.totalPrice}</p>
+            <p><strong>Advance Payment:</strong> {reservation.advancePayment}</p>
+          </>
+        ) : (
+          <p>No apartment data available for this reservation</p>
+        )}
+      </li>
+    ))
+  ) : (
+    <p>No reservations found</p>
+  )}
+</ul>
+
     </div>
   );
 };

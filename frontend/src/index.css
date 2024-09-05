@@ -255,6 +255,18 @@ border: 1px solid var(--secondary-color);
   opacity: 0.8;
 }
 
+/* .home .top h1 {
+  position: absolute;
+  top: 15rem;
+  left: 48%;
+  color: var(--secondary-color);
+  font-size: 10rem;
+  transform: translate(-80%, -60%);
+  z-index: 1;
+  opacity: 0.8;
+} */
+
+
 .home .top video {
   width: 100vw;
   height: 500px;

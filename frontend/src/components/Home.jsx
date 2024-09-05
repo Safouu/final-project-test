@@ -6,6 +6,7 @@ return (
 <div className='home'>
   <div className='top'>
     <h1>Your Dream Vocation</h1>
+    {/* <h1>PAUSE</h1> */}
    <video autoPlay loop muted>
       <source src="./public/images/video.mp4" type="video/mp4" />
     </video>

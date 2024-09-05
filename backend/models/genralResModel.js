@@ -3,12 +3,12 @@ import mongoose from "mongoose";
 const genralResSchema = new mongoose.Schema({
   user: {
     type: mongoose.Schema.Types.ObjectId,
-    ref: "Register",
+    ref: "Register", 
     required: true,
   },
   apartment: {
     type: mongoose.Schema.Types.ObjectId,
-    ref: "Object",
+    ref: "Object", 
     required: true,
   },
   startDate: {
@@ -28,5 +28,6 @@ const genralResSchema = new mongoose.Schema({
     required: true,
   },
 });
+
 
 export const GenReservation = mongoose.model("GenReservation", genralResSchema);
