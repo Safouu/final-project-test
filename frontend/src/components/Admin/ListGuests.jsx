@@ -1,53 +1,55 @@
 import { useState, useEffect } from "react";
 import AddGuest from "./AddGuest";
+
 const formatDate = (dateString) => {
   const options = { year: 'numeric', month: '2-digit', day: '2-digit' };
   const date = new Date(dateString);
   return date.toLocaleDateString(undefined, options);
 };
+
 const GuestList = () => {
   const [reservations, setReservations] = useState([]);
   const [selectedReservation, setSelectedReservation] = useState(null);
   const [isAdding, setIsAdding] = useState(false);
+
   useEffect(() => {
     fetchReservations();
   }, []);
+
   const fetchReservations = async () => {
     try {
       const response = await fetch("http://localhost:3232/genReservation");
+      if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
       const data = await response.json();
       setReservations(data);
-      console.log(data)
     } catch (error) {
       console.error("Error fetching reservations:", error);
+      // Optionally show an error message to the user
     }
-    
   };
-
 
   const handleEdit = (reservation) => {
     setSelectedReservation(reservation);
     setIsAdding(false);
   };
 
-
   const handleDelete = async (id) => {
     try {
-      await fetch(`http://localhost:3232/genReservation/${id}`, {
+      const response = await fetch(`http://localhost:3232/genReservation/${id}`, {
         method: "DELETE",
       });
+      if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
       fetchReservations();
     } catch (error) {
       console.error("Error deleting reservation:", error);
+      // Optionally show an error message to the user
     }
-  }
-
+  };
 
   const handleAdd = () => {
     setSelectedReservation(null);
     setIsAdding(true);
   };
-
 
   const handleClose = () => {
     setSelectedReservation(null);
@@ -82,19 +84,19 @@ const GuestList = () => {
         <tbody>
           {reservations.map((reservation) => (
             <tr key={reservation._id}>
-              <td>{reservation.user.firstName}</td>
-              <td>{reservation.user.lastName}</td>
-              <td>{reservation.user.email}</td>
-              <td>{reservation.user.phone}</td>
+              <td>{reservation.user?.firstName || 'N/A'}</td>
+              <td>{reservation.user?.lastName || 'N/A'}</td>
+              <td>{reservation.user?.email || 'N/A'}</td>
+              <td>{reservation.user?.phone || 'N/A'}</td>
               <td>{formatDate(reservation.startDate)}</td>
               <td>{formatDate(reservation.endDate)}</td>
               <td>{reservation.people}</td>
               <td>{reservation.children}</td>
               <td>{reservation.pets}</td>
-              <td>{reservation.apartment?.price}</td>
-              <td>${reservation.totalPrice}</td>
-              <td>${reservation.advancePayment}</td>
-              <td>{reservation.apartment?.name}</td>
+              <td>{reservation.apartment?.price || 'N/A'}</td>
+              <td>${reservation.totalPrice || '0.00'}</td>
+              <td>${reservation.advancePayment || '0.00'}</td>
+              <td>{reservation.apartment?.name || 'N/A'}</td>
               <td>
                 <button onClick={() => handleEdit(reservation)}>Edit</button>
               </td>
@@ -114,4 +116,5 @@ const GuestList = () => {
     </div>
   );
 };
+
 export default GuestList;
