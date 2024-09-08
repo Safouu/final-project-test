@@ -33,7 +33,7 @@ const GuestList = () => {
 
   const handleDelete = async (id) => {
     try {
-      await fetch(`http://localhost:3232/reservation/${id}`, {
+      await fetch(`http://localhost:3232/genReservation/${id}`, {
         method: "DELETE",
       });
       fetchReservations();
