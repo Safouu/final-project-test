@@ -9,7 +9,7 @@ const AddGuest = ({ reservationToEdit, onClose }) => {
     lastName: "",
     email: "",
     phone: "",
-    selectedObject: "", 
+    selectedObject: "",
     checkin: "",
     checkout: "",
     people: 0,
@@ -55,15 +55,25 @@ const AddGuest = ({ reservationToEdit, onClose }) => {
   useEffect(() => {
     if (reservationToEdit) {
       setFormData({
-        ...reservationToEdit,
-        checkin: reservationToEdit.checkin,
-        checkout: reservationToEdit.checkout,
-        days: Math.ceil((new Date(reservationToEdit.checkout) - new Date(reservationToEdit.checkin)) / (1000 * 60 * 60 * 24)),
+        firstName: reservationToEdit.firstName || "",
+        lastName: reservationToEdit.lastName || "",
+        email: reservationToEdit.email || "",
+        phone: reservationToEdit.phone || "",
+        selectedObject: reservationToEdit.selectedObject || "",
+        checkin: reservationToEdit.checkin || "",
+        checkout: reservationToEdit.checkout || "",
+        people: reservationToEdit.people || 0,
+        children: reservationToEdit.children || 0,
+        pets: reservationToEdit.pets || 0,
+        pricePerDay: reservationToEdit.pricePerDay || "",
+        days: reservationToEdit.days || 0,
+        totalPrice: reservationToEdit.totalPrice || "",
+        advancePayment: reservationToEdit.advancePayment || "",
       });
       setDateRange([
         {
-          startDate: new Date(reservationToEdit.checkin),
-          endDate: new Date(reservationToEdit.checkout),
+          startDate: new Date(reservationToEdit.checkin || new Date()),
+          endDate: new Date(reservationToEdit.checkout || new Date()),
           key: "selection",
         },
       ]);
@@ -83,7 +93,7 @@ const AddGuest = ({ reservationToEdit, onClose }) => {
       setErrorMessage("");
       setFormData((prevFormData) => ({
         ...prevFormData,
-        days: days,
+        days,
         checkin: start.toISOString().split("T")[0],
         checkout: end.toISOString().split("T")[0],
       }));
@@ -91,14 +101,16 @@ const AddGuest = ({ reservationToEdit, onClose }) => {
   }, [dateRange]);
 
   useEffect(() => {
-    const totalPrice = formData.pricePerDay * formData.days;
-    const advancePayment = totalPrice * 0.3;
+    if (formData.pricePerDay && formData.days) {
+      const totalPrice = formData.pricePerDay * formData.days;
+      const advancePayment = totalPrice * 0.3;
 
-    setFormData((prevFormData) => ({
-      ...prevFormData,
-      totalPrice: totalPrice.toFixed(2),
-      advancePayment: advancePayment.toFixed(2),
-    }));
+      setFormData((prevFormData) => ({
+        ...prevFormData,
+        totalPrice: totalPrice.toFixed(2),
+        advancePayment: advancePayment.toFixed(2),
+      }));
+    }
   }, [formData.pricePerDay, formData.days]);
 
   const handleChange = (e) => {
@@ -112,20 +124,19 @@ const AddGuest = ({ reservationToEdit, onClose }) => {
   const handleIncrement = (field) => {
     setFormData((prevFormData) => ({
       ...prevFormData,
-      [field]: formData[field] + 1,
+      [field]: prevFormData[field] + 1,
     }));
   };
 
   const handleDecrement = (field) => {
     setFormData((prevFormData) => ({
       ...prevFormData,
-      [field]: formData[field] > 0 ? formData[field] - 1 : 0,
+      [field]: prevFormData[field] > 0 ? prevFormData[field] - 1 : 0,
     }));
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log(formData.selectedObject)
     const method = reservationToEdit ? "PATCH" : "POST";
     const url = reservationToEdit
       ? `http://localhost:3232/reservation/${reservationToEdit._id}`
@@ -153,33 +164,28 @@ const AddGuest = ({ reservationToEdit, onClose }) => {
       setSubmitMessage("An error occurred during reservation.");
       console.error("Error during reservation:", error);
     }
-    console.log(formData.checkin, formData.checkout);
   };
-
-  
 
   return (
     <div className="add-guest">
       <h2>{reservationToEdit ? "Edit Reservation" : "New Reservation"}</h2>
       <form onSubmit={handleSubmit}>
-      <div>
-        <label>Select Object:</label>
-        <select
-          name="selectedObject"
-          value={formData.selectedObject}
-          onChange={handleChange}
-          required
-        >
-          <option value="" disabled>
-            Select an option
-          </option>
-          {objects.map((object) => (
-            <option key={object._id} value={object._id}>
-              {object.name}
-            </option>
-          ))}
-        </select>
-      </div>
+        <div>
+          <label>Select Object:</label>
+          <select
+            name="selectedObject"
+            value={formData.selectedObject}
+            onChange={handleChange}
+            required
+          >
+            <option value="" disabled>Select an option</option>
+            {objects.map((object) => (
+              <option key={object._id} value={object._id}>
+                {object.name}
+              </option>
+            ))}
+          </select>
+        </div>
 
         <div>
           <label>First Name:</label>
@@ -240,56 +246,60 @@ const AddGuest = ({ reservationToEdit, onClose }) => {
 
         <div className="people-container">
           <div className="people-group">
-          <label>Adults:</label>
-          <div className="input-group">
-            <button type="button" onClick={() => handleDecrement("people")}>
-              -
-            </button>
-            <input
-              type="number"
-              name="people"
-              value={formData.people}
-              readOnly
-            />
-            <button type="button" onClick={() => handleIncrement("people")}>
-              +
-            </button>
+            <label>Adults:</label>
+            <div className="input-group">
+              <button type="button" onClick={() => handleDecrement("people")}>
+                -
+              </button>
+              <input
+                type="number"
+                name="people"
+                value={formData.people}
+                readOnly
+              />
+              <button type="button" onClick={() => handleIncrement("people")}>
+                +
+              </button>
+            </div>
+          </div>
+
+          <div className="people-group">
+            <label>Children:</label>
+            <div className="input-group">
+              <button type="button" onClick={() => handleDecrement("children")}>
+                -
+              </button>
+              <input
+                type="number"
+                name="children"
+                value={formData.children}
+                readOnly
+              />
+              <button type="button" onClick={() => handleIncrement("children")}>
+                +
+              </button>
+            </div>
+          </div>
+
+          <div className="people-group">
+            <label>Pets:</label>
+            <div className="input-group">
+              <button type="button" onClick={() => handleDecrement("pets")}>
+                -
+              </button>
+              <input
+                type="number"
+                name="pets"
+                value={formData.pets}
+                readOnly
+              />
+              <button type="button" onClick={() => handleIncrement("pets")}>
+                +
+              </button>
+            </div>
           </div>
         </div>
 
-        <div>
-          <label>Children:</label>
-          <div className="input-group">
-            <button type="button" onClick={() => handleDecrement("children")}>
-              -
-            </button>
-            <input
-              type="number"
-              name="children"
-              value={formData.children}
-              readOnly
-            />
-            <button type="button" onClick={() => handleIncrement("children")}>
-              +
-            </button>
-          </div>
-        </div>
-         
-       
-        <div>
-          <label>Pets:</label>
-          <div className="input-group">
-            <button type="button" onClick={() => handleDecrement("pets")}>
-              -
-            </button>
-            <input type="number" name="pets" value={formData.pets} readOnly />
-            <button type="button" onClick={() => handleIncrement("pets")}>
-              +
-            </button>
-          </div>
-        </div>
-        </div>
-        
         <div className="calculator">
           <h3>Price Calculator</h3>
           <div>
@@ -326,7 +336,6 @@ const AddGuest = ({ reservationToEdit, onClose }) => {
           </div>
         </div>
 
-        
         <button type="submit" disabled={!isBookingValid}>
           {reservationToEdit ? "Update" : "Submit"}
         </button>
