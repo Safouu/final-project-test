@@ -33,7 +33,10 @@ const ObjectSchema = new mongoose.Schema({
     },
     image6: {
       type: String,
-    }
+    }, 
+    placeId: {
+      type: String,
+    },
 
   });
   

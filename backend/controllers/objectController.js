@@ -69,3 +69,30 @@ export const updateSingleObject = async (req, res) => {
       res.status(500).json({ error: 'Failed to update object' });
     }
   };
+
+// export const getObjectsByLocation = async (req, res) => {
+//     const { latitude, longitude } = req.query;
+//     try {
+//       await connect();
+//       const objectsLocation = await Object.find({
+//         latitude: { $gte: parseFloat(latitude) - 0.1, $lte: parseFloat(latitude) + 0.1 },
+//         longitude: { $gte: parseFloat(longitude) - 0.1, $lte: parseFloat(longitude) + 0.1 },
+//       });
+//       res.status(200).json(objectsLocation);
+//     } catch (e) {
+//       console.error('Error fetching objects by location:', e);
+//       res.status(500).json({ error: 'Failed to fetch objects by location' });
+//     }
+//   };
+
+export const getObjectsByPlaceId = async (req, res) => {
+    const { placeId } = req.query;
+    try {
+      await connect();
+      const objectsPlaceId = await Object.find({ placeId });
+      res.status(200).json(objectsPlaceId);
+    } catch (e) {
+      console.error('Error fetching objects by place ID:', e);
+      res.status(500).json({ error: 'Failed to fetch objects by place ID' });
+    }
+  };

@@ -19,9 +19,10 @@ const AddObject = () => {
   const [image4Preview, setImage4Preview] = useState('');
   const [image5Preview, setImage5Preview] = useState('');
   const [image6Preview, setImage6Preview] = useState('');
-  const [latitude, setLatitude] = useState('');
-  const [longitude, setLongitude] = useState('');
-  const [showMap, setShowMap] = useState(false);
+  // const [latitude, setLatitude] = useState('');
+  // const [longitude, setLongitude] = useState('');
+  const [placeId, setPlaceId] = useState('');
+  // const [showMap, setShowMap] = useState(false);
 
   const handleInputChange = (e, setImageFunction, setImagePreviewFunction) => {
     const value = e.target.value;
@@ -50,7 +51,7 @@ const AddObject = () => {
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ name, price, description, image, image1, image2, image3, image4, image5, image6 }),
+        body: JSON.stringify({ name, price, description, image, image1, image2, image3, image4, image5, image6, placeId }),
       });
 
       if (response.ok) {
@@ -79,9 +80,16 @@ const AddObject = () => {
     setImage4Preview('');
     setImage5Preview('');
     setImage6Preview('');
-    setLatitude('');
-    setLongitude('');
+    setPlaceId('');
+    // setLatitude('');
+    // setLongitude('');
   };
+
+  const handlePlaceSelection = (place) => {
+    setPlaceId(place.place_Id); // Use the place ID 
+  };
+
+
 
   return (
     <div>
@@ -268,7 +276,13 @@ const AddObject = () => {
           </div>
 
         )}
-            <label>Latitude</label>
+
+      {/* Map */}
+        <label>Location</label>
+        <Map onSelect={handlePlaceSelection} />
+
+
+            {/* <label>Latitude</label>
         <input
           type="text"
           placeholder="Latitude"
@@ -283,12 +297,14 @@ const AddObject = () => {
           value={longitude}
           onChange={(e) => setLongitude(e.target.value)}
           required
-        />
-        
+        /> */}
+
+
+        {/* <Map/> */}
 
         <button type="submit">Add</button>
 
-        {showMap && <Map latitude={latitude} longitude={longitude} />}s
+        {/* {showMap && <Map latitude={latitude} longitude={longitude} />} */}
       </form>
     </div>
   );

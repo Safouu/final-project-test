@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
-// import { LoadScript, GoogleMap, Marker } from '@react-google-maps/api';
+
 
 const ObjectDetail = () => {
   const { id } = useParams();
@@ -27,15 +27,15 @@ const ObjectDetail = () => {
   const handleImageClick = (imageKey) => {
     if (!object) return;
 
-    // Get the clicked image's URL
+  
     const clickedImage = object[imageKey];
 
-    // Swap the main image with the clicked image
+
     setObject({
       ...object,
-      [imageKey]: selectedImage, // The clicked image's place is taken by the main image
+      [imageKey]: selectedImage, 
     });
-    setSelectedImage(clickedImage); // The main image is updated with the clicked image
+    setSelectedImage(clickedImage); 
   };
 
 
@@ -43,19 +43,6 @@ const ObjectDetail = () => {
     if (!object) return;
     navigate('/booking', { state: { object } });
   };
-
-
-  //  // Map settings
-  //  const containerStyle = {
-  //   width: '100%',
-  //   height: '400px',
-  //   marginTop: '20px'
-  // };
-
-  // const center = {
-  //   lat: object?.latitude || 0,
-  //   lng: object?.longitude || 0,
-  // };
   
 
   return (
@@ -86,14 +73,6 @@ const ObjectDetail = () => {
                   ))}
                 </div>
             
-               {/* <div className='single-images'>
-                  <img src={object.image1} onClick={() => handleImageClick(object.image1)} alt="" />
-                  <img src={object.image2} onClick={() => handleImageClick(object.image2)} alt="" />
-                  <img src={object.image3} onClick={() => handleImageClick(object.image3)} alt="" />
-                  <img src={object.image4} onClick={() => handleImageClick(object.image4)} alt="" />
-                  <img src={object.image5} onClick={() => handleImageClick(object.image5)} alt="" />
-                  <img src={object.image6} onClick={() => handleImageClick(object.image6)} alt="" />
-                </div> */}
               </div>
 
 
@@ -103,8 +82,23 @@ const ObjectDetail = () => {
               <p>{object.price} $</p>
             </div>
 
-        
-           {/* Google Maps Embed */}
+
+
+      {/* Google Maps Embed using Place ID */}
+         <div className='map-container' style={{ marginTop: '20px' }}>
+                <iframe
+                  width="600"
+                  height="450"
+                  style={{ border: 0 }}
+                  loading="lazy"
+                  allowFullScreen
+                  src={`https://www.google.com/maps/embed/v1/place?key=AIzaSyBy48P_hoMccIb9HtqBXDGKISwygIJNJP8&q=place_id:${object.placeId}`}>
+   </iframe>
+              </div>
+
+
+
+{/*       
             <div className='map-container' style={{ marginTop: '20px' }}>
                 <iframe
                   width="600"
@@ -112,8 +106,10 @@ const ObjectDetail = () => {
                   style={{ border: 0 }}
                   loading="lazy"
                   allowFullScreen
-                  src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d1460.489044464581!2d16.00004251108997!3d43.4961082373452!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x1335176cb9f0b42f%3A0xf0579569aa04f80e!2sVilla%20Indigo!5e0!3m2!1sen!2sus!4v1631909042232!5m2!1sen!2sus" ></iframe>
-              </div>
+                  src="https://www.google.com/maps/embed?pb=AIzaSyDxn_CbsnecByoqOS6qQ6CRZCk-j4wOyNw" ></iframe>
+              </div> */}
+
+         
 
             <button className="booking-button" onClick={handleBooking}>
               Book Now

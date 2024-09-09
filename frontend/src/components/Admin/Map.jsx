@@ -1,29 +1,62 @@
-import { useEffect, useRef } from 'react';
-import PropTypes from 'prop-types';
 
-const Map = ({ latitude, longitude }) => {
-  const mapRef = useRef(null);
+
+// import { useEffect } from 'react';
+
+// const Map = () => {
+//   useEffect(() => {
+//     const script = document.createElement('script');
+//     script.type = 'module';
+//     script.src = 'https://unpkg.com/@googlemaps/extended-component-library@0.6';
+//     document.head.appendChild(script);
+
+//     return () => {
+//       document.head.removeChild(script);
+//     };
+//   }, []);
+
+//   return (
+//     <div id="place-picker-box">
+//       <div id="place-picker-container">
+//         {/* <gmpx-api-loader key={process.env.REACT_APP_GOOGLE_MAPS_API_KEY} solution-channel="GMP_GE_Map_v1">
+//         </gmpx-api-loader>
+//         <gmpx-place-picker placeholder="Enter an address"></gmpx-place-picker> */}
+//       </div>
+//     </div>
+//   );
+// };
+
+// export default Map;
+
+
+import { useEffect, useRef } from 'react';
+
+const Map = ({ onSelect }) => {
+  const autocompleteRef = useRef(null);
 
   useEffect(() => {
-    if (latitude && longitude) {
-      const map = new window.google.maps.Map(mapRef.current, {
-        center: { lat: parseFloat(latitude), lng: parseFloat(longitude) },
-        zoom: 15,
-      });
+    if (!window.google) return;
 
-      new window.google.maps.Marker({
-        position: { lat: parseFloat(latitude), lng: parseFloat(longitude) },
-        map: map,
-      });
-    }
-  }, [latitude, longitude]);
+    const autocomplete = new window.google.maps.places.Autocomplete(autocompleteRef.current, {
+      types: ['geocode'], // Limit results to geographical locations.
+    });
 
-  return <div ref={mapRef} style={{ height: '400px', width: '100%' }} />;
-};
+    autocomplete.addListener('place_changed', () => {
+      const place = autocomplete.getPlace();
+      if (place.place_Id && onSelect) {
+        onSelect(place); // Pass the place object to the parent component.
+      }
+    });
+  }, [onSelect]);
 
-Map.propTypes = {
-  latitude: PropTypes.number.isRequired,
-  longitude: PropTypes.number.isRequired,
+  return (
+    
+    <input
+      ref={autocompleteRef}
+      type="text"
+      placeholder="Enter a location"
+   
+    />
+  );
 };
 
 export default Map;
