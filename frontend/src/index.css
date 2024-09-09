@@ -590,7 +590,7 @@ border: 1px solid var(--secondary-color);
   /* border: solid 2px red; */
   display: flex;
   gap: 10px;
-  cursor: pointer;
+
 }
 
 .single-main-img{
@@ -613,6 +613,8 @@ border: 1px solid var(--secondary-color);
     height: 50%;
     object-fit: cover;
   }
+
+
 
 }
 

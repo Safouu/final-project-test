@@ -1,62 +1,71 @@
+import { useEffect, useRef, useState } from 'react';
+import PropTypes from 'prop-types';
 
+const loadGoogleMaps = (callback) => {
+  const existingScript = document.getElementById('google-maps-script');
+  if (!existingScript) {
+    const script = document.createElement('script');
+    script.id = 'google-maps-script';
+    script.src = `https://maps.googleapis.com/maps/api/js?key=AIzaSyBy48P_hoMccIb9HtqBXDGKISwygIJNJP8`;
+    script.onload = callback;
+    document.body.appendChild(script);
+  } else if (callback) {
+    callback();
+  }
+};
 
-// import { useEffect } from 'react';
-
-// const Map = () => {
-//   useEffect(() => {
-//     const script = document.createElement('script');
-//     script.type = 'module';
-//     script.src = 'https://unpkg.com/@googlemaps/extended-component-library@0.6';
-//     document.head.appendChild(script);
-
-//     return () => {
-//       document.head.removeChild(script);
-//     };
-//   }, []);
-
-//   return (
-//     <div id="place-picker-box">
-//       <div id="place-picker-container">
-//         {/* <gmpx-api-loader key={process.env.REACT_APP_GOOGLE_MAPS_API_KEY} solution-channel="GMP_GE_Map_v1">
-//         </gmpx-api-loader>
-//         <gmpx-place-picker placeholder="Enter an address"></gmpx-place-picker> */}
-//       </div>
-//     </div>
-//   );
-// };
-
-// export default Map;
-
-
-import { useEffect, useRef } from 'react';
-
-const Map = ({ onSelect }) => {
-  const autocompleteRef = useRef(null);
+const Map = ({ latitude, longitude, data }) => {
+  const mapRef = useRef(null);
+  const [map, setMap] = useState(null);
 
   useEffect(() => {
-    if (!window.google) return;
+    const initializeMap = () => {
+      if (window.google?.maps && mapRef.current) {
+        const newMap = new window.google.maps.Map(mapRef.current, {
+          center: { lat: latitude, lng: longitude },
+          zoom: 15,
+        });
 
-    const autocomplete = new window.google.maps.places.Autocomplete(autocompleteRef.current, {
-      types: ['geocode'], // Limit results to geographical locations.
-    });
+        setMap(newMap);
 
-    autocomplete.addListener('place_changed', () => {
-      const place = autocomplete.getPlace();
-      if (place.place_Id && onSelect) {
-        onSelect(place); // Pass the place object to the parent component.
+        const marker = new window.google.maps.Marker({
+          position: { lat: latitude, lng: longitude },
+          map: newMap,
+        });
+
+        const infoWindow = new window.google.maps.InfoWindow({
+          content: `
+            <div>
+              <h3>${data.name}</h3>
+              <p>${data.description}</p>
+              <p>Price: ${data.price} $</p>
+              <a href="${data.googleMapsUrl}" target="_blank" rel="noopener noreferrer">
+                View on Google Maps
+              </a>
+            </div>`,
+        });
+
+        marker.addListener('click', () => {
+          infoWindow.open(newMap, marker);
+        });
       }
-    });
-  }, [onSelect]);
+    };
 
-  return (
-    
-    <input
-      ref={autocompleteRef}
-      type="text"
-      placeholder="Enter a location"
-   
-    />
-  );
+    loadGoogleMaps(initializeMap);
+  }, [latitude, longitude, data]);
+
+  return <div ref={mapRef} style={{ height: '400px', width: '100%' }} />;
+};
+
+Map.propTypes = {
+  latitude: PropTypes.number.isRequired,
+  longitude: PropTypes.number.isRequired,
+  data: PropTypes.shape({
+    name: PropTypes.string.isRequired,
+    description: PropTypes.string.isRequired,
+    price: PropTypes.number.isRequired,
+    googleMapsUrl: PropTypes.string.isRequired,
+  }).isRequired,
 };
 
 export default Map;

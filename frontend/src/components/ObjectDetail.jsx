@@ -1,5 +1,7 @@
 import { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
+import Map from './Admin/Map';
+
 
 
 const ObjectDetail = () => {
@@ -82,34 +84,16 @@ const ObjectDetail = () => {
               <p>{object.price} $</p>
             </div>
 
+        {/* latitude and longitude  */}
+            {object.latitude && object.longitude ? (
+                <div className='map-container' style={{ marginTop: '20px' }}>
+                  <Map latitude={object.latitude} longitude={object.longitude} />
+                </div>
+              ) : (
+                <p>Location information is unavailable.</p>
+              )}
 
 
-      {/* Google Maps Embed using Place ID */}
-         <div className='map-container' style={{ marginTop: '20px' }}>
-                <iframe
-                  width="600"
-                  height="450"
-                  style={{ border: 0 }}
-                  loading="lazy"
-                  allowFullScreen
-                  src={`https://www.google.com/maps/embed/v1/place?key=AIzaSyBy48P_hoMccIb9HtqBXDGKISwygIJNJP8&q=place_id:${object.placeId}`}>
-   </iframe>
-              </div>
-
-
-
-{/*       
-            <div className='map-container' style={{ marginTop: '20px' }}>
-                <iframe
-                  width="600"
-                  height="450"
-                  style={{ border: 0 }}
-                  loading="lazy"
-                  allowFullScreen
-                  src="https://www.google.com/maps/embed?pb=AIzaSyDxn_CbsnecByoqOS6qQ6CRZCk-j4wOyNw" ></iframe>
-              </div> */}
-
-         
 
             <button className="booking-button" onClick={handleBooking}>
               Book Now

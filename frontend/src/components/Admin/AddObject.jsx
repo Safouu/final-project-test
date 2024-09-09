@@ -19,10 +19,10 @@ const AddObject = () => {
   const [image4Preview, setImage4Preview] = useState('');
   const [image5Preview, setImage5Preview] = useState('');
   const [image6Preview, setImage6Preview] = useState('');
-  // const [latitude, setLatitude] = useState('');
-  // const [longitude, setLongitude] = useState('');
-  const [placeId, setPlaceId] = useState('');
-  // const [showMap, setShowMap] = useState(false);
+  const [latitude, setLatitude] = useState('');
+  const [longitude, setLongitude] = useState('');
+  // const [placeId, setPlaceId] = useState('');
+  const [showMap, setShowMap] = useState(false);
 
   const handleInputChange = (e, setImageFunction, setImagePreviewFunction) => {
     const value = e.target.value;
@@ -51,7 +51,7 @@ const AddObject = () => {
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ name, price, description, image, image1, image2, image3, image4, image5, image6, placeId }),
+        body: JSON.stringify({ name, price, description, image, image1, image2, image3, image4, image5, image6, latitude, longitude}),
       });
 
       if (response.ok) {
@@ -80,14 +80,11 @@ const AddObject = () => {
     setImage4Preview('');
     setImage5Preview('');
     setImage6Preview('');
-    setPlaceId('');
-    // setLatitude('');
-    // setLongitude('');
+ 
+    setLatitude('');
+    setLongitude('');
   };
 
-  const handlePlaceSelection = (place) => {
-    setPlaceId(place.place_Id); // Use the place ID 
-  };
 
 
 
@@ -212,7 +209,7 @@ const AddObject = () => {
         <input
           type="text"
           placeholder="Image URL 4"
-          value={image3}
+          value={image4}
           onChange={(e) => handleInputChange(e, setImage4, setImage4Preview)}
         />
         <input
@@ -235,7 +232,7 @@ const AddObject = () => {
         <input
           type="text"
           placeholder="Image URL 5"
-          value={image3}
+          value={image5}
           onChange={(e) => handleInputChange(e, setImage5, setImage5Preview)}
         />
         <input
@@ -243,7 +240,7 @@ const AddObject = () => {
           accept="image/*"
           onChange={(e) => handleFileChange(e, setImage5, setImage5Preview)}
         />
-        {image3Preview && (
+        {image5Preview && (
           <div className="image-preview">
             <img
               src={image5Preview}
@@ -258,15 +255,9 @@ const AddObject = () => {
         <input
           type="text"
           placeholder="Image URL 6"
-          value={image3}
-          onChange={(e) => handleInputChange(e, setImage6, setImage6Preview)}
-        />
-        <input
-          type="file"
-          accept="image/*"
           onChange={(e) => handleFileChange(e, setImage6, setImage6Preview)}
         />
-        {image3Preview && (
+        {image6Preview && (
           <div className="image-preview">
             <img
               src={image6Preview}
@@ -277,12 +268,7 @@ const AddObject = () => {
 
         )}
 
-      {/* Map */}
-        <label>Location</label>
-        <Map onSelect={handlePlaceSelection} />
-
-
-            {/* <label>Latitude</label>
+        <label>Latitude</label>
         <input
           type="text"
           placeholder="Latitude"
@@ -297,14 +283,14 @@ const AddObject = () => {
           value={longitude}
           onChange={(e) => setLongitude(e.target.value)}
           required
-        /> */}
+        />
 
-
-        {/* <Map/> */}
+    {showMap && <Map latitude={latitude} longitude={longitude} />}  
+       
 
         <button type="submit">Add</button>
 
-        {/* {showMap && <Map latitude={latitude} longitude={longitude} />} */}
+        
       </form>
     </div>
   );
