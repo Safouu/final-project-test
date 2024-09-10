@@ -10,7 +10,7 @@ const Header = () => {
     <header className="header">
        <div className="logo">
         <a href="/">
-          <img src="./public/images/Dream .png" alt="Logo" className="logo-image" />
+          <img src="./public/images/logo.jpg" alt="Logo" className="logo-image" />
         </a>
       </div>
       <nav>
