@@ -4,7 +4,7 @@ import dotenv from "dotenv";
 import { loginUser, registerUser, UserProfile } from './controllers/authController.js';
 import { getObjects, postObject, getSingleObject, deleteSingleObject, updateSingleObject } from './controllers/objectController.js';
 import { getContacts, deleteContacts, deleteSingleContact, PostContact } from './controllers/contactController.js';
-import { genReservation, getGenReservations, getAllGenReservations, deleteSingleGuest, updateSingleGuest } from './controllers/genreservationController.js';
+import { genReservation, getGenReservations, getAllGenReservations, deleteSingleGuest, updateSingleGuest, getGenReservation } from './controllers/genreservationController.js';
 import { postReservation,getReservation, deleteReservation, updateReservation } from './controllers/reservationController.js';
 
 dotenv.config();
@@ -34,11 +34,14 @@ app.get("/genReservation/:userId",getGenReservations)
 app.get("/genReservation",getAllGenReservations)
 app.delete("/genReservation/:id",deleteSingleGuest)
 app.patch("/genReservation/:id",updateSingleGuest)
+app.get('/reservations', getGenReservation); // New endpoint
 
 app.get("/reservation",getReservation)
 app.delete("/reservation/:id",deleteReservation)
 app.patch("/reservation/:id",updateReservation)
 app.post("/reservation",postReservation)
+
+
 
 
 

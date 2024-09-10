@@ -99,3 +99,16 @@ export const updateSingleGuest = async (req, res) => {
     res.status(500).json({ error: 'Failed to update GenReservation' });
   }
 };
+
+export const getGenReservation = async (req, res) => {
+  try {
+    const reservations = await GenReservation.find()
+      .populate('user', 'firstName') // Only fetch the first name of the user
+      .populate('apartment', 'name'); // Fetch apartment name
+
+    res.json(reservations);
+  } catch (error) {
+    console.error('Error fetching reservations:', error);
+    res.status(500).json({ message: 'Failed to fetch reservations.' });
+  }
+};

@@ -1,6 +1,5 @@
-import { useState, useEffect } from 'react';
-import { DayPilot, DayPilotScheduler } from 'daypilot-pro-react';
-
+import { useState, useEffect, useRef } from 'react';
+import { DayPilotScheduler, DayPilot } from 'daypilot-pro-react';
 
 const generateRandomColor = () => {
   const letters = '0123456789ABCDEF';
@@ -11,44 +10,51 @@ const generateRandomColor = () => {
   return color;
 };
 
-
 const getColorForResource = (resourceId, resources) => {
-  
-    const resource = resources.find(r => r.id === resourceId);
-    return resource ? resource.color : generateRandomColor();
-  };
+  const resource = resources.find(r => r.id === resourceId);
+  return resource ? resource.color : generateRandomColor();
+};
+
 const AdminCalendar = () => {
   const [objects, setObjects] = useState([]);
   const [events, setEvents] = useState([]);
-  const [scheduler, setScheduler] = useState(null);
-  const [startDate, setStartDate] = useState("2024-01-01"); 
-  const [days, setDays] = useState(365); 
+  const schedulerRef = useRef(null);
+  const [startDate, setStartDate] = useState("2024-01-01");
+  const [days, setDays] = useState(365);
 
   useEffect(() => {
-    
-    fetch('http://localhost:3232/objects')
-      .then((res) => res.json())
-      .then((data) => {
-        const resources = data.map((item) => ({
-          id: item._id,
-          name: item.name,
-          color: getColorForResource(item._id, data) 
-        }));
-        setObjects(resources);
-
-       
-        const initialEvents = [
-          {
-            id: 1,
-            text: "Event 1",
-            start: "2025-01-02T00:00:00",
-            end: "2025-01-05T00:00:00",
-          },
-        
-        ];
-        setEvents(initialEvents);
+    fetch('http://localhost:3232/reservations')
+      .then(response => {
+        if (!response.ok) {
+          throw new Error('Network response was not ok');
+        }
+        return response.json();
       })
-      .catch((error) => console.error('Error fetching objects:', error));
+      .then(data => {
+        console.log('Fetched data:', data); // Log data for debugging
+
+        const resources = data
+          .filter(item => item.apartment) // Filter out items with null apartment
+          .map(item => ({
+            id: item.apartment._id, // Using apartment ID for resource
+            name: item.apartment.name,
+            color: getColorForResource(item.apartment._id, data) // Color assignment
+          }));
+
+        const events = data
+          .filter(item => item.apartment && item.user) // Filter out items with null apartment or user
+          .map(item => ({
+            id: item._id,
+            text: item.user.firstName, // Display user's first name
+            start: item.startDate,
+            end: item.endDate,
+            resource: item.apartment._id // Use apartment ID as resource
+          }));
+
+        setObjects(resources);
+        setEvents(events);
+      })
+      .catch(error => console.error('Error fetching data:', error));
   }, []);
 
   const config = {
@@ -64,11 +70,11 @@ const AdminCalendar = () => {
     rowHeaderWidth: 150,
     onEventMoved: args => {
       console.log("Event moved:", args.e.data.id, args.newStart, args.newEnd, args.newResource);
-      scheduler.message("Event moved: " + args.e.data.text);
+      schedulerRef.current.message("Event moved: " + args.e.data.text);
     },
     onEventResized: args => {
       console.log("Event resized:", args.e.data.id, args.newStart, args.newEnd);
-      scheduler.message("Event resized: " + args.e.data.text);
+      schedulerRef.current.message("Event resized: " + args.e.data.text);
     },
     onTimeRangeSelected: async args => {
       const modal = await DayPilot.Modal.prompt("New event name", "Event");
@@ -82,11 +88,11 @@ const AdminCalendar = () => {
       };
       console.log('New event created:', newEvent);
       setEvents(prevEvents => [...prevEvents, newEvent]);
-      scheduler.events.add(newEvent);
+      schedulerRef.current.events.add(newEvent);
     },
     onBeforeEventRender: args => {
       const resource = objects.find(o => o.id === args.data.resource);
-      const color = resource ? resource.color : "#93c47d"; 
+      const color = resource ? resource.color : "#93c47d";
       args.data.backColor = color;
     },
     contextMenu: new DayPilot.Menu({
@@ -96,10 +102,7 @@ const AdminCalendar = () => {
           onClick: async args => {
             const modal = await DayPilot.Modal.confirm("Do you want to delete this event?");
             if (modal.canceled) return;
-         
-           console.log("Deleted", args.source);
-        
-        
+            console.log("Deleted", args.source);
           }
         }
       ]
@@ -108,19 +111,15 @@ const AdminCalendar = () => {
 
   return (
     <div>
-      
-      <div  className="admin-container-calendar">
-      {/* <div className='demo'>ADMIN</div> */}
-      <h1>Admin Scheduler</h1>
-
-      <DayPilotScheduler
-        {...config}
-        events={events}
-        resources={objects}
-        ref={setScheduler}
-      />
+      <div className="admin-container-calendar">
+        <h1>Admin Scheduler</h1>
+        <DayPilotScheduler
+          {...config}
+          events={events}
+          resources={objects}
+          ref={schedulerRef}
+        />
       </div>
-
     </div>
   );
 };

@@ -14,7 +14,7 @@ const loadGoogleMaps = (callback) => {
   }
 };
 
-const Map = ({ latitude, longitude, data }) => {
+const Map = ({ latitude, longitude }) => {
   const mapRef = useRef(null);
   const [map, setMap] = useState(null);
 
@@ -33,41 +33,25 @@ const Map = ({ latitude, longitude, data }) => {
           map: newMap,
         });
 
-        if (data && data.name) {
-          const infoWindow = new window.google.maps.InfoWindow({
-            content: `
-              <div>
-                <h3>${data.name}</h3>
-                <p>${data.description}</p>
-                <a href="${data.googleMapsUrl}" target="_blank" rel="noopener noreferrer">
-                  View on Google Maps
-                </a>
-              </div>`,
-          });
-
-          marker.addListener('click', () => {
-            infoWindow.open(newMap, marker);
-          });
-        } else {
-          console.error('Map data is undefined or missing required fields.');
-        }
+        
       }
     };
 
     loadGoogleMaps(initializeMap);
-  }, [latitude, longitude, data]);
+  }, [latitude, longitude]);
 
-  return <div ref={mapRef} style={{ height: '400px', width: '100%' }} />;
+  return (
+    <div>
+      
+      <div ref={mapRef} style={{ height: '400px', width: '100%' }} />
+    </div>
+  );
 };
 
 Map.propTypes = {
   latitude: PropTypes.number.isRequired,
   longitude: PropTypes.number.isRequired,
-  data: PropTypes.shape({
-    name: PropTypes.string.isRequired,
-    description: PropTypes.string.isRequired,
-    googleMapsUrl: PropTypes.string.isRequired,
-  }),
+  
 };
 
 export default Map;
