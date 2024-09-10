@@ -20,8 +20,8 @@ export const getObjects = async (req, res) => {
       await newObject.save();
       res.status(201).json(newObject);
     } catch (e) {
-      console.error('Error saving object:', e.message || e);
-      res.status(500).json({ error: 'Failed to save object', details: e.message || e  });
+      console.error('Error saving object:');
+      res.status(500).json({ error: 'Failed to save object'});
     }
   };
 
