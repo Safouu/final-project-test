@@ -18,8 +18,9 @@ const getColorForResource = (resourceId, resources) => {
 const AdminCalendar = () => {
   const [objects, setObjects] = useState([]);
   const [events, setEvents] = useState([]);
+  
   const schedulerRef = useRef(null);
-  const [startDate, setStartDate] = useState("2024-01-01");
+  const [startDate, setStartDate] = useState("2024-09-01");
   const [days, setDays] = useState(365);
 
   useEffect(() => {
@@ -31,28 +32,33 @@ const AdminCalendar = () => {
         return response.json();
       })
       .then(data => {
-        console.log('Fetched data:', data); // Log data for debugging
+        console.log('Fetched data:', data);
 
-        const resources = data
-          .filter(item => item.apartment) // Filter out items with null apartment
-          .map(item => ({
-            id: item.apartment._id, // Using apartment ID for resource
-            name: item.apartment.name,
-            color: getColorForResource(item.apartment._id, data) // Color assignment
-          }));
-
-        const events = data
-          .filter(item => item.apartment && item.user) // Filter out items with null apartment or user
-          .map(item => ({
-            id: item._id,
-            text: item.user.firstName, // Display user's first name
-            start: item.startDate,
-            end: item.endDate,
-            resource: item.apartment._id // Use apartment ID as resource
-          }));
+      const resources = data
+        .filter((item, index, self) => self.findIndex(t => t.apartment._id === item.apartment._id) === index) // Entfernen von Duplikaten
+        .map(item => ({
+          id: item.apartment._id,
+          name: item.apartment.name,
+          color: getColorForResource(item.apartment._id, data)
+        }));
+      
+      const events = data
+        .filter((item, index, self) => self.findIndex(t => t._id === item._id) === index) // Entfernen von Duplikaten
+        .map(item => ({
+          id: item._id,
+          text: item.user.firstName,
+          start: item.startDate,
+          end: item.endDate,
+          resource: item.apartment._id
+        }));
+      
 
         setObjects(resources);
         setEvents(events);
+
+        // console.log(events)
+        // console.log(resources)
+        // console.log(data)
       })
       .catch(error => console.error('Error fetching data:', error));
   }, []);
@@ -92,7 +98,7 @@ const AdminCalendar = () => {
     },
     onBeforeEventRender: args => {
       const resource = objects.find(o => o.id === args.data.resource);
-      const color = resource ? resource.color : "#93c47d";
+      const color = resource ? resource.color : "#c47dc4";
       args.data.backColor = color;
     },
     contextMenu: new DayPilot.Menu({
