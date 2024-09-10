@@ -9,6 +9,7 @@ const ObjectDetail = () => {
   const navigate = useNavigate();
   const [object, setObject] = useState(null);
   const [selectedImage, setSelectedImage] = useState('');
+  const [currentPrice, setCurrentPrice] = useState('');
 
   useEffect(() => {
     fetch(`http://localhost:3232/objects/${id}`)
@@ -18,6 +19,10 @@ const ObjectDetail = () => {
         setSelectedImage(data.image); 
         /// console.log('Fetched object:', data);
         // console.log('Image URL:', data.image);
+
+        const today = new Date();
+        const price = data.prices.find(p => new Date(p.startDate) <= today && new Date(p.endDate) >= today);
+        setCurrentPrice(price ? price.price : 'N/A');
       })
       .catch((error) => {
         console.error('There was a problem with the fetch operation:', error);
@@ -64,7 +69,7 @@ const ObjectDetail = () => {
 
 
                <div className='single-images'>
-                  {/* Loop through image keys dynamically */}
+                  
                   {['image1', 'image2', 'image3', 'image4', 'image5', 'image6'].map((key) => (
                     <img
                       key={key}
@@ -77,11 +82,10 @@ const ObjectDetail = () => {
             
               </div>
 
-
             <div className='single-description'>
               <h2>{object.name}</h2>
               <p>{object.description}</p>
-              <p>{object.price} $</p>
+              <p>Current Price: {currentPrice} $</p>
             </div>
 
         {/* latitude and longitude  */}

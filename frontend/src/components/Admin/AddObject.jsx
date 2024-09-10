@@ -3,7 +3,7 @@ import Map from './Map';
 
 const AddObject = () => {
   const [name, setName] = useState('');
-  const [price, setPrice] = useState('');
+  const [price, setPrice] = useState([{ startDate: '', endDate: '', price: '' }]);
   const [description, setDescription] = useState('');
   const [image, setImage] = useState('');
   const [image1, setImage1] = useState('');
@@ -23,6 +23,25 @@ const AddObject = () => {
   const [longitude, setLongitude] = useState('');
   // const [placeId, setPlaceId] = useState('');
   const [showMap, setShowMap] = useState(false);
+
+
+  const handlePriceChange = (index, e) => {
+    const { name, value } = e.target;
+    const updatedPrices = [...price];
+    updatedPrices[index] = { ...updatedPrices[index], [name]: value };
+    setPrice(updatedPrices);
+  };
+
+  const handleAddPriceRange = () => {
+    setPrice([...price, { startDate: '', endDate: '', price: '' }]);
+  };
+
+  const handleRemovePriceRange = (index) => {
+    const updatedPrices = price.filter((_, i) => i !== index);
+    setPrice(updatedPrices);
+  };
+
+
 
   const handleInputChange = (e, setImageFunction, setImagePreviewFunction) => {
     const value = e.target.value;
@@ -64,7 +83,7 @@ const AddObject = () => {
     }
 
     setName('');
-    setPrice('');
+    setPrice([{ startDate: '', endDate: '', price: '' }]);
     setDescription('');
     setImage('');
     setImage1('');
@@ -99,14 +118,14 @@ const AddObject = () => {
           onChange={(e) => setName(e.target.value)}
           required
         />
-        <label>Price</label>
+        {/* <label>Price</label>
         <input
           type="text"
           placeholder="Price $"
           value={price}
           onChange={(e) => setPrice(e.target.value)}
           required
-        />
+        /> */}
         <label>Description</label>
         <input
           type="text"
@@ -115,6 +134,40 @@ const AddObject = () => {
           onChange={(e) => setDescription(e.target.value)}
           required
         />
+
+
+{price.map((priceRange, index) => (
+          <div key={index}>
+            <label>Start Date</label>
+            <input
+              type="date"
+              name="startDate"
+              value={priceRange.startDate}
+              onChange={(e) => handlePriceChange(index, e)}
+              required
+            />
+            <label>End Date</label>
+            <input
+              type="date"
+              name="endDate"
+              value={priceRange.endDate}
+              onChange={(e) => handlePriceChange(index, e)}
+              required
+            />
+            <label>Price</label>
+            <input
+              type="number"
+              name="price"
+              value={priceRange.price}
+              onChange={(e) => handlePriceChange(index, e)}
+              required
+            />
+            <button type="button" onClick={() => handleRemovePriceRange(index)}>Remove Price Range</button>
+          </div>
+        ))}
+        <button type="button" onClick={handleAddPriceRange}>Add Price Range</button>
+
+
 
         <label>Main image</label>
         <input

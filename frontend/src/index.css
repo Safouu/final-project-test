@@ -613,10 +613,54 @@ border: 1px solid var(--secondary-color);
     height: 50%;
     object-fit: cover;
   }
-
-
-
 }
+
+.single-description {
+  margin-top: 20px;
+  padding: 20px;
+  background-color: #f9f9f9;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* Styling the Table */
+.details-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 20px;
+}
+
+/* Table Headers */
+.details-table th {
+  background-color: #4CAF50;
+  color: white;
+  text-align: left;
+  padding: 12px;
+  font-weight: bold;
+}
+
+/* Table Rows */
+.details-table td {
+  padding: 12px;
+  border-bottom: 1px solid #ddd;
+}
+
+/* Alternate Row Colors */
+.details-table tr:nth-child(even) {
+  background-color: #f2f2f2;
+}
+
+/* Hover Effect on Rows */
+.details-table tr:hover {
+  background-color: #ddd;
+}
+
+/* Table Headings */
+.details-table th {
+  background-color: #4CAF50;
+  color: white;
+}
+
 
 /*  Social-Media-Links */
 

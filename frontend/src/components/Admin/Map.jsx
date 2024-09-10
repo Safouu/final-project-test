@@ -33,21 +33,24 @@ const Map = ({ latitude, longitude, data }) => {
           map: newMap,
         });
 
-        const infoWindow = new window.google.maps.InfoWindow({
-          content: `
-            <div>
-              <h3>${data.name}</h3>
-              <p>${data.description}</p>
-              <p>Price: ${data.price} $</p>
-              <a href="${data.googleMapsUrl}" target="_blank" rel="noopener noreferrer">
-                View on Google Maps
-              </a>
-            </div>`,
-        });
+        if (data && data.name) {
+          const infoWindow = new window.google.maps.InfoWindow({
+            content: `
+              <div>
+                <h3>${data.name}</h3>
+                <p>${data.description}</p>
+                <a href="${data.googleMapsUrl}" target="_blank" rel="noopener noreferrer">
+                  View on Google Maps
+                </a>
+              </div>`,
+          });
 
-        marker.addListener('click', () => {
-          infoWindow.open(newMap, marker);
-        });
+          marker.addListener('click', () => {
+            infoWindow.open(newMap, marker);
+          });
+        } else {
+          console.error('Map data is undefined or missing required fields.');
+        }
       }
     };
 
@@ -63,9 +66,8 @@ Map.propTypes = {
   data: PropTypes.shape({
     name: PropTypes.string.isRequired,
     description: PropTypes.string.isRequired,
-    price: PropTypes.number.isRequired,
     googleMapsUrl: PropTypes.string.isRequired,
-  }).isRequired,
+  }),
 };
 
 export default Map;
