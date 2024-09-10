@@ -1,5 +1,6 @@
 import { useState, useEffect, useRef } from 'react';
 import { DayPilotScheduler, DayPilot } from 'daypilot-pro-react';
+import moment from 'moment-timezone'; // Add moment-timezone for better timezone handling
 
 const generateRandomColor = () => {
   const letters = '0123456789ABCDEF';
@@ -34,31 +35,33 @@ const AdminCalendar = () => {
       .then(data => {
         console.log('Fetched data:', data);
 
-      const resources = data
-        .filter((item, index, self) => self.findIndex(t => t.apartment._id === item.apartment._id) === index) // Entfernen von Duplikaten
-        .map(item => ({
-          id: item.apartment._id,
-          name: item.apartment.name,
-          color: getColorForResource(item.apartment._id, data)
-        }));
-      
-      const events = data
-        .filter((item, index, self) => self.findIndex(t => t._id === item._id) === index) // Entfernen von Duplikaten
-        .map(item => ({
-          id: item._id,
-          text: item.user.firstName,
-          start: item.startDate,
-          end: item.endDate,
-          resource: item.apartment._id
-        }));
-      
+        const resources = data
+          .filter((item, index, self) => self.findIndex(t => t.apartment._id === item.apartment._id) === index)
+          .map(item => ({
+            id: item.apartment._id,
+            name: item.apartment.name,
+            color: getColorForResource(item.apartment._id, data)
+          }));
+          const events = data
+          .filter((item, index, self) => self.findIndex(t => t._id === item._id) === index)
+          .map(item => {
+            const startDateUTC = moment.utc(item.startDate).local().format('YYYY-MM-DDTHH:mm:ss');
+            
+            const endDateUTC = moment.utc(item.endDate).local().endOf('day').format('YYYY-MM-DDTHH:mm:ss');
+            
+            return {
+              id: item._id,
+              text: item.user.firstName,
+              start: startDateUTC,
+              end: endDateUTC,
+              resource: item.apartment._id
+            };
+          });
+        
 
         setObjects(resources);
         setEvents(events);
 
-        // console.log(events)
-        // console.log(resources)
-        // console.log(data)
       })
       .catch(error => console.error('Error fetching data:', error));
   }, []);
@@ -131,5 +134,3 @@ const AdminCalendar = () => {
 };
 
 export default AdminCalendar;
-
-
