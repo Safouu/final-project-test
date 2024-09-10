@@ -1,5 +1,6 @@
 import { useState, useEffect, useRef } from 'react';
 import { DayPilotScheduler, DayPilot } from 'daypilot-pro-react';
+import moment from 'moment-timezone'; // Add moment-timezone for better timezone handling
 
 const generateRandomColor = () => {
   const letters = '0123456789ABCDEF';
@@ -34,6 +35,7 @@ const AdminCalendar = () => {
         console.log('Fetched data:', data); // Log data for debugging
 
         const resources = data
+<<<<<<< HEAD
           .filter(item => item.apartment) // Filter out items with null apartment
           .map(item => ({
             id: item.apartment._id, // Using apartment ID for resource
@@ -53,6 +55,34 @@ const AdminCalendar = () => {
 
         setObjects(resources);
         setEvents(events);
+=======
+          .filter((item, index, self) => self.findIndex(t => t.apartment._id === item.apartment._id) === index)
+          .map(item => ({
+            id: item.apartment._id,
+            name: item.apartment.name,
+            color: getColorForResource(item.apartment._id, data)
+          }));
+          const events = data
+          .filter((item, index, self) => self.findIndex(t => t._id === item._id) === index)
+          .map(item => {
+            const startDateUTC = moment.utc(item.startDate).local().format('YYYY-MM-DDTHH:mm:ss');
+            
+            const endDateUTC = moment.utc(item.endDate).local().endOf('day').format('YYYY-MM-DDTHH:mm:ss');
+            
+            return {
+              id: item._id,
+              text: item.user.firstName,
+              start: startDateUTC,
+              end: endDateUTC,
+              resource: item.apartment._id
+            };
+          });
+        
+
+        setObjects(resources);
+        setEvents(events);
+
+>>>>>>> refs/remotes/origin/main
       })
       .catch(error => console.error('Error fetching data:', error));
   }, []);
@@ -125,5 +155,3 @@ const AdminCalendar = () => {
 };
 
 export default AdminCalendar;
-
-
