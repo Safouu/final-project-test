@@ -36,28 +36,6 @@ const Map = ({ latitude, longitude }) => {
           map: newMap,
         });
 
-<<<<<<< HEAD
-        
-=======
-    //     if (data && data.name && data.description && data.googleMapsUrl) {
-    //       const infoWindow = new window.google.maps.InfoWindow({
-    //         content: `
-    //           <div>
-    //             <h3>${data.name}</h3>
-    //             <p>${data.description}</p>
-    //             <a href="${data.googleMapsUrl}" target="_blank" rel="noopener noreferrer">
-    //               View on Google Maps
-    //             </a>
-    //           </div>`,
-    //       });
-
-    //       marker.addListener('click', () => {
-    //         infoWindow.open(newMap, marker);
-    //       });
-    //     } else {
-    //       console.error('Map data is undefined or missing required fields.');
-    //     }
->>>>>>> refs/remotes/origin/main
       }
     };
 
@@ -75,11 +53,7 @@ const Map = ({ latitude, longitude }) => {
 Map.propTypes = {
   latitude: PropTypes.number.isRequired,
   longitude: PropTypes.number.isRequired,
-<<<<<<< HEAD
-  
-=======
 
->>>>>>> refs/remotes/origin/main
 };
 
 export default Map;
