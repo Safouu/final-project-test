@@ -9,9 +9,9 @@ const Header = () => {
   return (
     <header className="header">
        <div className="logo">
-        <a href="/">
-          <img src="./public/images/logo.jpg" alt="Logo" className="logo-image" />
-        </a>
+        <NavLink to="/">
+          Y.D.V
+        </NavLink>
       </div>
       <nav>
         <NavLink to="/">Home</NavLink>
