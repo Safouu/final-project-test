@@ -28,6 +28,9 @@ const AddObject = () => {
   const handlePriceChange = (index, e) => {
     const { name, value } = e.target;
     const updatedPrices = [...prices];
+
+  
+    
     updatedPrices[index] = { ...updatedPrices[index], [name]: value };
     setPrices(updatedPrices);
   };
@@ -62,10 +65,22 @@ const AddObject = () => {
   };
   const handleSubmit = async (e) => {
     e.preventDefault();
-    
+
+    const formatDateToYYYYMMDD = (dateStr) => {
+      const date = new Date(dateStr);
+      return date.toISOString().split('T')[0];
+    };
+
+    const formattedPrices = prices.map(price => ({
+      ...price,
+      startDate: formatDateToYYYYMMDD(price.startDate),
+      endDate: formatDateToYYYYMMDD(price.endDate)
+    }));
+
+
     const objectData = {
       name, 
-      prices, // make sure this is an array of price ranges
+      prices: formattedPrices,
       description,
       image,
       image1,
@@ -174,10 +189,10 @@ const AddObject = () => {
               onChange={(e) => handlePriceChange(index, e)}
               required
             />
-            <button type="button" onClick={() => handleRemovePriceRange(index)}>Remove Price Range</button>
+            <button type="button" onClick={() => handleRemovePriceRange(index)}>Remove Price</button>
           </div>
         ))}
-        <button type="button" onClick={handleAddPriceRange}>Add Price Range</button>
+        <button type="button" onClick={handleAddPriceRange}>Add Price</button>
 
 
 

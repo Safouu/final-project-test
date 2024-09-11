@@ -10,7 +10,6 @@ function Booking() {
   const location = useLocation();
   const { object } = location.state || {};
   const storedFirstName = localStorage.getItem('firstName');
-
   const [dateRange, setDateRange] = useState([
     {
       startDate: new Date(),
@@ -23,7 +22,6 @@ function Booking() {
     people: 0,
     children: 0,
     pets: 0,
-    pricePerDay: object ? object.price : "",
     days: 0,
     totalPrice: "",
     advancePayment: "",
@@ -36,9 +34,52 @@ function Booking() {
   const [errorMessage, setErrorMessage] = useState('');
 
   useEffect(() => {
-    const start = dateRange[0].startDate;
-    const end = dateRange[0].endDate;
-    const days = Math.ceil((end - start) / (1000 * 60 * 60 * 24));
+    // Ensure object and dateRange are available
+    if (!object || !dateRange[0]) return;
+
+    const { startDate, endDate } = dateRange[0];
+
+    // Helper function to iterate through dates
+    const getDatesInRange = (start, end) => {
+      const dates = [];
+      let currentDate = new Date(start);
+
+      while (currentDate <= end) {
+        dates.push(new Date(currentDate));
+        currentDate.setDate(currentDate.getDate() + 1); // Move to the next day
+      }
+
+      return dates;
+    };
+
+    // Helper function to find the price for a specific date
+    const findPriceForDate = (date, prices) => {
+      const applicablePriceRange = prices.find(({ startDate: priceStart, endDate: priceEnd }) => {
+        const startDateObj = new Date(priceStart);
+        const endDateObj = new Date(priceEnd);
+        return date >= startDateObj && date <= endDateObj;
+      });
+
+      return applicablePriceRange ? applicablePriceRange.price : 0;
+    };
+
+    // Calculate total price for the booking range
+    const calculateTotalPrice = () => {
+      const { prices } = object;
+
+      // Get all dates in the range from startDate to endDate
+      const datesInRange = getDatesInRange(startDate, endDate);
+
+      // Sum the price for each day
+      const total = datesInRange.reduce((acc, currentDate) => {
+        const dailyPrice = findPriceForDate(currentDate, prices);
+        return acc + dailyPrice;
+      }, 0);
+
+      return total;
+    };
+
+    const days = Math.ceil((endDate - startDate) / (1000 * 60 * 60 * 24));  // Calculate number of days
 
     if (days < 5) {
       setIsBookingValid(false);
@@ -46,23 +87,19 @@ function Booking() {
     } else {
       setIsBookingValid(true);
       setErrorMessage('');
+
+      // Calculate total price and advance payment
+      const totalPrice = calculateTotalPrice();
+      const advancePayment = totalPrice * 0.3;
+
       setFormData((prevFormData) => ({
         ...prevFormData,
         days: days,
+        totalPrice: totalPrice.toFixed(2),
+        advancePayment: advancePayment.toFixed(2)
       }));
     }
-  }, [dateRange]);
-
-  useEffect(() => {
-    const totalPrice = formData.pricePerDay * formData.days;
-    const advancePayment = totalPrice * 0.3;
-
-    setFormData((prevFormData) => ({
-      ...prevFormData,
-      totalPrice: totalPrice.toFixed(2),
-      advancePayment: advancePayment.toFixed(2),
-    }));
-  }, [formData.pricePerDay, formData.days]);
+  }, [dateRange, object]);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -89,26 +126,25 @@ function Booking() {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    
     if (!isLoggedIn || !userId || !object) {
       alert('You must be logged in and have selected an object.');
       return;
     }
 
     try {
-      const response = await fetch ('http://localhost:3232/genreservation', {
+      const response = await fetch('http://localhost:3232/genreservation', {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({ 
+        body: JSON.stringify({
           user: userId,
-           apartment: object._id,
-            startDate: dateRange[0].startDate.toISOString(),
-            endDate: dateRange[0].endDate.toISOString(), 
-            totalPrice: formData.totalPrice, 
-            advancePayment: formData.advancePayment, 
-            }),
+          apartment: object._id,
+          startDate: dateRange[0].startDate.toISOString(),
+          endDate: dateRange[0].endDate.toISOString(),
+          totalPrice: formData.totalPrice,
+          advancePayment: formData.advancePayment,
+        }),
       });
 
       if (response.status === 201) {
@@ -123,125 +159,112 @@ function Booking() {
   return (
     <div className="home">
       <div className="booking-container">
-      <form onSubmit={handleSubmit}>
-        <div className="calendar-section">
-          <DateRange
-            editableDateInputs={true}
-            onChange={item => setDateRange([item.selection])}
-            moveRangeOnFirstSelection={false}
-            ranges={dateRange}
-            className="date-range-picker"
-          />
-          {errorMessage && <p style={{ color: 'red' }}>{errorMessage}</p>}
-        </div>
-        <div className="people-container">
-        <div className="people-group">
-          <label>Adults:</label>
-          <div className="input-group">
-            <button type="button" onClick={() => handleDecrement("people")}>
-              -
-            </button>
-            <input
-              type="number"
-              name="people"
-              value={formData.people}
-              onChange={handleChange}
-              readOnly
+        <form onSubmit={handleSubmit}>
+          <div className="calendar-section">
+            <DateRange
+              editableDateInputs={true}
+              onChange={item => setDateRange([item.selection])}
+              moveRangeOnFirstSelection={false}
+              ranges={dateRange}
+              className="date-range-picker"
             />
-            <button type="button" onClick={() => handleIncrement("people")}>
-              +
-            </button>
+            {errorMessage && <p style={{ color: 'red' }}>{errorMessage}</p>}
           </div>
-        </div>
+          <div className="people-container">
+            <div className="people-group">
+              <label>Adults:</label>
+              <div className="input-group">
+                <button type="button" onClick={() => handleDecrement("people")}>
+                  -
+                </button>
+                <input
+                  type="number"
+                  name="people"
+                  value={formData.people}
+                  onChange={handleChange}
+                  readOnly
+                />
+                <button type="button" onClick={() => handleIncrement("people")}>
+                  +
+                </button>
+              </div>
+            </div>
 
-        <div>
-          <label>Children:</label>
-          <div className="input-group">
-            <button type="button" onClick={() => handleDecrement("children")}>
-              -
-            </button>
-            <input
-              type="number"
-              name="children"
-              value={formData.children}
-              onChange={handleChange}
-              readOnly
-            />
-            <button type="button" onClick={() => handleIncrement("children")}>
-              +
-            </button>
-          </div>
-        </div>
+            <div>
+              <label>Children:</label>
+              <div className="input-group">
+                <button type="button" onClick={() => handleDecrement("children")}>
+                  -
+                </button>
+                <input
+                  type="number"
+                  name="children"
+                  value={formData.children}
+                  onChange={handleChange}
+                  readOnly
+                />
+                <button type="button" onClick={() => handleIncrement("children")}>
+                  +
+                </button>
+              </div>
+            </div>
 
-        <div>
-          <label>Pets:</label>
-          <div className="input-group">
-            <button type="button" onClick={() => handleDecrement("pets")}>
-              -
-            </button>
-            <input
-              type="number"
-              name="pets"
-              value={formData.pets}
-              onChange={handleChange}
-              readOnly
-            />
-            <button type="button" onClick={() => handleIncrement("pets")}>
-              +
-            </button>
+            <div>
+              <label>Pets:</label>
+              <div className="input-group">
+                <button type="button" onClick={() => handleDecrement("pets")}>
+                  -
+                </button>
+                <input
+                  type="number"
+                  name="pets"
+                  value={formData.pets}
+                  onChange={handleChange}
+                  readOnly
+                />
+                <button type="button" onClick={() => handleIncrement("pets")}>
+                  +
+                </button>
+              </div>
+            </div>
           </div>
-        </div>
-        </div>
-        <div className="price-calculator">
-          <h3>Price Calculator</h3>
-          <div>
-            <label>Price per day:</label>
-            <input
-              type="number"
-              name="pricePerDay"
-              value={formData.pricePerDay}
-              onChange={handleChange}
-              required
-            />
+          <div className="price-calculator">
+            <h3>Price Calculator</h3>
+            <div>
+              <label>Number of days:</label>
+              <input
+                type="number"
+                name="days"
+                value={formData.days}
+                readOnly
+              />
+            </div>
+            <div>
+              <label>Total Price:</label>
+              <input
+                type="text"
+                name="totalPrice"
+                value={formData.totalPrice}
+                readOnly
+              />
+            </div>
+            <div>
+              <label>Advance Payment (30%):</label>
+              <input
+                type="text"
+                name="advancePayment"
+                value={formData.advancePayment}
+                readOnly
+              />
+            </div>
           </div>
-          <div>
-            <label>Number of days:</label>
-            <input
-              type="number"
-              name="days"
-              value={formData.days}
-              onChange={handleChange}
-              readOnly
-            />
-          </div>
-          <div>
-            <label>Total Price:</label>
-            <input
-              type="text"
-              name="totalPrice"
-              value={formData.totalPrice}
-              readOnly
-            />
-          </div>
-          <div>
-            <label>Advance Payment (30%):</label>
-            <input
-              type="text"
-              name="advancePayment"
-              value={formData.advancePayment}
-              readOnly
-            />
-          </div>
-       
-        </div>
-        <button type="submit" disabled={!isBookingValid}>
-          Submit
-        </button>
-      </form>
-    </div>
+          <button type="submit" disabled={!isBookingValid}>
+            Submit
+          </button>
+        </form>
+      </div>
     </div>
   );
 }
-
 
 export default Booking;
