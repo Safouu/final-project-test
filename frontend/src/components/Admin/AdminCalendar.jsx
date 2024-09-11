@@ -76,7 +76,43 @@ const AdminCalendar = () => {
   };
 
   useEffect(() => {
+<<<<<<< HEAD
     fetchData();
+=======
+    fetch('http://localhost:3232/reservations')
+      .then(response => {
+        if (!response.ok) {
+          throw new Error('Network response was not ok');
+        }
+        return response.json();
+      })
+      .then(data => {
+        console.log('Fetched data:', data); 
+
+        const resources = data
+
+          .filter(item => item.apartment) 
+          .map(item => ({
+            id: item.apartment._id,
+            name: item.apartment.name,
+            color: getColorForResource(item.apartment._id, data) 
+          }));
+
+        const events = data
+          .filter(item => item.apartment && item.user) 
+          .map(item => ({
+            id: item._id,
+            text: item.user.firstName, 
+            start: item.startDate,
+            end: item.endDate,
+            resource: item.apartment._id 
+          }));
+
+        setObjects(resources);
+        setEvents(events);
+      })
+      .catch(error => console.error('Error fetching data:', error));
+>>>>>>> refs/remotes/origin/main
   }, []);
 
   // Scheduler configuration

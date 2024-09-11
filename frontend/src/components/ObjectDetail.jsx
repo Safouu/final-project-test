@@ -14,8 +14,13 @@ const ObjectDetail = () => {
       .then((res) => res.json())
       .then((data) => {
         setObject(data);
-        setSelectedImage(data.image);
-        setCurrentPrice(data.prices || []); // Store the prices array
+        setSelectedImage(data.image); 
+        /// console.log('Fetched object:', data);
+        // console.log('Image URL:', data.image);
+
+        const today = new Date();
+        const price = data.prices.find(p => new Date(p.startDate) <= today && new Date(p.endDate) >= today);
+        setCurrentPrice(price ? price.price : 'N/A');
       })
       .catch((error) => {
         console.error('There was a problem with the fetch operation:', error);
@@ -70,6 +75,7 @@ const ObjectDetail = () => {
                 </div>
               </div>
 
+<<<<<<< HEAD
               <div className='single-description'>
                 <h2>{object.name}</h2>
                 <p>{object.description}</p>
@@ -97,6 +103,13 @@ const ObjectDetail = () => {
                   </table>
                 </div>
               </div>
+=======
+            <div className='single-description'>
+              <h2>{object.name}</h2>
+              <p>{object.description}</p>
+              <p>Current Price: {currentPrice} $</p>
+            </div>
+>>>>>>> refs/remotes/origin/main
 
               {/* latitude and longitude  */}
               {object.latitude && object.longitude ? (

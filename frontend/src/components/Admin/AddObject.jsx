@@ -3,7 +3,7 @@ import Map from './Map';
 
 const AddObject = () => {
   const [name, setName] = useState('');
-  const [prices, setPrices] = useState([{ startDate: '', endDate: '', price: '' }]);
+  const [price, setPrice] = useState([{ startDate: '', endDate: '', price: '' }]);
   const [description, setDescription] = useState('');
   const [image, setImage] = useState('');
   const [image1, setImage1] = useState('');
@@ -27,21 +27,25 @@ const AddObject = () => {
 
   const handlePriceChange = (index, e) => {
     const { name, value } = e.target;
+<<<<<<< HEAD
     const updatedPrices = [...prices];
 
   
     
+=======
+    const updatedPrices = [...price];
+>>>>>>> refs/remotes/origin/main
     updatedPrices[index] = { ...updatedPrices[index], [name]: value };
-    setPrices(updatedPrices);
+    setPrice(updatedPrices);
   };
 
   const handleAddPriceRange = () => {
-    setPrices([...prices, { startDate: '', endDate: '', price: '' }]);
+    setPrice([...price, { startDate: '', endDate: '', price: '' }]);
   };
 
   const handleRemovePriceRange = (index) => {
-    const updatedPrices = prices.filter((_, i) => i !== index);
-    setPrices(updatedPrices);
+    const updatedPrices = price.filter((_, i) => i !== index);
+    setPrice(updatedPrices);
   };
 
 
@@ -63,9 +67,11 @@ const AddObject = () => {
       reader.readAsDataURL(file);
     }
   };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
 
+<<<<<<< HEAD
     const formatDateToYYYYMMDD = (dateStr) => {
       const date = new Date(dateStr);
       return date.toISOString().split('T')[0];
@@ -95,15 +101,17 @@ const AddObject = () => {
   
     console.log('Object data being sent:', objectData); // Check here
   
+=======
+>>>>>>> refs/remotes/origin/main
     try {
       const response = await fetch('http://localhost:3232/objects', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify(objectData),
+        body: JSON.stringify({ name, price, description, image, image1, image2, image3, image4, image5, image6, latitude, longitude}),
       });
-  
+
       if (response.ok) {
         console.log('Object added successfully');
       } else {
@@ -114,7 +122,7 @@ const AddObject = () => {
     }
 
     setName('');
-    setPrices([{ startDate: '', endDate: '', price: '' }]);
+    setPrice([{ startDate: '', endDate: '', price: '' }]);
     setDescription('');
     setImage('');
     setImage1('');
@@ -130,9 +138,13 @@ const AddObject = () => {
     setImage4Preview('');
     setImage5Preview('');
     setImage6Preview('');
+ 
     setLatitude('');
     setLongitude('');
   };
+
+
+
 
   return (
     <div>
@@ -163,7 +175,7 @@ const AddObject = () => {
         />
 
 
-      {prices.map((priceRange, index) => (
+{price.map((priceRange, index) => (
           <div key={index}>
             <label>Start Date</label>
             <input
@@ -285,7 +297,7 @@ const AddObject = () => {
 
         )}
 
-      <label>Image 4</label>
+<label>Image 4</label>
         <input
           type="text"
           placeholder="Image URL 4"
@@ -308,7 +320,7 @@ const AddObject = () => {
 
         )}
 
-      <label>Image 5</label>
+<label>Image 5</label>
         <input
           type="text"
           placeholder="Image URL 5"
@@ -331,16 +343,10 @@ const AddObject = () => {
 
         )}
 
-      <label>Image 6</label>
+<label>Image 6</label>
         <input
           type="text"
           placeholder="Image URL 6"
-          value={image6}
-          onChange={(e) => handleFileChange(e, setImage6, setImage6Preview)}
-        />
-        <input
-          type="file"
-          accept="image/*"
           onChange={(e) => handleFileChange(e, setImage6, setImage6Preview)}
         />
         {image6Preview && (

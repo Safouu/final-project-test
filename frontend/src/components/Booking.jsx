@@ -267,4 +267,9 @@ function Booking() {
   );
 }
 
+<<<<<<< HEAD
 export default Booking;
+=======
+
+export default Booking;
+>>>>>>> refs/remotes/origin/main
