@@ -32,57 +32,29 @@ const AdminCalendar = () => {
         return response.json();
       })
       .then(data => {
-        console.log('Fetched data:', data); // Log data for debugging
+        console.log('Fetched data:', data); 
 
         const resources = data
-<<<<<<< HEAD
-          .filter(item => item.apartment) // Filter out items with null apartment
-          .map(item => ({
-            id: item.apartment._id, // Using apartment ID for resource
-            name: item.apartment.name,
-            color: getColorForResource(item.apartment._id, data) // Color assignment
-          }));
 
-        const events = data
-          .filter(item => item.apartment && item.user) // Filter out items with null apartment or user
-          .map(item => ({
-            id: item._id,
-            text: item.user.firstName, // Display user's first name
-            start: item.startDate,
-            end: item.endDate,
-            resource: item.apartment._id // Use apartment ID as resource
-          }));
-
-        setObjects(resources);
-        setEvents(events);
-=======
-          .filter((item, index, self) => self.findIndex(t => t.apartment._id === item.apartment._id) === index)
+          .filter(item => item.apartment) 
           .map(item => ({
             id: item.apartment._id,
             name: item.apartment.name,
-            color: getColorForResource(item.apartment._id, data)
+            color: getColorForResource(item.apartment._id, data) 
           }));
-          const events = data
-          .filter((item, index, self) => self.findIndex(t => t._id === item._id) === index)
-          .map(item => {
-            const startDateUTC = moment.utc(item.startDate).local().format('YYYY-MM-DDTHH:mm:ss');
-            
-            const endDateUTC = moment.utc(item.endDate).local().endOf('day').format('YYYY-MM-DDTHH:mm:ss');
-            
-            return {
-              id: item._id,
-              text: item.user.firstName,
-              start: startDateUTC,
-              end: endDateUTC,
-              resource: item.apartment._id
-            };
-          });
-        
+
+        const events = data
+          .filter(item => item.apartment && item.user) 
+          .map(item => ({
+            id: item._id,
+            text: item.user.firstName, 
+            start: item.startDate,
+            end: item.endDate,
+            resource: item.apartment._id 
+          }));
 
         setObjects(resources);
         setEvents(events);
-
->>>>>>> refs/remotes/origin/main
       })
       .catch(error => console.error('Error fetching data:', error));
   }, []);

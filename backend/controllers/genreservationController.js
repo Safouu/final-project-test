@@ -11,11 +11,27 @@ export const genReservation = async (req, res) => {
       return res.status(400).json({ error: "Missing required fields" });
     }
 
+    const start = new Date(startDate);
+    const end = new Date(endDate);
+
+  
+    const overlappingReservation = await GenReservation.findOne({
+      apartment,
+      $or: [
+        { startDate: { $lt: end }, endDate: { $gt: start } }  // 
+      ]
+    });
+
+    if (overlappingReservation) {
+      return res.status(409).json({ error: "Apartment is already booked for the selected dates." });
+    }
+
+   
     const newGenReservation = new GenReservation({
       user,
       apartment,
-      startDate: new Date(startDate),
-      endDate: new Date(endDate),
+      startDate: start,
+      endDate: end,
       totalPrice,
       advancePayment,
     });
@@ -71,7 +87,6 @@ export const getAllGenReservations = async (req, res) => {
   }
 };
 
-//delete Guest
 export const deleteSingleGuest = async (req, res) => {
   const id = req.params.id;
   try {
@@ -103,8 +118,8 @@ export const updateSingleGuest = async (req, res) => {
 export const getGenReservation = async (req, res) => {
   try {
     const reservations = await GenReservation.find()
-      .populate('user', 'firstName') // Only fetch the first name of the user
-      .populate('apartment', 'name'); // Fetch apartment name
+      .populate('user', 'firstName') 
+      .populate('apartment', 'name'); 
 
     res.json(reservations);
   } catch (error) {

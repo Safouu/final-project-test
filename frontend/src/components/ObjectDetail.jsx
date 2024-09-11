@@ -10,22 +10,25 @@ const ObjectDetail = () => {
   const [object, setObject] = useState(null);
   const [selectedImage, setSelectedImage] = useState('');
   const [currentPrice, setCurrentPrice] = useState('');
-  
+
   useEffect(() => {
     fetch(`http://localhost:3232/objects/${id}`)
       .then((res) => res.json())
       .then((data) => {
         setObject(data);
-        setSelectedImage(data.image);
-        setCurrentPrice(data.prices || []); // Store the prices array
+        setSelectedImage(data.image); 
+        /// console.log('Fetched object:', data);
+        // console.log('Image URL:', data.image);
+
+        const today = new Date();
+        const price = data.prices.find(p => new Date(p.startDate) <= today && new Date(p.endDate) >= today);
+        setCurrentPrice(price ? price.price : 'N/A');
       })
       .catch((error) => {
         console.error('There was a problem with the fetch operation:', error);
         setObject({ error: 'Failed to load object details' });
       });
   }, [id]);
-  
-  
 
  
   const handleImageClick = (imageKey) => {
@@ -79,32 +82,10 @@ const ObjectDetail = () => {
             
               </div>
 
-              <div className='single-description'>
+            <div className='single-description'>
               <h2>{object.name}</h2>
               <p>{object.description}</p>
-
-              {/* Display all prices in a table */}
-              <div className='single-price'>
-              <h3>Prices</h3>
-              <table>
-                <thead>
-                  <tr>
-                    <th>Start Date</th>
-                    <th>End Date</th>
-                    <th>Price (EUR)</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {currentPrice.map((priceRange, index) => (
-                    <tr key={index}>
-                      <td>{priceRange.startDate}</td>
-                      <td>{priceRange.endDate}</td>
-                      <td>{priceRange.price} EUR</td>
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
-            </div>
+              <p>Current Price: {currentPrice} $</p>
             </div>
 
         {/* latitude and longitude  */}

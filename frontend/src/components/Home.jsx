@@ -5,7 +5,7 @@ const Home = () => {
 return (
 <div className='home'>
   <div className='top'>
-    <h1>Dream Vocation</h1>
+    <h1>Your Dream Vocation</h1>
     {/* <h1>PAUSE</h1> */}
     <img src="./public/images/Villa-Indigo.jpg" alt="airplane" />
    {/* <video autoPlay loop muted>
@@ -27,5 +27,3 @@ return (
 };
 
 export default Home;
-
-
