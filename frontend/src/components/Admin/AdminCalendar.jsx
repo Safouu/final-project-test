@@ -76,9 +76,6 @@ const AdminCalendar = () => {
   };
 
   useEffect(() => {
-<<<<<<< HEAD
-    fetchData();
-=======
     fetch('http://localhost:3232/reservations')
       .then(response => {
         if (!response.ok) {
@@ -112,7 +109,6 @@ const AdminCalendar = () => {
         setEvents(events);
       })
       .catch(error => console.error('Error fetching data:', error));
->>>>>>> refs/remotes/origin/main
   }, []);
 
   // Scheduler configuration

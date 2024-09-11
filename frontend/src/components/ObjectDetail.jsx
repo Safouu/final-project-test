@@ -75,41 +75,11 @@ const ObjectDetail = () => {
                 </div>
               </div>
 
-<<<<<<< HEAD
-              <div className='single-description'>
-                <h2>{object.name}</h2>
-                <p>{object.description}</p>
-
-                {/* Display all prices in a table */}
-                <div className='single-price'>
-                  <h3>Prices</h3>
-                  <table>
-                    <thead>
-                      <tr>
-                        <th>Start Date</th>
-                        <th>End Date</th>
-                        <th>Price (EUR)</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      {currentPrice.map((priceRange, index) => (
-                        <tr key={index}>
-                          <td>{formatDate(priceRange.startDate)}</td>
-                          <td>{formatDate(priceRange.endDate)}</td>
-                          <td>{priceRange.price} EUR</td>
-                        </tr>
-                      ))}
-                    </tbody>
-                  </table>
-                </div>
-              </div>
-=======
             <div className='single-description'>
               <h2>{object.name}</h2>
               <p>{object.description}</p>
               <p>Current Price: {currentPrice} $</p>
             </div>
->>>>>>> refs/remotes/origin/main
 
               {/* latitude and longitude  */}
               {object.latitude && object.longitude ? (

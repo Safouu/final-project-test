@@ -27,14 +27,7 @@ const AddObject = () => {
 
   const handlePriceChange = (index, e) => {
     const { name, value } = e.target;
-<<<<<<< HEAD
-    const updatedPrices = [...prices];
-
-  
-    
-=======
     const updatedPrices = [...price];
->>>>>>> refs/remotes/origin/main
     updatedPrices[index] = { ...updatedPrices[index], [name]: value };
     setPrice(updatedPrices);
   };
@@ -71,38 +64,6 @@ const AddObject = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-<<<<<<< HEAD
-    const formatDateToYYYYMMDD = (dateStr) => {
-      const date = new Date(dateStr);
-      return date.toISOString().split('T')[0];
-    };
-
-    const formattedPrices = prices.map(price => ({
-      ...price,
-      startDate: formatDateToYYYYMMDD(price.startDate),
-      endDate: formatDateToYYYYMMDD(price.endDate)
-    }));
-
-
-    const objectData = {
-      name, 
-      prices: formattedPrices,
-      description,
-      image,
-      image1,
-      image2,
-      image3,
-      image4,
-      image5,
-      image6,
-      latitude,
-      longitude
-    };
-  
-    console.log('Object data being sent:', objectData); // Check here
-  
-=======
->>>>>>> refs/remotes/origin/main
     try {
       const response = await fetch('http://localhost:3232/objects', {
         method: 'POST',
