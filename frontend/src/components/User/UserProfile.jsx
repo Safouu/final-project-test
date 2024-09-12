@@ -72,7 +72,7 @@ const UserProfile = () => {
 
   return (
     <div>
-      <h1>{user.firstName}'s Profile</h1>
+      <h1>{user.firstName} Profile</h1>
       <p><strong>First Name:</strong> {user.firstName}</p>
       <p><strong>Last Name:</strong> {user.lastName}</p>
       {/* <p><strong>Email:</strong> {user.email}</p>
