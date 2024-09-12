@@ -60,8 +60,9 @@ const GuestList = () => {
 
   return (
     <div className="reservations-table">
-      <h2>Guest List</h2>
-      <button onClick={handleAdd}>Add New Reservation</button>
+
+      <button className="addNewGuest" onClick={handleAdd}>+ Reservation</button>
+
       <table>
         <thead>
           <tr>
@@ -76,10 +77,9 @@ const GuestList = () => {
             <th>Total Price</th>
             <th>Advance Payment</th>
             <th>Apartment</th>
-            <th></th>
-            <th></th>
           </tr>
         </thead>
+
         <tbody>
           {reservations.map((reservation) => (
             <tr key={reservation._id}>
@@ -95,10 +95,10 @@ const GuestList = () => {
               <td>${reservation.advancePayment || '0.00'}</td>
               <td>{reservation.apartment?.name || 'N/A'}</td>
               <td>
-                <button onClick={() => handleEdit(reservation)}>Edit</button>
+                <button className="button edit" onClick={() => handleEdit(reservation)}>Edit</button>
               </td>
               <td>
-                <button onClick={() => handleDelete(reservation._id)}>Delete</button>
+                <button className="button delete" onClick={() => handleDelete(reservation._id)}>X</button>
               </td>
             </tr>
           ))}
