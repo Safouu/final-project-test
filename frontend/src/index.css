@@ -45,7 +45,7 @@ header {
   align-items: center;
   padding: 1rem;
   color: var(--secondary-color);
-  font-size: var(--font-size-large);
+  font-size: var(--font-size-medium);
 
 background: rgba(255, 255, 255, 0.142);
 box-shadow: 0 4px 30px rgba(109, 109, 109, 0.194);
@@ -68,7 +68,6 @@ header nav {
 header nav a {
   text-decoration: none;
   color: var(--secondary-color);
-  font-weight: 600;
   transition: color 0.3s;
 }
 
@@ -76,6 +75,7 @@ header nav .active {
   color: orange;
   padding: 5px;
   border: solid 2px orange;;
+  font-weight: 600;
 }
 
 header .logo a {
@@ -194,48 +194,44 @@ footer {
   align-items: center;
   gap: 20px;
   padding: 20px;
-  background-color: var(--main-color);
-  border-radius: 10px;
-  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.682);
-  max-width: 700px;
-  margin: 20px auto;
+  border-radius: 8px;
+  box-shadow: 0 2px 12px #0000002b;
+  margin-top: 120px ;
+  width: 30%;
+  background-color: yellowgreen;
 }
+
 .booking-container .calendar-section {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 20px;
+  text-align: center;
   width: 100%;
-  margin-bottom: 20px;
+  box-shadow: 0 2px 12px #0000002b;
+  border-radius: 8px;
+  padding: 3px;
+  border: solid 5px rgb(249, 207, 0);
 }
 
 .booking-container .people-container {
   display: flex;
   flex-direction: row;
+  flex-wrap: wrap;
   align-items: center;
   justify-content: space-around;
   gap: 10px;
   width: 100%;
   margin-bottom: 20px;
+  border: solid 5px rgb(16, 57, 181);
+  input{
+    text-align: center;
+    border-radius: 4px;
+    border: solid 5px red;
+  }
+  button{
+    border-radius: 4px;
+    border: solid 5px red;
+  }
 }
 
 
-.people-group {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  margin-right: 10px;
-}
-
-.people-group:last-child {
-  margin-right: 0;
-}
-
-.input-group {
-  display: flex;
-  align-items: center;
-  margin-top: 5px;
-}
 
 .input-group button {
  
@@ -245,6 +241,7 @@ footer {
   font-size: 16px;
   cursor: pointer;
   border-radius: 4px;
+  border: solid 5px rgb(13, 255, 0);
 }
 
 
@@ -255,26 +252,23 @@ footer {
   padding: 5px;
   border-radius: 4px;
   border: 1px solid #ccc;
+  border: solid 5px rgb(0, 68, 255);
 }
 
  .price-calculator {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 20px;
-  width: 100%;
-  margin-top: 20px;
-  margin-bottom: 20px;
+  gap: 10px;
+  border: solid 5px rgb(255, 0, 0);
 }
 
-.price-calculator h3 {
-  margin-bottom: 15px;
-  text-align: center;
-}
+
 
 .price-calculator label {
   display: block;
   margin-bottom: 5px;
+  border: solid 5px rgb(255, 0, 0);
 }
 
 .price-calculator input {
@@ -283,15 +277,9 @@ footer {
   margin-bottom: 10px;
   border-radius: 4px;
   border: 1px solid #ccc;
+  border: solid 5px rgb(255, 0, 0);
 }
 
-
-/* For Chrome, Safari, Edge, and Opera
-input[type="number"]::-webkit-outer-spin-button,
-input[type="number"]::-webkit-inner-spin-button {
-    -webkit-appearance: none;
-    margin: 0;
-}
 
 /* For Firefox */
 input[type="number"] {
@@ -300,7 +288,6 @@ input[type="number"] {
 
 
 button {
-  background-color: #ccc;
   cursor: not-allowed;
 }
 
@@ -561,37 +548,35 @@ border: 1px solid var(--secondary-color);
 
 /* Styling for the map container */
 .map-container {
-  margin-top: 20px;
-  height: 300px;
-  border-radius: 8px;
+  height: 379px;
+  border-radius: 5px;
   overflow: hidden;
-  box-shadow: 0 2px 12px #0000002b;
+  box-shadow: 0 2px 12px #00000033;
 }
 
 /* Button for booking */
 .booking-button {
-  box-shadow: 0 2px 12px #0000002b;
-  color: white;
-  border: none;
-  padding: 12px 20px;
-  border-radius: 6px;
-  cursor: pointer;
-  font-size: 16px;
-  margin-top: 20px;
   width: 100%;
-  transition: background-color 0.3s ease-in-out;
+  padding: 10px;
+  background-color: var(--secondary-color);
+  /* box-shadow: 0 2px 12px #0000002b; */
+  color: var(--color-white);
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: var(--font-size-small);
+  transition: background-color 0.3s ease;
 }
 
 .booking-button:hover {
-  background-color: #707711;
+  background-color: #1b38b9;
 }
 
 /* Styling the Table */
 
 .single-price {
   margin-top: 30px;
-  padding: 20px;
-  background-color: #f9f9f9;
+  padding: 200px;
   border-radius: 8px;
   box-shadow: 0 1px 4px rgba(0, 0, 0, 0.1);
 }
@@ -652,8 +637,6 @@ border: 1px solid var(--secondary-color);
   background-color: #ddd;
 }
 
-
-
 /*  Social-Media-Links */
 
 .social-media {
@@ -682,23 +665,7 @@ border: 1px solid var(--secondary-color);
 .social-media a:hover {
   background-color: #555;
 }
-.booking-button {
-  width: 100%;
-  padding: 10px 20px;
-  background-color: var(--secondary-color);
-  color: var(--color-white);
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-  font-size: var(--font-size-small);
-  transition: background-color 0.3s ease;
-}
 
-/*Object*/
-
-
-
--------------------------
 /* Admin-Panel */
 
 
@@ -1204,6 +1171,10 @@ border: 1px solid var(--secondary-color);
       text-shadow: 0 4px 20px #00eaff79;
       font-size: 4rem;
     }
+
+    .apart-details {
+      margin-top: 155px;
+    }
  
 
 }
@@ -1211,3 +1182,6 @@ border: 1px solid var(--secondary-color);
 
 
 
+.admin-sidebar{
+  margin-top: 200px;
+}

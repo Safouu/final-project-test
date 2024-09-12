@@ -158,8 +158,11 @@ function Booking() {
 
   return (
     <div className="home">
+      {/* ////////////////////////// */}
       <div className="booking-container">
-        <form onSubmit={handleSubmit}>
+        <form  onSubmit={handleSubmit}>
+
+          {/* ////////////////////// */}
           <div className="calendar-section">
             <DateRange
               editableDateInputs={true}
@@ -170,8 +173,11 @@ function Booking() {
             />
             {errorMessage && <p style={{ color: 'red' }}>{errorMessage}</p>}
           </div>
+
+          {/* //////////////////////////////// */}
           <div className="people-container">
-            <div className="people-group">
+
+            <div>
               <label>Adults:</label>
               <div className="input-group">
                 <button type="button" onClick={() => handleDecrement("people")}>
@@ -188,9 +194,9 @@ function Booking() {
                   +
                 </button>
               </div>
-            </div>
+              </div>
 
-            <div>
+              <div>
               <label>Children:</label>
               <div className="input-group">
                 <button type="button" onClick={() => handleDecrement("children")}>
@@ -226,8 +232,9 @@ function Booking() {
                   +
                 </button>
               </div>
-            </div>
+              </div>
           </div>
+          {/* ////////////////////////////////////////// */}
           <div className="price-calculator">
             <h3>Price Calculator</h3>
             <div>
