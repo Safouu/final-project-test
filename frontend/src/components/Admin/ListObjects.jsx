@@ -1,7 +1,6 @@
 import { useState, useEffect } from 'react';
 import Map from './Map';
 
-
 const ListObject = () => {
   const [objects, setObjects] = useState([]);
   const [editingObject, setEditingObject] = useState(null);
