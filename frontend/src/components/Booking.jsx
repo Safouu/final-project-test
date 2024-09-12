@@ -34,52 +34,32 @@ function Booking() {
   const [errorMessage, setErrorMessage] = useState('');
 
   useEffect(() => {
-    // Ensure object and dateRange are available
-    if (!object || !dateRange[0]) return;
+    if (!object) return;
+    
+    const calculatePricePerDay = () => {
+      const { prices } = object;
+      const start = dateRange[0].startDate;
+      const end = dateRange[0].endDate;
 
-    const { startDate, endDate } = dateRange[0];
-
-    // Helper function to iterate through dates
-    const getDatesInRange = (start, end) => {
-      const dates = [];
-      let currentDate = new Date(start);
-
-      while (currentDate <= end) {
-        dates.push(new Date(currentDate));
-        currentDate.setDate(currentDate.getDate() + 1); // Move to the next day
-      }
-
-      return dates;
-    };
-
-    // Helper function to find the price for a specific date
-    const findPriceForDate = (date, prices) => {
-      const applicablePriceRange = prices.find(({ startDate: priceStart, endDate: priceEnd }) => {
-        const startDateObj = new Date(priceStart);
-        const endDateObj = new Date(priceEnd);
-        return date >= startDateObj && date <= endDateObj;
+      // Find the applicable price range
+      const applicablePriceRange = prices.find(({ startDate, endDate }) => {
+        const startDateObj = new Date(startDate);
+        const endDateObj = new Date(endDate);
+        return start >= startDateObj && end <= endDateObj;
       });
 
-      return applicablePriceRange ? applicablePriceRange.price : 0;
+      console.log('Applicable price range:', applicablePriceRange); // Debugging line
+      if (!applicablePriceRange) {
+        setErrorMessage('No pricing available for the selected dates.');
+        return 0;
+      }
+
+      return applicablePriceRange.price;
     };
 
-    // Calculate total price for the booking range
-    const calculateTotalPrice = () => {
-      const { prices } = object;
-
-      // Get all dates in the range from startDate to endDate
-      const datesInRange = getDatesInRange(startDate, endDate);
-
-      // Sum the price for each day
-      const total = datesInRange.reduce((acc, currentDate) => {
-        const dailyPrice = findPriceForDate(currentDate, prices);
-        return acc + dailyPrice;
-      }, 0);
-
-      return total;
-    };
-
-    const days = Math.ceil((endDate - startDate) / (1000 * 60 * 60 * 24));  // Calculate number of days
+    const start = dateRange[0].startDate;
+    const end = dateRange[0].endDate;
+    const days = Math.ceil((end - start) / (1000 * 60 * 60 * 24));
 
     if (days < 5) {
       setIsBookingValid(false);
@@ -88,8 +68,8 @@ function Booking() {
       setIsBookingValid(true);
       setErrorMessage('');
 
-      // Calculate total price and advance payment
-      const totalPrice = calculateTotalPrice();
+      const pricePerDay = calculatePricePerDay();
+      const totalPrice = pricePerDay * days;
       const advancePayment = totalPrice * 0.3;
 
       setFormData((prevFormData) => ({
@@ -158,11 +138,8 @@ function Booking() {
 
   return (
     <div className="home">
-      {/* ////////////////////////// */}
       <div className="booking-container">
-        <form  onSubmit={handleSubmit}>
-
-          {/* ////////////////////// */}
+        <form onSubmit={handleSubmit}>
           <div className="calendar-section">
             <DateRange
               editableDateInputs={true}
@@ -173,11 +150,8 @@ function Booking() {
             />
             {errorMessage && <p style={{ color: 'red' }}>{errorMessage}</p>}
           </div>
-
-          {/* //////////////////////////////// */}
           <div className="people-container">
-
-            <div>
+            <div className="people-group">
               <label>Adults:</label>
               <div className="input-group">
                 <button type="button" onClick={() => handleDecrement("people")}>
@@ -194,9 +168,9 @@ function Booking() {
                   +
                 </button>
               </div>
-              </div>
+            </div>
 
-              <div>
+            <div>
               <label>Children:</label>
               <div className="input-group">
                 <button type="button" onClick={() => handleDecrement("children")}>
@@ -232,9 +206,8 @@ function Booking() {
                   +
                 </button>
               </div>
-              </div>
+            </div>
           </div>
-          {/* ////////////////////////////////////////// */}
           <div className="price-calculator">
             <h3>Price Calculator</h3>
             <div>

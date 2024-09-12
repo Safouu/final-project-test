@@ -6,7 +6,7 @@ const loadGoogleMaps = (callback) => {
   if (!existingScript) {
     const script = document.createElement('script');
     script.id = 'google-maps-script';
-    script.src = `https://maps.googleapis.com/maps/api/js?key=AIzaSyBy48P_hoMccIb9HtqBXDGKISwygIJNJP8`;
+    script.src = `https://maps.googleapis.com/maps/api/js?key=AIzaSyBy48P_hoMccIb9HtqBXDGKISwygIJNJP8&libraries=places`;
     script.onload = callback;
     document.body.appendChild(script);
   } else if (callback) {
@@ -15,27 +15,45 @@ const loadGoogleMaps = (callback) => {
 };
 
 const Map = ({ latitude, longitude }) => {
-  const mapRef = useRef(null);
-  const [map, setMap] = useState(null);
+  const mapRef = useRef(null);   // Reference to the div containing the map
+  const mapInstance = useRef(null);  // Reference to the map instance itself
+  const [placeDetails, setPlaceDetails] = useState(null);  // Store place details
 
   useEffect(() => {
     const initializeMap = () => {
-
-      // console.log(data);
-
-      if (window.google?.maps && mapRef.current) {
-        const newMap = new window.google.maps.Map(mapRef.current, {
+      if (window.google?.maps && mapRef.current && !mapInstance.current) {
+        // Only create the map if it hasn't been created yet
+        mapInstance.current = new window.google.maps.Map(mapRef.current, {
           center: { lat: latitude, lng: longitude },
           zoom: 15,
         });
 
-        setMap(newMap);
-
         const marker = new window.google.maps.Marker({
           position: { lat: latitude, lng: longitude },
-          map: newMap,
+          map: mapInstance.current,
         });
 
+        // Add a click event listener to the marker
+        marker.addListener('click', () => {
+          const service = new window.google.maps.places.PlacesService(mapInstance.current);
+          const request = {
+            location: { lat: latitude, lng: longitude },
+            radius: '500',
+            type: ['establishment'],
+          };
+
+          service.nearbySearch(request, (results, status) => {
+            if (status === window.google.maps.places.PlacesServiceStatus.OK && results[0]) {
+              const placeId = results[0].place_id;
+              service.getDetails({ placeId }, (placeResult, status) => {
+                if (status === window.google.maps.places.PlacesServiceStatus.OK) {
+                  console.log('Place Details:', placeResult);
+                  setPlaceDetails(placeResult);  // Update place details in state
+                }
+              });
+            }
+          });
+        });
       }
     };
 
@@ -44,8 +62,18 @@ const Map = ({ latitude, longitude }) => {
 
   return (
     <div>
-      
       <div ref={mapRef} style={{ height: '400px', width: '100%' }} />
+      
+      {/* Display place details if available */}
+      {placeDetails && (
+        <div style={{ marginTop: '20px' }}>
+          <h3>Place Details</h3>
+          <p><strong>Name:</strong> {placeDetails.name}</p>
+          <p><strong>Address:</strong> {placeDetails.formatted_address}</p>
+          <p><strong>Rating:</strong> {placeDetails.rating}</p>
+          <p><strong>Website:</strong> {placeDetails.website}</p>
+        </div>
+      )}
     </div>
   );
 };
@@ -53,7 +81,6 @@ const Map = ({ latitude, longitude }) => {
 Map.propTypes = {
   latitude: PropTypes.number.isRequired,
   longitude: PropTypes.number.isRequired,
-
 };
 
 export default Map;
