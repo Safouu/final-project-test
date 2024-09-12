@@ -27,6 +27,18 @@ const genralResSchema = new mongoose.Schema({
     type: Number,
     required: true,
   },
+  people: {
+    type: Number,
+    required: true,
+  },
+  children: {
+    type: Number,
+    required: true,
+  },
+  pets: {
+    type: Number,
+    required: true,
+  },
 });
 
 

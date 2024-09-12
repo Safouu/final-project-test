@@ -124,9 +124,13 @@ function Booking() {
           endDate: dateRange[0].endDate.toISOString(),
           totalPrice: formData.totalPrice,
           advancePayment: formData.advancePayment,
+          people: formData.people,
+          children: formData.children,
+          pets: formData.pets
         }),
       });
 
+      console.log(formData)
       if (response.status === 201) {
         alert('Reservation created successfully!');
       }

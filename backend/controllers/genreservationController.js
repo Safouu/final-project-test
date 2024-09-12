@@ -5,9 +5,9 @@ export const genReservation = async (req, res) => {
   try {
     await connect();
 
-    const { user, apartment, startDate, endDate, totalPrice, advancePayment } = req.body;
+    const { user, apartment, startDate, endDate, totalPrice, advancePayment, people, children, pets } = req.body;
 
-    if (!user || !apartment || !startDate || !endDate || !totalPrice || !advancePayment) {
+    if (!user || !apartment || !startDate || !endDate || !totalPrice || !advancePayment || !people || !children || !pets) {
       return res.status(400).json({ error: "Missing required fields" });
     }
 
@@ -34,6 +34,9 @@ export const genReservation = async (req, res) => {
       endDate: end,
       totalPrice,
       advancePayment,
+      people,
+      children,
+      pets,
     });
 
     await newGenReservation.save();

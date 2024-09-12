@@ -18,10 +18,11 @@ const GuestList = () => {
 
   const fetchReservations = async () => {
     try {
-      const response = await fetch("http://localhost:3232/genReservation");
+      const response = await fetch("http://localhost:3232/genreservation");
       if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
       const data = await response.json();
       setReservations(data);
+      console.log("reservation:",data)
     } catch (error) {
       console.error("Error fetching reservations:", error);
       // Optionally show an error message to the user
@@ -67,13 +68,11 @@ const GuestList = () => {
             <th>First Name</th>
             <th>Last Name</th>
             <th>Email</th>
-            <th>Phone</th>
             <th>Check-in</th>
             <th>Check-out</th>
             <th>People</th>
             <th>Children</th>
             <th>Pets</th>
-            <th>Price per Day</th>
             <th>Total Price</th>
             <th>Advance Payment</th>
             <th>Apartment</th>
@@ -87,13 +86,11 @@ const GuestList = () => {
               <td>{reservation.user?.firstName || 'N/A'}</td>
               <td>{reservation.user?.lastName || 'N/A'}</td>
               <td>{reservation.user?.email || 'N/A'}</td>
-              <td>{reservation.user?.phone || 'N/A'}</td>
               <td>{formatDate(reservation.startDate)}</td>
               <td>{formatDate(reservation.endDate)}</td>
               <td>{reservation.people}</td>
               <td>{reservation.children}</td>
               <td>{reservation.pets}</td>
-              <td>{reservation.apartment?.price || 'N/A'}</td>
               <td>${reservation.totalPrice || '0.00'}</td>
               <td>${reservation.advancePayment || '0.00'}</td>
               <td>{reservation.apartment?.name || 'N/A'}</td>
