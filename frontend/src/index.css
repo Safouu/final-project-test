@@ -498,10 +498,11 @@ resize: none;
 
 .apart-details {
   max-width: 900px;
+  background-color: white;
   border-radius: 8px;
-  box-shadow: 0 2px 12px #0000002b;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
   padding: 20px;
-  margin-top: 120px;
+  margin: 20px;
 }
 
 .single-apart {
@@ -510,18 +511,12 @@ resize: none;
   gap: 20px;
 }
 
-.single-top{
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-
-}
-
 /* Styling for the main and additional images */
 .single-main-img img {
+
   max-width: 100%;
   border-radius: 8px;
-  box-shadow: 0 2px 12px #0000002b;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
   max-height: 500px;
   object-fit: cover;
 }
@@ -539,7 +534,7 @@ resize: none;
   object-fit: cover;
   border-radius: 4px;
   cursor: pointer;
-  box-shadow: 0 2px 12px #0000002b;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
   transition: transform 0.3s ease-in-out;
 }
 
@@ -548,43 +543,75 @@ resize: none;
 }
 
 /* Styling for the description and price */
+
 .single-description {
-  padding: 0 10px;
-  border-radius: 8px;
-  box-shadow: 0 2px 12px #0000002b;
+  display: flex;
+  flex-direction: column;
+  gap: 12px; 
+  padding: 20px; 
+  background-color: #f9f9f9; 
+  border-radius: 8px; 
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); 
 }
+
+.single-description h2 {
+  font-size: 2rem; 
+  margin-bottom: 12px; 
+  color: #222; 
+  font-weight: 600; 
+  line-height: 1.3; 
+}
+
+.single-description p {
+  flex-wrap: wrap;
+  font-size: 1rem; 
+  margin-bottom: 10px;
+  color: #555; 
+  line-height: 1.6; 
+}
+
+.single-description p:last-child {
+  font-size: 1.125rem; 
+  font-weight: 700; 
+  color: #d32f2f; 
+  line-height: 1.5;
+  text-transform: uppercase; 
+}
+
 
 /* Styling for the map container */
 .map-container {
-  height: 379px;
-  border-radius: 5px;
+  margin-top: 20px;
+  height: 380px;
+  border-radius: 8px;
   overflow: hidden;
-  box-shadow: 0 2px 12px #00000033;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
 }
 
 /* Button for booking */
 .booking-button {
-  width: 100%;
-  padding: 10px;
-  background-color: var(--secondary-color);
-  /* box-shadow: 0 2px 12px #0000002b; */
-  color: var(--color-white);
+  background-color: #c12f2f;
+  color: white;
   border: none;
-  border-radius: 5px;
+  padding: 12px 20px;
+  border-radius: 6px;
   cursor: pointer;
-  font-size: var(--font-size-small);
-  transition: background-color 0.3s ease;
+  font-size: 16px;
+  margin-top: 20px;
+  width: 100%;
+  transition: background-color 0.3s ease-in-out;
 }
 
 .booking-button:hover {
-  background-color: #1b38b9;
+  background-color: #707711;
 }
 
 /* Styling the Table */
 
 .single-price {
   margin-top: 30px;
-  padding: 200px;
+  padding: 20px;
+  background-color: #f9f9f9;
   border-radius: 8px;
   box-shadow: 0 1px 4px rgba(0, 0, 0, 0.1);
 }
@@ -645,34 +672,10 @@ resize: none;
   background-color: #ddd;
 }
 
+
+
 /*  Social-Media-Links */
 
-.social-media {
-  position: fixed;
-  right: 0;
-  bottom: 0 ;
-  margin: 1rem;
-  display: flex;
-  flex-direction: column;
-  gap: 0.1rem;
-  cursor: pointer;
-}
-
-.social-media a {
- 
-  padding: 0.5rem;
-  background-color: #333;
-  opacity: 0.6 ;
-  color: white;
-  text-align: center;
-  border-radius: 4px;
-  text-decoration: none;
-  font-weight: bold;
-}
-
-.social-media a:hover {
-  background-color: #555;
-}
 
 /* Admin-Panel */
 

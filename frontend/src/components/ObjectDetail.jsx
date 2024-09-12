@@ -14,13 +14,8 @@ const ObjectDetail = () => {
       .then((res) => res.json())
       .then((data) => {
         setObject(data);
-        setSelectedImage(data.image); 
-        /// console.log('Fetched object:', data);
-        // console.log('Image URL:', data.image);
-
-        const today = new Date();
-        const price = data.prices.find(p => new Date(p.startDate) <= today && new Date(p.endDate) >= today);
-        setCurrentPrice(price ? price.price : 'N/A');
+        setSelectedImage(data.image);
+        setCurrentPrice(data.prices || []); // Store the prices array
       })
       .catch((error) => {
         console.error('There was a problem with the fetch operation:', error);
@@ -75,11 +70,33 @@ const ObjectDetail = () => {
                 </div>
               </div>
 
-            <div className='single-description'>
-              <h2>{object.name}</h2>
-              <p>{object.description}</p>
-              <p>Current Price: {currentPrice} $</p>
-            </div>
+              <div className='single-description'>
+                <h2>{object.name}</h2>
+                <p>{object.description}</p>
+
+                {/* Display all prices in a table */}
+                <div className='single-price'>
+                  <h3>Prices</h3>
+                  <table>
+                    <thead>
+                      <tr>
+                        <th>Start Date</th>
+                        <th>End Date</th>
+                        <th>Price (EUR)</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {currentPrice.map((priceRange, index) => (
+                        <tr key={index}>
+                          <td>{formatDate(priceRange.startDate)}</td>
+                          <td>{formatDate(priceRange.endDate)}</td>
+                          <td>{priceRange.price} EUR</td>
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
+                </div>
+              </div>
 
               {/* latitude and longitude  */}
               {object.latitude && object.longitude ? (
