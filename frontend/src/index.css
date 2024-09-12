@@ -24,9 +24,15 @@ body, html {
   box-sizing: border-box;
 }
 
-main {
+/* main {
+  padding-top: 70px;
   padding-bottom: 70px;
-}
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+} */
  
 #root {
   /* display: flex;
@@ -43,9 +49,13 @@ header {
   flex-wrap: wrap;
   justify-content: space-between;
   align-items: center;
-  padding: 1rem;
+  padding: 1.5rem;
   color: var(--secondary-color);
   font-size: var(--font-size-medium);
+  /* border-bottom: 10px solid #0a228c52; */
+  /* border-bottom: 10px solid #0a228c2f; */
+
+  font-weight: 500;
 
 background: rgba(255, 255, 255, 0.142);
 box-shadow: 0 4px 30px rgba(109, 109, 109, 0.194);
@@ -72,9 +82,9 @@ header nav a {
 }
 
 header nav .active {
-  color: orange;
+  color: var(--secondary-color);
   padding: 5px;
-  border: solid 2px orange;;
+  border: solid 2px var(--secondary-color);
   font-weight: 600;
 }
 
@@ -110,8 +120,9 @@ header .logout {
   align-items: center;
   justify-content: center;
   gap:40px; 
-  min-height: 100vh; 
+  min-height: 85vh; 
   background-color: var(--hover-color);
+  padding-bottom: 80px;
 }
 
 .home .top {
@@ -138,11 +149,31 @@ header .logout {
 
 footer {
   text-align: center;
-  background-color: var(--main-color);
-  color: white;
-  padding: 0.8rem;
+  color: var(--secondary-color);
+  font-weight: 500;
+  padding: 1rem;
+  position: fixed; 
+  bottom: 0;
+  right: 0;
+  left: 0;
+  z-index: 2;
+
+background: rgba(255, 255, 255, 0.142);
+box-shadow: 0 4px 30px rgba(109, 109, 109, 0.194);
+backdrop-filter: blur(5px);
+-webkit-backdrop-filter: blur(5px);
 }
 
+.layout{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding-top: 130px;
+  gap: 50px;
+  min-height: 100%;
+ 
+}
 /*Objects-container//////////*/
 
 .objects-container {
@@ -337,23 +368,15 @@ button {
 
 /*Contact*/
 
-.contact-container {
-margin-top: 50px;
-padding: 50px;
-background-color: var(--main-color);
-z-index: 1;
-border-radius: 10px;
-opacity: 0.5 ;
-box-shadow: inset 2px 5px 20px var(--secondary-color);
-color: black;
-}
-
 .contact-form {
   display: flex;
   flex-direction: column;
   align-items: center;
   gap: 20px;
   color: black;
+  box-shadow: 0 2px 12px #0000002b;
+  width: 25%;
+  padding: 20px;
 }
 
 .contact-form input {
@@ -361,59 +384,44 @@ width: 100%;
 padding: 5px;
 background-color: var(--color-white);
 color: black;
-font-size: var(--font-size-small);
+font-size: 1.2rem;
 border-radius: 5px;
-border: 1px solid #ccc;
+border: none;
+border-right: 1px solid #0000002b;
+border-bottom: 1px solid #0000002b;
 }
 
 .contact-form textarea {
-width: 100%;
+max-width: 100%;
+min-width: 100%;
+max-height: fit-content;
+min-height: 130px;
 padding: 5px;
 background-color: var(--color-white);
-font-size: var(--font-size-small);
+font-size: 1.2rem;
 border-radius: 5px;
-border: 5px solid #ccc;
-}
-
-
-.contact-form button {
-width: 80%;
-height: 40px;
-padding: 5px;
-background-color: var(--secondary-color);
-color: white;
-font-size: var(--font-size-small);
 border: none;
-border-radius: 5px;
-cursor: pointer;
+border-right: 1px solid #0000002b;
+border-top: 1px solid #0000002b;
+resize: none;
 }
 
-.contact-form button:hover {
-background-color: var(--main-color);
-border: 1px solid var(--secondary-color);
-}
-
-.company-details   {
+.contact-details{
   display: flex;
   flex-direction: column;
   align-items: center;
-  width: 40%;
-  margin-top: 20px;
-  background-color: var(--secondary-color);
-  color: var(--color-white);
-  z-index: 1;
-  border-radius: 50px;
-  border: 14px solid var(--secondary-color);
-  opacity: 0.5 ;
-  box-shadow: inset 2px 5px 20px var(--main-color);
+  color: var(--secondary-color);
+  box-shadow: 0 2px 12px #0000002b;
+  border-radius: 5px;
+  width: 25%;
+  padding: 20px;
+  a{
+    color: var(--secondary-color);
+    text-decoration: none;
+    box-shadow: 0 2px 12px #0000002b;
+    padding: 5px;
+  }
 }
-
-.company-details a {
-  font-size: var(--font-size-small);
- color: var(--main-color);
-}
-
-
 
 
 
@@ -668,40 +676,34 @@ border: 1px solid var(--secondary-color);
 
 /* Admin-Panel */
 
-
-
 .admin-sidebar {
   width: 100%;
-  height: 100%;
   display: flex;
   flex-wrap: wrap; 
   justify-content: center;
-  gap: 80px;
+  gap: 50px;
   padding: 1rem;
-  position: fixed;
-  
+  box-shadow: 0 2px 12px #0000002b;
+  width: fit-content;
 }
 
 .admin-sidebar a {
   text-decoration: none;
-  color: rgb(0, 0, 0);
+  color: #000000;
   font-size: 1.4rem;
   padding: 0.5rem;
-  
+  text-align: center;
  }  
  .admin-sidebar .active {
   border: solid 2px rgb(0, 0, 0);
 } 
  
-
   .admin-content {
-  width: 100%;
-  height: 100%;
+
   display: flex;
   flex-direction: column;
   align-items: center;
   gap: 20px;
-  padding: 5rem;
 }
 
 
@@ -924,7 +926,6 @@ border: 1px solid var(--secondary-color);
 .reservations-table {
   margin: 20px auto;
   padding: 20px;
-  background-color: var(--main-color);
   border-radius: 10px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   max-width: 1200px;
@@ -949,6 +950,7 @@ border: 1px solid var(--secondary-color);
 }
 
 
+
 .reservations-table table {
   width: 100%;
   border-collapse: collapse;
@@ -960,6 +962,7 @@ border: 1px solid var(--secondary-color);
   padding: 12px 15px;
   text-align: left;
   border-bottom: 1px solid #ddd;
+  font-size: 2rem;
 }
 
 .reservations-table th {
@@ -980,19 +983,32 @@ border: 1px solid var(--secondary-color);
   opacity: 0.9;
 }
 
+.reservations-table {
+  padding: 15px;
+}
 
+.reservations-table table,
+.reservations-table th,
+.reservations-table td {
+  font-size: 1rem;
+  font-weight: bold;
+  padding: 8px;
+}
 
+.reservations-table button {
+  padding: 8px 10px;
+
+}
 
 
 /*Message*/
 
 .contact-message-container {
-  max-width: 100%;
-  margin: 20px auto;
   padding: 20px;
-  background-color: var(--main-color);
   border-radius: 8px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  border: solid 5px red;
+  width: 100%;
 }
 
 .contact-message-container h1 {
@@ -1001,15 +1017,14 @@ border: 1px solid var(--secondary-color);
   margin-bottom: 20px;
   font-size: 2rem;
   font-weight: 600;
+  border: solid 5px rgb(47, 255, 0);
 }
 
 .object-message {
-  margin: 20px auto;
   padding: 20px;
-  background-color: var(--main-color);
-  border-radius: 10px;
+  border-radius: 8px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  max-width: 1200px;
+  border: solid 5px rgb(255, 200, 0);
 }
 .object-message table {
   width: 100%;
@@ -1024,14 +1039,12 @@ border: 1px solid var(--secondary-color);
 }
 
 .object-message th {
-  background-color: var(--secondary-color);
-  color: #fff;
   font-weight: 600;
+  border: solid 5px rgb(0, 0, 0);
 }
 
 
 .object-message button {
-  background-color: var(--hover-color);
   color: var(--color);
   padding: 6px 12px;
   border: none;
@@ -1103,21 +1116,6 @@ border: 1px solid var(--secondary-color);
   width: 100%;
 }
 
-.reservations-table {
-  padding: 15px;
-}
-
-.reservations-table table,
-.reservations-table th,
-.reservations-table td {
-  font-size: 12px;
-  padding: 8px;
-}
-
-.reservations-table button {
-  padding: 8px 10px;
-  font-size: 12px;
-}
 
 
 @media (max-width: 480px) {
@@ -1179,9 +1177,3 @@ border: 1px solid var(--secondary-color);
 
 }
 
-
-
-
-.admin-sidebar{
-  margin-top: 200px;
-}

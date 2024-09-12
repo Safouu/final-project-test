@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { NavLink } from 'react-router-dom';
 
 const Contact = () => {
   const [name, setName] = useState('');
@@ -37,10 +38,10 @@ const Contact = () => {
 
   return (
 
-    <div className="home">
+    <div className='layout'>
 
-      <div className="contact-container">
-      <h2>Contact Us</h2>
+      {/* /////////////////// */}
+
       <form className="contact-form" onSubmit={handleSubmit}>
         
         {submitted && <p className="success-message">Thank you for your message!</p>}
@@ -65,20 +66,21 @@ const Contact = () => {
           onChange={(e) => setMessage(e.target.value)}
           required
         />
-        <button type="submit">Send Message</button>
+        <button className='booking-button' type="submit">Send Message</button>
       </form>
-
-      </div>
-      <div className="company-details">
+      
+{/* //////////////////////////////// */}
+      <div className="contact-details">
         <p>World Wide Vecation GmbH 123</p>
         <p>Berliner Strasse 2b, Berlin, Germany</p>
         <p>(+49) 1456-7890</p>
         <p>
-          <a href="https://dream-voacation.com" target="_blank" rel="noopener noreferrer">
-            www.wwv.com
-          </a>
+          <NavLink to= "/" >
+            wwww.Your-Dream-Vacation.de
+          </NavLink>
         </p>
       </div>
+
     </div>
   );
 };

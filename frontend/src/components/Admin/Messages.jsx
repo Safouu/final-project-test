@@ -54,6 +54,7 @@ const Messages = () => {
   return (
     <div className="contact-message-container">
     <h1>Contact Messages</h1>
+    
     <div className='object-message'>
      
       <table>
@@ -83,6 +84,7 @@ const Messages = () => {
           ))}
         </tbody>
       </table>
+
     </div>
     </div>
   );
