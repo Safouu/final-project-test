@@ -171,9 +171,7 @@ backdrop-filter: blur(5px);
   align-items: center;
   padding: 65px 0;
   gap: 50px;
-  min-height: 100%;
-  background-color: rgb(155, 155, 155);
- 
+  min-height: 100%; 
 }
 /*Objects-container//////////*/
 

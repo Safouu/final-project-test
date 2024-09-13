@@ -4,13 +4,25 @@ const BookingSchema = new mongoose.Schema({
   user: {
     type: mongoose.Schema.Types.ObjectId,
     ref: "Register", 
-    required: true,
+    // required: true,
   },
   apartment: {
     type: mongoose.Schema.Types.ObjectId,
     ref: "Apartment", 
-    required: true,
+    // required: true,
   },
+  ///////////FÜR ADMIN BOOKING ///////////////
+  // selectedObject: { type: mongoose.Schema.Types.ObjectId, ref: 'apartment' },
+  firstName: {
+    type: String,
+  },
+  lastName: {
+    type: String,
+  },
+  email: {
+    type: String,
+  },
+  //////////////////////////
   startDate: {
     type: Date,
     required: true,

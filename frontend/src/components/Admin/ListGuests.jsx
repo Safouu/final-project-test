@@ -81,9 +81,9 @@ const GuestList = () => {
         <tbody>
           {reservations.map((reservation) => (
             <tr key={reservation._id}>
-              <td>{reservation.user?.firstName || 'N/A'}</td>
-              <td>{reservation.user?.lastName || 'N/A'}</td>
-              <td>{reservation.user?.email || 'N/A'}</td>
+              <td>{reservation.user?.firstName || reservation.firstName}</td>
+              <td>{reservation.user?.lastName || reservation.lastName }</td>
+              <td>{reservation.user?.email || reservation.email}</td>
               <td>{formatDate(reservation.startDate)}</td>
               <td>{formatDate(reservation.endDate)}</td>
               <td>{reservation.people}</td>

@@ -8,17 +8,17 @@ const AddGuest = ({ reservationToEdit, onClose }) => {
     firstName: "",
     lastName: "",
     email: "",
-    phone: "",
-    selectedObject: "",
-    checkin: "",
-    checkout: "",
+    // phone: "",
+    apartment: "",
+    startDate: "",
+    endDate: "",
+    totalPrice: "",
+    advancePayment: "",
     people: 0,
     children: 0,
     pets: 0,
     pricePerDay: "",
     days: 0,
-    totalPrice: "",
-    advancePayment: "",
   });
 
   const [dateRange, setDateRange] = useState([
@@ -29,27 +29,27 @@ const AddGuest = ({ reservationToEdit, onClose }) => {
     },
   ]);
 
-  const [objects, setObjects] = useState([]);
+  const [apartments, setApartments] = useState([]);
   const [isBookingValid, setIsBookingValid] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
   const [submitMessage, setSubmitMessage] = useState("");
 
   useEffect(() => {
-    const fetchObjects = async () => {
+    const fetchApartments = async () => {
       try {
-        const response = await fetch("http://localhost:3232/objects");
+        const response = await fetch("http://localhost:3232/apartment");
         if (response.ok) {
           const data = await response.json();
-          setObjects(data);
+          setApartments(data);
         } else {
-          console.error("Failed to fetch objects:", response.statusText);
+          console.error("Failed to fetch apartments:", response.statusText);
         }
       } catch (error) {
-        console.error("Error fetching objects:", error);
+        console.error("Error fetching apartments:", error);
       }
     };
 
-    fetchObjects();
+    fetchApartments();
   }, []);
 
   useEffect(() => {
@@ -58,10 +58,10 @@ const AddGuest = ({ reservationToEdit, onClose }) => {
         firstName: reservationToEdit.firstName || "",
         lastName: reservationToEdit.lastName || "",
         email: reservationToEdit.email || "",
-        phone: reservationToEdit.phone || "",
-        selectedObject: reservationToEdit.selectedObject || "",
-        checkin: reservationToEdit.checkin || "",
-        checkout: reservationToEdit.checkout || "",
+        // phone: reservationToEdit.phone || "",
+        apartment: reservationToEdit.apartment || "",
+        startDate: reservationToEdit.startDate || "",
+        endDate: reservationToEdit.endDate || "",
         people: reservationToEdit.people || 0,
         children: reservationToEdit.children || 0,
         pets: reservationToEdit.pets || 0,
@@ -72,8 +72,8 @@ const AddGuest = ({ reservationToEdit, onClose }) => {
       });
       setDateRange([
         {
-          startDate: new Date(reservationToEdit.checkin || new Date()),
-          endDate: new Date(reservationToEdit.checkout || new Date()),
+          startDate: new Date(reservationToEdit.startDate || new Date()),
+          endDate: new Date(reservationToEdit.endDate || new Date()),
           key: "selection",
         },
       ]);
@@ -94,8 +94,8 @@ const AddGuest = ({ reservationToEdit, onClose }) => {
       setFormData((prevFormData) => ({
         ...prevFormData,
         days,
-        checkin: start.toISOString().split("T")[0],
-        checkout: end.toISOString().split("T")[0],
+        startDate: start.toISOString().split("T")[0],
+        endDate: end.toISOString().split("T")[0],
       }));
     }
   }, [dateRange]);
@@ -138,9 +138,7 @@ const AddGuest = ({ reservationToEdit, onClose }) => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     const method = reservationToEdit ? "PATCH" : "POST";
-    const url = reservationToEdit
-      ? `http://localhost:3232/reservation/${reservationToEdit._id}`
-      : "http://localhost:3232/reservation";
+    const url = reservationToEdit? `http://localhost:3232/booking/${reservationToEdit._id}` : "http://localhost:3232/booking";
 
     try {
       const response = await fetch(url, {
@@ -169,19 +167,21 @@ const AddGuest = ({ reservationToEdit, onClose }) => {
   return (
     <div className="add-guest">
       <h2>{reservationToEdit ? "Edit Reservation" : "New Reservation"}</h2>
+
       <form onSubmit={handleSubmit}>
+
         <div>
-          <label>Select Object:</label>
+          <label>Select Apartment:</label>
           <select
-            name="selectedObject"
-            value={formData.selectedObject}
+            name="apartment"
+            value={formData.apartment}
             onChange={handleChange}
             required
           >
             <option value="" disabled>Select an option</option>
-            {objects.map((object) => (
-              <option key={object._id} value={object._id}>
-                {object.name}
+            {apartments.map((apartment) => (
+              <option key={apartment._id} value={apartment._id}>
+                {apartment.name}
               </option>
             ))}
           </select>
@@ -220,7 +220,7 @@ const AddGuest = ({ reservationToEdit, onClose }) => {
           />
         </div>
 
-        <div>
+        {/* <div>
           <label>Phone:</label>
           <input
             type="tel"
@@ -229,7 +229,7 @@ const AddGuest = ({ reservationToEdit, onClose }) => {
             onChange={handleChange}
             required
           />
-        </div>
+        </div> */}
 
         <div className="calendar-section">
           <h3>Select Your Stay:</h3>
@@ -246,6 +246,7 @@ const AddGuest = ({ reservationToEdit, onClose }) => {
 
         <div className="people-container">
           <div className="people-group">
+
             <label>Adults:</label>
             <div className="input-group">
               <button type="button" onClick={() => handleDecrement("people")}>

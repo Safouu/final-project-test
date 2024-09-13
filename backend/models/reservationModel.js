@@ -64,7 +64,7 @@ const reservationSchema = new mongoose.Schema({
             type: Number,
             required: true,
         },
-        selectedObject: { type: mongoose.Schema.Types.ObjectId, ref: 'Object' },
+    selectedObject: { type: mongoose.Schema.Types.ObjectId, ref: 'Object' },
   });
   
   export const Reservation = mongoose.model("Reservation", reservationSchema);

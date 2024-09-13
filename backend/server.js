@@ -4,7 +4,7 @@ import dotenv from "dotenv";
 import { loginUser, registerUser, UserProfile } from './controllers/AuthController.js';
 import { PostApartment, GetSingleApartment, DeleteSingleApartment, UpdateSingleApartment, GetAllApartments } from './controllers/ApartmentController.js';
 import { getContacts, deleteContacts, deleteSingleContact, PostContact } from './controllers/contactController.js';
-import { PostBooking, GetSingleBooking, GetAllBookings, DeleteSingleBooking, UpdateSingleBooking } from './controllers/BookingController.js';
+import { PostBooking, GetSingleBooking, GetAllBookings, DeleteSingleBooking, UpdateSingleBooking,PostAdminBooking } from './controllers/BookingController.js';
 import { postReservation,getReservation, deleteReservation, updateReservation } from './controllers/reservationController.js';
 
 dotenv.config();
@@ -40,6 +40,9 @@ app.delete("/booking/:id",DeleteSingleBooking)
 app.patch("/booking/:id",UpdateSingleBooking)
 ////////  GET ALL BOOKINGS  /////////
 app.get("/booking",GetAllBookings)
+
+app.post("/booking/",PostAdminBooking)
+
 
 ////////////////////////////////////////////////////
 
