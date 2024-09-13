@@ -38,7 +38,7 @@ const Contact = () => {
 
   return (
 
-    <div className='layout'>
+    <div className='layout contact-hero'>
 
       {/* /////////////////// */}
 

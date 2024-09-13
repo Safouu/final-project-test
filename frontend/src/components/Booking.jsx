@@ -49,6 +49,7 @@ function Booking() {
       });
 
       console.log('Applicable price range:', applicablePriceRange); // Debugging line
+
       if (!applicablePriceRange) {
         setErrorMessage('No pricing available for the selected dates.');
         return 0;
@@ -59,7 +60,7 @@ function Booking() {
 
     const start = dateRange[0].startDate;
     const end = dateRange[0].endDate;
-    const days = Math.ceil((end - start) / (1000 * 60 * 60 * 24));
+    const days = Math.ceil(((end - start) / (1000 * 60 * 60 * 24) +1));
 
     if (days < 5) {
       setIsBookingValid(false);
@@ -130,7 +131,10 @@ function Booking() {
         }),
       });
 
+
+
       console.log(formData)
+
       if (response.status === 201) {
         alert('Reservation created successfully!');
       }
