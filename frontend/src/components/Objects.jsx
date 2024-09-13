@@ -22,7 +22,7 @@ const Objects = () => {
           <div className='object-details'>
             <h1>{item.name}</h1>
             <h3>{(item.description).slice(0,30)}...</h3>
-            {/* <p>{item.price} $</p> */}
+            <p>{item.price} $</p>
           </div>
 
           </div>

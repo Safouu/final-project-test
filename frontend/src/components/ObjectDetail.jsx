@@ -7,7 +7,6 @@ const ObjectDetail = () => {
   const navigate = useNavigate();
   const [object, setObject] = useState(null);
   const [selectedImage, setSelectedImage] = useState('');
-  const [currentPrice, setCurrentPrice] = useState('');
 
   useEffect(() => {
     fetch(`http://localhost:3232/objects/${id}`)
@@ -15,12 +14,12 @@ const ObjectDetail = () => {
       .then((data) => {
         setObject(data);
         setSelectedImage(data.image);
-        setCurrentPrice(data.prices || []); // Store the prices array
       })
       .catch((error) => {
         console.error('There was a problem with the fetch operation:', error);
         setObject({ error: 'Failed to load object details' });
       });
+      
   }, [id]);
 
   const handleImageClick = (imageKey) => {
@@ -37,12 +36,6 @@ const ObjectDetail = () => {
   const handleBooking = () => {
     if (!object) return;
     navigate('/booking', { state: { object } });
-  };
-
-  // Function to format dates to Day and Month
-  const formatDate = (dateStr) => {
-    const options = { day: '2-digit', month: '2-digit' };
-    return new Date(dateStr).toLocaleDateString(undefined, options);
   };
 
   return (
@@ -73,29 +66,7 @@ const ObjectDetail = () => {
               <div className='single-description'>
                 <h2>{object.name}</h2>
                 <p>{object.description}</p>
-
-                {/* Display all prices in a table */}
-                <div className='single-price'>
-                  <h3>Prices</h3>
-                  <table>
-                    <thead>
-                      <tr>
-                        <th>Start Date</th>
-                        <th>End Date</th>
-                        <th>Price (EUR)</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      {currentPrice.map((priceRange, index) => (
-                        <tr key={index}>
-                          <td>{formatDate(priceRange.startDate)}</td>
-                          <td>{formatDate(priceRange.endDate)}</td>
-                          <td>{priceRange.price} EUR</td>
-                        </tr>
-                      ))}
-                    </tbody>
-                  </table>
-                </div>
+                <p> {object.price} $ </p>
               </div>
 
               {/* latitude and longitude  */}

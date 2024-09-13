@@ -199,18 +199,18 @@ const AddObject = () => {
         <input
           type="text"
           placeholder="Image URL 3"
-          value={image1}
-          onChange={(e) => handleInputChange(e, setImage1, setImage1Preview)}
+          value={image3}
+          onChange={(e) => handleInputChange(e, setImage3, setImage3Preview)}
         />
         <input
           type="file"
           accept="image/*"
-          onChange={(e) => handleFileChange(e, setImage1, setImage1Preview)}
+          onChange={(e) => handleFileChange(e, setImage3, setImage3Preview)}
         />
-        {image1Preview && (
+        {image3Preview && (
           <div className="image-preview">
             <img
-              src={image1Preview}
+              src={image3Preview}
               alt="Preview"
               style={{ maxWidth: '75%', borderRadius: '8px' }}
             />
@@ -221,18 +221,18 @@ const AddObject = () => {
         <input
           type="text"
           placeholder="Image URL 4"
-          value={image2}
-          onChange={(e) => handleInputChange(e, setImage2, setImage2Preview)}
+          value={image4}
+          onChange={(e) => handleInputChange(e, setImage4, setImage4Preview)}
         />
         <input
           type="file"
           accept="image/*"
-          onChange={(e) => handleFileChange(e, setImage2, setImage2Preview)}
+          onChange={(e) => handleFileChange(e, setImage4, setImage4Preview)}
         />
-        {image2Preview && (
+        {image4Preview && (
           <div className="image-preview">
             <img
-              src={image2Preview}
+              src={image4Preview}
               alt="Preview"
               style={{ maxWidth: '75%', borderRadius: '8px' }}
             />
@@ -242,18 +242,18 @@ const AddObject = () => {
         <input
           type="text"
           placeholder="Image URL 5"
-          value={image1}
-          onChange={(e) => handleInputChange(e, setImage1, setImage1Preview)}
+          value={image5}
+          onChange={(e) => handleInputChange(e, setImage5, setImage5Preview)}
         />
         <input
           type="file"
           accept="image/*"
-          onChange={(e) => handleFileChange(e, setImage1, setImage1Preview)}
+          onChange={(e) => handleFileChange(e, setImage5, setImage5Preview)}
         />
-        {image1Preview && (
+        {image5Preview && (
           <div className="image-preview">
             <img
-              src={image1Preview}
+              src={image5Preview}
               alt="Preview"
               style={{ maxWidth: '75%', borderRadius: '8px' }}
             />
@@ -264,18 +264,18 @@ const AddObject = () => {
         <input
           type="text"
           placeholder="Image URL 6"
-          value={image2}
-          onChange={(e) => handleInputChange(e, setImage2, setImage2Preview)}
+          value={image6}
+          onChange={(e) => handleInputChange(e, setImage6, setImage6Preview)}
         />
         <input
           type="file"
           accept="image/*"
-          onChange={(e) => handleFileChange(e, setImage2, setImage2Preview)}
+          onChange={(e) => handleFileChange(e, setImage6, setImage6Preview)}
         />
-        {image2Preview && (
+        {image6Preview && (
           <div className="image-preview">
             <img
-              src={image2Preview}
+              src={image6Preview}
               alt="Preview"
               style={{ maxWidth: '75%', borderRadius: '8px' }}
             />

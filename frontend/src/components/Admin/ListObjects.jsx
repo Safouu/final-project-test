@@ -102,6 +102,7 @@ const ListObject = () => {
           <div className='object-details'>
             <h1>{item.name}</h1>
             <h3>{item.description.slice(0, 30)}...</h3>
+            <p>{item.price} $</p>
             <button
               style={{ background: 'red', color: 'white', cursor: 'pointer', padding: '5px 10px' }}
               onClick={() => handleDelete(item._id)}

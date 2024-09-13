@@ -122,7 +122,6 @@ function Booking() {
       });
 
 
-
       console.log(formData)
 
       if (response.status === 201) {
