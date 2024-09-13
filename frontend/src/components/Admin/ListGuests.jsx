@@ -71,11 +71,11 @@ const GuestList = () => {
             <th>Email</th>
             <th>Check-in</th>
             <th>Check-out</th>
-            <th>People</th>
+            <th>Adult</th>
             <th>Children</th>
-            <th>Pets</th>
+            <th>Pet</th>
+            <th>Ad.Payment</th>
             <th>Total Price</th>
-            <th>Advance Payment</th>
             <th>Apartment</th>
           </tr>
         </thead>
@@ -91,8 +91,8 @@ const GuestList = () => {
               <td>{reservation.people}</td>
               <td>{reservation.children}</td>
               <td>{reservation.pets}</td>
-              <td>${reservation.totalPrice || '0.00'}</td>
               <td>${reservation.advancePayment || '0.00'}</td>
+              <td>${reservation.totalPrice || '0.00'}</td>
               <td>{reservation.apartment?.name || 'N/A'}</td>
               <td>
                 <button className="button edit" onClick={() => handleEdit(reservation)}>Edit</button>
