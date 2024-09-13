@@ -22,7 +22,7 @@ const Login = () => {
       });
 
       const data = await response.json();
-      console.log('Login Response:', data);
+      // console.log('Login Response:', data);
 
       if (response.ok) {
         

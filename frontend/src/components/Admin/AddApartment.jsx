@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import Map from './Map';
 
-const AddObject = () => {
+const AddApartment = () => {
   const [name, setName] = useState('');
   const [price, setPrice] = useState(''); // Price is now a single number as a string initially
   const [description, setDescription] = useState('');
@@ -43,7 +43,7 @@ const AddObject = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    const objectData = {
+    const apartmentData = {
       name,
       price, // Single price
       description,
@@ -58,28 +58,28 @@ const AddObject = () => {
       longitude,
     };
 
-    console.log('Object data being sent:', objectData);
+    console.log('Apartment data being sent:', apartmentData);
 
     try {
-      const response = await fetch('http://localhost:3232/objects', {
+      const response = await fetch('http://localhost:3232/apartment', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify(objectData),
+        body: JSON.stringify(apartmentData),
       });
 
       if (response.ok) {
-        console.log('Object added successfully');
+        console.log('apartment added successfully');
       } else {
-        console.error('Failed to add object');
+        console.error('Failed to add apartment');
       }
     } catch (error) {
       console.error('Error:', error);
     }
 
     setName('');
-    setPrice(''); // Reset the single price value
+    setPrice('');
     setDescription('');
     setImage('');
     setImage1('');
@@ -104,59 +104,46 @@ const AddObject = () => {
       <form className='add-apartment' onSubmit={handleSubmit}>
         <label>Name</label>
         <input
-          type="text"
-          placeholder="Object Name"
-          value={name}
+          type="text" placeholder="Apartment Name" value={name}
           onChange={(e) => setName(e.target.value)}
           required
         />
 
         <label>Price</label>
         <input
-          type="number"
-          placeholder="Price $"
-          value={price}
-          onChange={(e) => setPrice(e.target.value)} // Handle the single price change
+          type="number" placeholder="Price $" value={price}
+          onChange={(e) => setPrice(e.target.value)}
           required
         />
 
         <label>Description</label>
         <input
-          type="text"
-          placeholder="Description"
-          value={description}
+          type="text" placeholder="Description" value={description}
           onChange={(e) => setDescription(e.target.value)}
           required
         />
 
         <label>Main image</label>
         <input
-          type="text"
-          placeholder="Image URL"
-          value={image}
+          type="text" placeholder="Image URL" value={image}
           onChange={(e) => handleInputChange(e, setImage, setImagePreview)}
         />
         <input
-          type="file"
-          accept="image/*"
+          type="file" accept="image/*"
           onChange={(e) => handleFileChange(e, setImage, setImagePreview)}
         />
         {imagePreview && (
           <div className="image-preview">
             <img
-              src={imagePreview}
-              alt="Preview"
+              src={imagePreview} alt="Preview"
               style={{ maxWidth: '75%', borderRadius: '8px' }}
             />
           </div>
         )}
 
-        
         <label>Image 1</label>
         <input
-          type="text"
-          placeholder="Image URL 1"
-          value={image1}
+          type="text" placeholder="Image URL 1" value={image1}
           onChange={(e) => handleInputChange(e, setImage1, setImage1Preview)}
         />
         <input
@@ -167,8 +154,7 @@ const AddObject = () => {
         {image1Preview && (
           <div className="image-preview">
             <img
-              src={image1Preview}
-              alt="Preview"
+              src={image1Preview} alt="Preview"
               style={{ maxWidth: '75%', borderRadius: '8px' }}
             />
           </div>
@@ -176,42 +162,35 @@ const AddObject = () => {
 
         <label>Image 2</label>
         <input
-          type="text"
-          placeholder="Image URL 2"
-          value={image2}
+          type="text" placeholder="Image URL 2" value={image2}
           onChange={(e) => handleInputChange(e, setImage2, setImage2Preview)}
         />
         <input
-          type="file"
-          accept="image/*"
+          type="file"  accept="image/*"
           onChange={(e) => handleFileChange(e, setImage2, setImage2Preview)}
         />
         {image2Preview && (
           <div className="image-preview">
             <img
-              src={image2Preview}
-              alt="Preview"
+              src={image2Preview}  alt="Preview"
               style={{ maxWidth: '75%', borderRadius: '8px' }}
             />
           </div>
         )}
+
           <label>Image 3</label>
         <input
-          type="text"
-          placeholder="Image URL 3"
-          value={image3}
+          type="text" placeholder="Image URL 3" value={image3}
           onChange={(e) => handleInputChange(e, setImage3, setImage3Preview)}
         />
         <input
-          type="file"
-          accept="image/*"
+          type="file" accept="image/*"
           onChange={(e) => handleFileChange(e, setImage3, setImage3Preview)}
         />
         {image3Preview && (
           <div className="image-preview">
             <img
-              src={image3Preview}
-              alt="Preview"
+              src={image3Preview} alt="Preview"
               style={{ maxWidth: '75%', borderRadius: '8px' }}
             />
           </div>
@@ -219,42 +198,35 @@ const AddObject = () => {
 
         <label>Image 4</label>
         <input
-          type="text"
-          placeholder="Image URL 4"
-          value={image4}
+          type="text"  placeholder="Image URL 4" value={image4}
           onChange={(e) => handleInputChange(e, setImage4, setImage4Preview)}
         />
         <input
-          type="file"
-          accept="image/*"
+          type="file" accept="image/*"
           onChange={(e) => handleFileChange(e, setImage4, setImage4Preview)}
         />
         {image4Preview && (
           <div className="image-preview">
             <img
-              src={image4Preview}
-              alt="Preview"
+              src={image4Preview} alt="Preview"
               style={{ maxWidth: '75%', borderRadius: '8px' }}
             />
           </div>
         )}
+
           <label>Image 5</label>
         <input
-          type="text"
-          placeholder="Image URL 5"
-          value={image5}
+          type="text" placeholder="Image URL 5" value={image5}
           onChange={(e) => handleInputChange(e, setImage5, setImage5Preview)}
         />
         <input
-          type="file"
-          accept="image/*"
+          type="file" accept="image/*"
           onChange={(e) => handleFileChange(e, setImage5, setImage5Preview)}
         />
         {image5Preview && (
           <div className="image-preview">
             <img
-              src={image5Preview}
-              alt="Preview"
+              src={image5Preview} alt="Preview"
               style={{ maxWidth: '75%', borderRadius: '8px' }}
             />
           </div>
@@ -262,41 +234,31 @@ const AddObject = () => {
 
         <label>Image 6</label>
         <input
-          type="text"
-          placeholder="Image URL 6"
-          value={image6}
+          type="text" placeholder="Image URL 6" value={image6}
           onChange={(e) => handleInputChange(e, setImage6, setImage6Preview)}
         />
         <input
-          type="file"
-          accept="image/*"
+          type="file" accept="image/*"
           onChange={(e) => handleFileChange(e, setImage6, setImage6Preview)}
         />
         {image6Preview && (
           <div className="image-preview">
             <img
-              src={image6Preview}
-              alt="Preview"
+              src={image6Preview} alt="Preview"
               style={{ maxWidth: '75%', borderRadius: '8px' }}
             />
           </div>
         )}
 
-       
-
         <label>Latitude</label>
         <input
-          type="text"
-          placeholder="Latitude"
-          value={latitude}
+          type="text" placeholder="Latitude" value={latitude}
           onChange={(e) => setLatitude(e.target.value)}
           required
         />
         <label>Longitude</label>
         <input
-          type="text"
-          placeholder="Longitude"
-          value={longitude}
+          type="text" placeholder="Longitude" value={longitude}
           onChange={(e) => setLongitude(e.target.value)}
           required
         />
@@ -304,9 +266,10 @@ const AddObject = () => {
         <Map latitude={latitude} longitude={longitude} />
 
         <button type="submit">Add</button>
+
       </form>
     </div>
   );
 };
 
-export default AddObject;
+export default AddApartment;

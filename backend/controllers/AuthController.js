@@ -3,6 +3,7 @@ import dotenv from 'dotenv';
 import { connect } from "../db.js";
 import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
+import { Booking } from '../models/BookingModel.js';
 
 dotenv.config();
 
@@ -28,7 +29,7 @@ export const authenticateToken = (req, res, next) => {
 export const registerUser = async (req, res) => {
   try {
     await connect();
-    const { firstName, lastName, email, password, address, zipCode, city, country } = req.body;
+    const { firstName, lastName, email, password } = req.body;
 
     const saltRounds = 2;
     const hashedPassword = await bcrypt.hash(password, saltRounds);
@@ -38,10 +39,10 @@ export const registerUser = async (req, res) => {
       lastName,
       email,
       password: hashedPassword, 
-      address,
-      zipCode,
-      city,
-      country
+      // address,
+      // zipCode,
+      // city,
+      // country
     });
 
     await newUser.save();
@@ -95,18 +96,24 @@ export const loginUser = async (req, res) => {
 
 
 export const UserProfile = async (req, res) => {
+  const { id } = req.params;
   try {
     await connect();
-    const userId = req.params.id;
-
-    const user = await Register.findById(userId);
+    const user = await Register.findById(id);
     if (!user) {
-      return res.status(404).json({ error: 'User not found' });
+      return res.status(404).json({ error: "User not found" });
     }
 
-    res.status(200).json(user);
-  } catch (error) {
-    console.error('Error fetching user data:', error);
-    res.status(500).json({ error: 'Failed to fetch user data' });
+    const bookings = await Booking.find({ user: id })
+      .populate('apartment')
+      .populate('user');
+
+    return res.status(200).json({ user, bookings });
+
+  } catch (err) {
+    console.error('Error fetching user profile:', err);
+    
+    return res.status(500).json({ error: 'Internal Server Error', details: err.message });
   }
 };
+

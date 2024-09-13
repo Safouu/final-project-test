@@ -52,13 +52,13 @@ const AdminCalendar = () => {
   const [objects, setObjects] = useState([]);
   const [events, setEvents] = useState([]);
   const schedulerRef = useRef(null);
-  const [startDate, setStartDate] = useState('2024-01-01');
+  const [startDate, setStartDate] = useState('2024-09-01');
   const [days, setDays] = useState(365);
 
   // Function to fetch data
   const fetchData = async () => {
     try {
-      const response = await fetch('http://localhost:3232/reservations');
+      const response = await fetch('http://localhost:3232/bookings');
       if (!response.ok) {
         throw new Error(`Network response was not ok: ${response.statusText}`);
       }
@@ -76,7 +76,7 @@ const AdminCalendar = () => {
   };
 
   useEffect(() => {
-    fetch('http://localhost:3232/reservations')
+    fetch('http://localhost:3232/bookings')
       .then(response => {
         if (!response.ok) {
           throw new Error('Network response was not ok');

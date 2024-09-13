@@ -2,8 +2,9 @@ import { useState, useEffect } from 'react';
 import { useAuth } from '../../context/AuthContext';
 
 const UserProfile = () => {
-  const { isLoggedIn, userId } = useAuth(); 
-  const [user, setUser] = useState(null);
+  const { isLoggedIn, userId } = useAuth();
+
+  const [user, setUser] = useState();
   const [reservations, setReservations] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -17,7 +18,7 @@ const UserProfile = () => {
       }
 
       try {
-        const userResponse = await fetch(`http://localhost:3232/userProfile/${userId}`, {
+        const response = await fetch(`http://localhost:3232/userProfile/${userId}`, {
           method: 'GET',
           headers: {
             'Content-Type': 'application/json',
@@ -25,28 +26,14 @@ const UserProfile = () => {
           }
         });
 
-        if (!userResponse.ok) {
-          throw new Error('Failed to fetch user data');
+        if (!response.ok) {
+          throw new Error('Failed to fetch user profile and reservations');
         }
 
-        const userData = await userResponse.json();
-
-        const reservationResponse = await fetch(`http://localhost:3232/genReservation/${userId}`, {
-          method: 'GET',
-          headers: {
-            'Content-Type': 'application/json',
-            'Authorization': `Bearer ${localStorage.getItem('token')}`
-          }
-        });
-
-        if (!reservationResponse.ok) {
-          throw new Error('Failed to fetch reservation data');
-        }
-
-        const reservationData = await reservationResponse.json();
-
-        setUser(userData);
-        setReservations(reservationData);
+        const data = await response.json();
+        console.log(data)
+        setUser(data.user);
+        setReservations(data.bookings); 
 
       } catch (err) {
         setError(err.message);
@@ -56,7 +43,7 @@ const UserProfile = () => {
     };
 
     fetchUserData();
-  }, [isLoggedIn, userId]); 
+  }, [isLoggedIn, userId]);
 
   if (loading) {
     return <div>Loading...</div>;
@@ -75,11 +62,7 @@ const UserProfile = () => {
       <h1>{user.firstName} Profile</h1>
       <p><strong>First Name:</strong> {user.firstName}</p>
       <p><strong>Last Name:</strong> {user.lastName}</p>
-      {/* <p><strong>Email:</strong> {user.email}</p>
-      <p><strong>Address:</strong> {user.address}</p>
-      <p><strong>City:</strong> {user.city}</p>
-      <p><strong>Country:</strong> {user.country}</p> */}
-  
+
       <h2>Reservations</h2>
       <ul>
         {reservations.length > 0 ? (
@@ -102,7 +85,6 @@ const UserProfile = () => {
           <p>No reservations found</p>
         )}
       </ul>
-
     </div>
   );
 };

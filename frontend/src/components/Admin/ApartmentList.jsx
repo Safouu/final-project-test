@@ -1,9 +1,9 @@
 import { useState, useEffect } from 'react';
 import Map from './Map';
 
-const ListObject = () => {
-  const [objects, setObjects] = useState([]);
-  const [editingObject, setEditingObject] = useState(null);
+const ApartmentList = () => {
+  const [apartments, setApartments] = useState([]);
+  const [editingApartment, setEditingApartment] = useState(null);
   const [name, setName] = useState('');
   const [description, setDescription] = useState('');
   const [price, setPrice] = useState('');  // Single price field
@@ -15,19 +15,19 @@ const ListObject = () => {
 
   // Fetch the objects on component load
   useEffect(() => {
-    fetch('http://localhost:3232/objects')
+    fetch('http://localhost:3232/apartment')
       .then((res) => res.json())
-      .then((data) => setObjects(data));
+      .then((data) => setApartments(data));
   }, []);
 
   // Handle deletion of an object
   const handleDelete = async (id) => {
     try {
-      const response = await fetch(`http://localhost:3232/objects/${id}`, {
+      const response = await fetch(`http://localhost:3232/apartment/${id}`, {
         method: 'DELETE',
       });
       if (response.ok) {
-        setObjects(objects.filter((item) => item._id !== id));
+        setApartments(apartments.filter((apartment) => apartment._id !== id));
       }
     } catch (error) {
       console.error('Error:', error);
@@ -35,16 +35,16 @@ const ListObject = () => {
   };
 
   // Handle editing an object
-  const handleEditObject = (object) => {
-    setEditingObject(object);
-    setName(object.name || '');
-    setDescription(object.description || '');
-    setPrice(object.price || '');  // Single price field
-    setImage(object.image || '');
-    setImagePreview(object.image || '');
-    setLatitude(object.latitude || '');
-    setLongitude(object.longitude || '');
-    setShowMap(!!object.latitude && !!object.longitude);
+  const handleEditApartment = (apartment) => {
+    setEditingApartment(apartment);
+    setName(apartment.name || '');
+    setDescription(apartment.description || '');
+    setPrice(apartment.price || '');  // Single price field
+    setImage(apartment.image || '');
+    setImagePreview(apartment.image || '');
+    setLatitude(apartment.latitude || '');
+    setLongitude(apartment.longitude || '');
+    setShowMap(!!apartment.latitude && !!apartment.longitude);
   };
 
   // Handle file change (for image upload)
@@ -60,11 +60,11 @@ const ListObject = () => {
     }
   };
 
-  // Handle form submission for editing/creating object
+  // Handle form submission for editing/creating Apartment
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    const updatedObject = {
+    const updatedApartment = {
       name,
       description,
       price,  // Single price field
@@ -74,20 +74,20 @@ const ListObject = () => {
     };
 
     try {
-      const response = await fetch(`http://localhost:3232/objects/${editingObject._id}`, {
+      const response = await fetch(`http://localhost:3232/apartment/${editingApartment._id}`, {
         method: 'PATCH',
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify(updatedObject),
+        body: JSON.stringify(updatedApartment),
       });
 
       if (response.ok) {
         const updatedData = await response.json();
-        setObjects(objects.map((item) =>
-          item._id === updatedData._id ? updatedData : item
+        setApartments(apartments.map((apartment) =>
+        apartment._id === updatedData._id ? updatedData : apartment
         ));
-        setEditingObject(null);
+        setEditingApartment(null);
       }
     } catch (error) {
       console.error('Error:', error);
@@ -96,76 +96,65 @@ const ListObject = () => {
 
   return (
     <div className='objects-container'>
-      {objects.map((item) => (
-        <div key={item._id} className='object'>
-          <img src={item.image} alt={item.name} />
+      {apartments.map((apartment) => (
+
+        <div key={apartment._id} className='object'>
+          <img src={apartment.image} alt={apartment.name} />
           <div className='object-details'>
-            <h1>{item.name}</h1>
-            <h3>{item.description.slice(0, 30)}...</h3>
-            <p>{item.price} $</p>
+            <h1>{apartment.name}</h1>
+            <h3>{apartment.description.slice(0, 30)}...</h3>
+            <p>{apartment.price} $</p>
+
             <button
               style={{ background: 'red', color: 'white', cursor: 'pointer', padding: '5px 10px' }}
-              onClick={() => handleDelete(item._id)}
-            >
-              Delete
+              onClick={() => handleDelete(apartment._id)}> Delete
             </button>
+
             <button
               style={{ background: 'green', color: 'white', cursor: 'pointer', padding: '5px 10px' }}
-              onClick={() => handleEditObject(item)}
-            >
-              Edit
+              onClick={() => handleEditApartment(apartment)}> Edit
             </button>
           </div>
         </div>
       ))}
 
-      {editingObject && (
+      {editingApartment && (
         <div className='edit-modal'>
           <form className='add-apartment' onSubmit={handleSubmit}>
             <label>Name</label>
             <input
-              type="text"
-              placeholder="Object Name"
-              value={name}
+              type="text" placeholder="Object Name" value={name}
               onChange={(e) => setName(e.target.value)}
               required
             />
 
             <label>Description</label>
             <input
-              type="text"
-              placeholder="Description"
-              value={description}
+              type="text" placeholder="Description" value={description}
               onChange={(e) => setDescription(e.target.value)}
               required
             />
 
             <label>Price</label> {/* Single price field */}
             <input
-              type="number"
-              placeholder="Price"
-              value={price}
+              type="number" placeholder="Price" value={price}
               onChange={(e) => setPrice(e.target.value)}
               required
             />
 
             <label>Main image</label>
             <input
-              type="text"
-              placeholder="Image URL"
-              value={image}
+              type="text" placeholder="Image URL" value={image}
               onChange={(e) => setImage(e.target.value)}
             />
             <input
-              type="file"
-              accept="image/*"
+              type="file" accept="image/*"
               onChange={(e) => handleFileChange(e, setImage, setImagePreview)}
             />
             {imagePreview && (
               <div className="image-preview">
                 <img
-                  src={imagePreview}
-                  alt="Preview"
+                  src={imagePreview} alt="Preview"
                   style={{ maxWidth: '75%', borderRadius: '8px' }}
                 />
               </div>
@@ -176,21 +165,17 @@ const ListObject = () => {
               <div key={idx}>
                 <label>Image {idx + 1}</label>
                 <input
-                  type="text"
-                  placeholder={`Image URL ${idx + 1}`}
-                  value={editingObject[img] || ''}
-                  onChange={(e) => setEditingObject(prev => ({ ...prev, [img]: e.target.value }))}
+                  type="text" placeholder={`Image URL ${idx + 1}`} value={editingApartment[img] || ''}
+                  onChange={(e) => setEditingApartment(prev => ({ ...prev, [img]: e.target.value }))}
                 />
                 <input
-                  type="file"
-                  accept="image/*"
-                  onChange={(e) => handleFileChange(e, (value) => setEditingObject(prev => ({ ...prev, [img]: value })), (value) => setEditingObject(prev => ({ ...prev, [`${img}Preview`]: value })))}
+                  type="file" accept="image/*"
+                  onChange={(e) => handleFileChange(e, (value) => setEditingApartment(prev => ({ ...prev, [img]: value })), (value) => setEditingApartment(prev => ({ ...prev, [`${img}Preview`]: value })))}
                 />
-                {editingObject[`${img}Preview`] && (
+                {editingApartment[`${img}Preview`] && (
                   <div className="image-preview">
                     <img
-                      src={editingObject[`${img}Preview`]}
-                      alt="Preview"
+                      src={editingApartment[`${img}Preview`]} alt="Preview"
                       style={{ maxWidth: '75%', borderRadius: '8px' }}
                     />
                   </div>
@@ -200,17 +185,14 @@ const ListObject = () => {
 
             <label>Latitude</label>
             <input
-              type="text"
-              placeholder="Latitude"
-              value={latitude}
+              type="text" placeholder="Latitude" value={latitude}
               onChange={(e) => setLatitude(e.target.value)}
               required
             />
+
             <label>Longitude</label>
             <input
-              type="text"
-              placeholder="Longitude"
-              value={longitude}
+              type="text" placeholder="Longitude" value={longitude}
               onChange={(e) => setLongitude(e.target.value)}
               required
             />
@@ -218,7 +200,8 @@ const ListObject = () => {
             {showMap && <Map latitude={latitude} longitude={longitude} />}
 
             <button type="submit">Save</button>
-            <button type="button" onClick={() => setEditingObject(null)}>Cancel</button>
+
+            <button type="button" onClick={() => setEditingApartment(null)}>Cancel</button>
           </form>
         </div>
       )}
@@ -226,4 +209,4 @@ const ListObject = () => {
   );
 };
 
-export default ListObject;
+export default ApartmentList;

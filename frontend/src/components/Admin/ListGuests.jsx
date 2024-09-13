@@ -18,14 +18,13 @@ const GuestList = () => {
 
   const fetchReservations = async () => {
     try {
-      const response = await fetch("http://localhost:3232/genreservation");
+      const response = await fetch("http://localhost:3232/booking");
       if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
       const data = await response.json();
       setReservations(data);
       console.log("reservation:",data)
     } catch (error) {
       console.error("Error fetching reservations:", error);
-      // Optionally show an error message to the user
     }
   };
 
@@ -36,14 +35,13 @@ const GuestList = () => {
 
   const handleDelete = async (id) => {
     try {
-      const response = await fetch(`http://localhost:3232/genReservation/${id}`, {
+      const response = await fetch(`http://localhost:3232/booking/${id}`, {
         method: "DELETE",
       });
       if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
       fetchReservations();
     } catch (error) {
       console.error("Error deleting reservation:", error);
-      // Optionally show an error message to the user
     }
   };
 

@@ -1,6 +1,6 @@
 import mongoose from "mongoose";
 
-const ObjectSchema = new mongoose.Schema({
+const ApartmentSchema = new mongoose.Schema({
   name: {
     type: String,
     required: true,
@@ -43,4 +43,4 @@ const ObjectSchema = new mongoose.Schema({
   },
 });
 
-export const Object = mongoose.model("Object", ObjectSchema);
+export const Apartment = mongoose.model("Apartment", ApartmentSchema);

@@ -4,15 +4,14 @@ import Home from "./components/Home";
 import Login from "./components/Login";
 import Layout from "./components/Layout";
 import Contact from "./components/Contact";
-import ObjectDetail from "./components/ObjectDetail";
 import ProtectedRoute from "./components/ProtectedRoute";
 import Register from "./components/Register";
 import Admin from "./components/Admin/Admin";
 import Booking from "./components/Booking";
-
 import UserProfile from './components/User/UserProfile';
 import { AuthProvider } from './context/AuthContext';
 import Logout from './components/LogOut';
+import ApartmentDetails from "./components/ApartmentDetails";
 
 function App() {
   return (
@@ -28,7 +27,7 @@ function App() {
             <Route path="register" element={<Register />} />
             <Route path="contact" element={<Contact />} />
             <Route path="booking" element={<Booking />} />
-            <Route path="object/:id" element={<ObjectDetail />} />
+            <Route path="apartment/:id" element={<ApartmentDetails />} />
           </Route>
         </Routes>
       </BrowserRouter>

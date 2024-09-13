@@ -1,10 +1,10 @@
 import express from "express";
 import cors from "cors";
 import dotenv from "dotenv";
-import { loginUser, registerUser, UserProfile } from './controllers/authController.js';
-import { getObjects, postObject, getSingleObject, deleteSingleObject, updateSingleObject } from './controllers/objectController.js';
+import { loginUser, registerUser, UserProfile } from './controllers/AuthController.js';
+import { PostApartment, GetSingleApartment, DeleteSingleApartment, UpdateSingleApartment, GetAllApartments } from './controllers/ApartmentController.js';
 import { getContacts, deleteContacts, deleteSingleContact, PostContact } from './controllers/contactController.js';
-import { genReservation, getGenReservations, getAllGenReservations, deleteSingleGuest, updateSingleGuest, getGenReservation } from './controllers/genreservationController.js';
+import { PostBooking, GetSingleBooking, GetAllBookings, DeleteSingleBooking, UpdateSingleBooking } from './controllers/BookingController.js';
 import { postReservation,getReservation, deleteReservation, updateReservation } from './controllers/reservationController.js';
 
 dotenv.config();
@@ -14,27 +14,36 @@ app.use(express.json({ limit: '10mb' }));
 app.use(express.urlencoded({ limit: '10mb', extended: true }));
 app.use(cors());
 
+//////////// AUTHENTICATION ////////////
 app.post('/register', registerUser);
 app.post('/login', loginUser);
 app.get("/userProfile/:id",UserProfile)
 
-app.get("/objects",getObjects)
-app.get("/objects/:id",getSingleObject)
-app.delete("/objects/:id",deleteSingleObject)
-app.patch("/objects/:id",updateSingleObject)
-app.post("/objects",postObject)
+///////////// APARTMENT ////////////
+app.post("/apartment",PostApartment)
+app.get("/apartment/:id",GetSingleApartment)
+app.delete("/apartment/:id",DeleteSingleApartment)
+app.patch("/apartment/:id",UpdateSingleApartment)
+////////  GET ALL APARTMENTS  /////////
+app.get("/apartment",GetAllApartments)
+//////////////////////////////////////////////////
 
 app.get("/contacts",getContacts)
 app.delete("/contacts/",deleteContacts)
 app.delete("/contacts/:id",deleteSingleContact)
 app.post("/contacts",PostContact)
 
-app.post("/genReservation",genReservation)
-app.get("/genReservation/:userId",getGenReservations)
-app.get("/genReservation",getAllGenReservations)
-app.delete("/genReservation/:id",deleteSingleGuest)
-app.patch("/genReservation/:id",updateSingleGuest)
-app.get('/reservations', getGenReservation); // New endpoint
+/////////////  BOOKING ////////////
+app.post("/booking/:id",PostBooking)
+app.get("/booking/:id",GetSingleBooking)
+app.delete("/booking/:id",DeleteSingleBooking)
+app.patch("/booking/:id",UpdateSingleBooking)
+////////  GET ALL BOOKINGS  /////////
+app.get("/booking",GetAllBookings)
+
+////////////////////////////////////////////////////
+
+app.get('/bookings', GetAllBookings); // New endpoint
 
 app.get("/reservation",getReservation)
 app.delete("/reservation/:id",deleteReservation)

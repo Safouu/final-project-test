@@ -8,8 +8,8 @@ import { useAuth } from "../context/AuthContext";
 function Booking() {
   const { isLoggedIn, userId } = useAuth();
   const location = useLocation();
-  const { object } = location.state || {};
-  const storedFirstName = localStorage.getItem('firstName');
+  const { apartment } = location.state || {};
+  // const storedFirstName = localStorage.getItem('firstName');
 
   const [dateRange, setDateRange] = useState([
     {
@@ -19,27 +19,31 @@ function Booking() {
     },
   ]);
 
+
   const [formData, setFormData] = useState({
+    // userId: userId,
+    user: "",
+    apartment: apartment ? apartment.name : "",
+    startDate: dateRange[0].startDate,
+    endDate: dateRange[0].endDate,
+    totalPrice: "",
+    advancePayment: "",
     people: 0,
     children: 0,
     pets: 0,
     days: 0,
-    totalPrice: "",
-    advancePayment: "",
-    selectedObject: object ? object.name : "",
-    userId: userId,
-    storedFirstName: storedFirstName
+    // storedFirstName: storedFirstName
   });
 
   const [isBookingValid, setIsBookingValid] = useState(false);
   const [errorMessage, setErrorMessage] = useState('');
 
   useEffect(() => {
-    if (!object) return;
+    if (!apartment) return;
     
     // Function to calculate total price based on single price
     const calculatePrice = () => {
-      const { price } = object;  // Assume object has a single price field
+      const { price } = apartment;  // Assume object has a single price field
       const start = dateRange[0].startDate;
       const end = dateRange[0].endDate;
 
@@ -70,7 +74,7 @@ function Booking() {
       totalPrice: totalPrice.toFixed(2),
       advancePayment: advancePayment.toFixed(2)
     }));
-  }, [dateRange, object]);
+  }, [dateRange, apartment]);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -96,21 +100,21 @@ function Booking() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
-    if (!isLoggedIn || !userId || !object) {
-      alert('You must be logged in and have selected an object.');
+  
+    if (!isLoggedIn || !userId || !apartment) {
+      alert('You must be logged in and have selected an apartment.');
       return;
     }
-
+  
     try {
-      const response = await fetch('http://localhost:3232/genReservation', {
+      const response = await fetch(`http://localhost:3232/booking/${userId}`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
           user: userId,
-          apartment: object._id,
+          apartment: apartment._id,
           startDate: dateRange[0].startDate.toISOString(),
           endDate: dateRange[0].endDate.toISOString(),
           totalPrice: formData.totalPrice,
@@ -120,23 +124,29 @@ function Booking() {
           pets: formData.pets
         }),
       });
-
-
-      console.log(formData)
+  
+      const data = await response.json();
+      console.log(data)
 
       if (response.status === 201) {
         alert('Reservation created successfully!');
+      } else {
+        console.log("Fehler:", data);
+        alert(`Failed to create reservation: ${data.error}`);
       }
     } catch (error) {
       console.error('Error creating reservation:', error);
-      alert(`Failed to create reservation: ${error.response?.data?.error || 'Unknown error'}`);
+      alert(`Failed to create reservation: ${error.message}`);
     }
   };
+  
 
   return (
     <div className="home">
       <div className="booking-container">
+
         <form onSubmit={handleSubmit}>
+
           <div className="calendar-section">
             <DateRange
               editableDateInputs={true}
@@ -145,10 +155,13 @@ function Booking() {
               ranges={dateRange}
               className="date-range-picker"
             />
+
             {errorMessage && <p style={{ color: 'red' }}>{errorMessage}</p>}
-          </div>
+
+         </div>
           <div className="people-container">
             <div className="people-group">
+              
               <label>Adults:</label>
               <div className="input-group">
                 <button type="button" onClick={() => handleDecrement("people")}>

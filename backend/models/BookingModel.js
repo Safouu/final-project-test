@@ -1,6 +1,6 @@
 import mongoose from "mongoose";
 
-const genralResSchema = new mongoose.Schema({
+const BookingSchema = new mongoose.Schema({
   user: {
     type: mongoose.Schema.Types.ObjectId,
     ref: "Register", 
@@ -8,7 +8,7 @@ const genralResSchema = new mongoose.Schema({
   },
   apartment: {
     type: mongoose.Schema.Types.ObjectId,
-    ref: "Object", 
+    ref: "Apartment", 
     required: true,
   },
   startDate: {
@@ -42,4 +42,4 @@ const genralResSchema = new mongoose.Schema({
 });
 
 
-export const GenReservation = mongoose.model("GenReservation", genralResSchema);
+export const Booking = mongoose.model("Booking", BookingSchema);

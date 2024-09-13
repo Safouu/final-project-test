@@ -8,10 +8,10 @@ const Register = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
-  const [address, setAddress] = useState("");
-  const [zipCode, setZipCode] = useState("");
-  const [city, setCity] = useState("");
-  const [country, setCountry] = useState("");
+  // const [address, setAddress] = useState("");
+  // const [zipCode, setZipCode] = useState("");
+  // const [city, setCity] = useState("");
+  // const [country, setCountry] = useState("");
 
   const [message, setMessage] = useState("");
     const navigate = useNavigate();
@@ -25,7 +25,7 @@ const Register = () => {
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({ firstName, lastName, email, password, address, zipCode, city, country }),
+        body: JSON.stringify({ firstName, lastName, email, password }),
       });
 
       const data = await response.json();
@@ -45,10 +45,10 @@ const Register = () => {
     setLastName("");
     setEmail("");
     setPassword("");
-    setAddress("");
-    setZipCode("");
-    setCity("");
-    setCountry("");
+    // setAddress("");
+    // setZipCode("");
+    // setCity("");
+    // setCountry("");
     
   };
 
@@ -87,7 +87,7 @@ const Register = () => {
           onChange={(e) => setPassword(e.target.value)}
           required
         />
-        <input
+        {/* <input
           type="country"
           placeholder="Country"
           value={country}
@@ -114,7 +114,7 @@ const Register = () => {
           value={address}
           onChange={(e) => setAddress(e.target.value)}
           required
-        />
+        /> */}
 
         <button type="submit">Sign up</button>
         {message && <p className="message">{message}</p>}
