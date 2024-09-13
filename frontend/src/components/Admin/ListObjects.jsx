@@ -6,19 +6,21 @@ const ListObject = () => {
   const [editingObject, setEditingObject] = useState(null);
   const [name, setName] = useState('');
   const [description, setDescription] = useState('');
-  const [prices, setPrices] = useState([{ startDate: '', endDate: '', price: '' }]);
+  const [price, setPrice] = useState('');  // Single price field
   const [image, setImage] = useState('');
   const [imagePreview, setImagePreview] = useState('');
   const [latitude, setLatitude] = useState('');
   const [longitude, setLongitude] = useState('');
   const [showMap, setShowMap] = useState(false);
 
+  // Fetch the objects on component load
   useEffect(() => {
     fetch('http://localhost:3232/objects')
       .then((res) => res.json())
       .then((data) => setObjects(data));
   }, []);
 
+  // Handle deletion of an object
   const handleDelete = async (id) => {
     try {
       const response = await fetch(`http://localhost:3232/objects/${id}`, {
@@ -32,11 +34,12 @@ const ListObject = () => {
     }
   };
 
+  // Handle editing an object
   const handleEditObject = (object) => {
     setEditingObject(object);
     setName(object.name || '');
     setDescription(object.description || '');
-    setPrices(object.prices || [{ startDate: '', endDate: '', price: '' }]);
+    setPrice(object.price || '');  // Single price field
     setImage(object.image || '');
     setImagePreview(object.image || '');
     setLatitude(object.latitude || '');
@@ -44,6 +47,7 @@ const ListObject = () => {
     setShowMap(!!object.latitude && !!object.longitude);
   };
 
+  // Handle file change (for image upload)
   const handleFileChange = (e, setImageState, setPreviewState) => {
     const file = e.target.files[0];
     if (file) {
@@ -56,33 +60,14 @@ const ListObject = () => {
     }
   };
 
-  const handleAddPriceRange = () => {
-    setPrices([...prices, { startDate: '', endDate: '', price: '' }]);
-  };
-
-  const handleRemovePriceRange = (index) => {
-    setPrices(prices.filter((_, i) => i !== index));
-  };
-
-  const handlePriceChange = (index, e) => {
-    const { name, value } = e.target;
-    const newPrices = [...prices];
-    newPrices[index] = { ...newPrices[index], [name]: value };
-    setPrices(newPrices);
-  };
-
-  const handleInputChange = (e, setImageState) => {
-    const value = e.target;
-    setImageState(value);
-  };
-
+  // Handle form submission for editing/creating object
   const handleSubmit = async (e) => {
     e.preventDefault();
 
     const updatedObject = {
       name,
       description,
-      prices,
+      price,  // Single price field
       image,
       latitude,
       longitude,
@@ -117,7 +102,6 @@ const ListObject = () => {
           <div className='object-details'>
             <h1>{item.name}</h1>
             <h3>{item.description.slice(0, 30)}...</h3>
-            {/* <p>{item.price} $</p> */}
             <button
               style={{ background: 'red', color: 'white', cursor: 'pointer', padding: '5px 10px' }}
               onClick={() => handleDelete(item._id)}
@@ -155,43 +139,21 @@ const ListObject = () => {
               required
             />
 
-            {prices.map((priceRange, index) => (
-              <div key={index}>
-                <label>Start Date</label>
-                <input
-                  type="date"
-                  name="startDate"
-                  value={priceRange.startDate || ''}
-                  onChange={(e) => handlePriceChange(index, e)}
-                  required
-                />
-                <label>End Date</label>
-                <input
-                  type="date"
-                  name="endDate"
-                  value={priceRange.endDate || ''}
-                  onChange={(e) => handlePriceChange(index, e)}
-                  required
-                />
-                <label>Price</label>
-                <input
-                  type="number"
-                  name="price"
-                  value={priceRange.price || ''}
-                  onChange={(e) => handlePriceChange(index, e)}
-                  required
-                />
-                <button type="button" onClick={() => handleRemovePriceRange(index)}>Remove Price</button>
-              </div>
-            ))}
-            <button type="button" onClick={handleAddPriceRange}>Add Price</button>
+            <label>Price</label> {/* Single price field */}
+            <input
+              type="number"
+              placeholder="Price"
+              value={price}
+              onChange={(e) => setPrice(e.target.value)}
+              required
+            />
 
             <label>Main image</label>
             <input
               type="text"
               placeholder="Image URL"
               value={image}
-              onChange={(e) => handleInputChange(e, setImage)}
+              onChange={(e) => setImage(e.target.value)}
             />
             <input
               type="file"
@@ -208,7 +170,7 @@ const ListObject = () => {
               </div>
             )}
 
-            {/* Repeat for other images */}
+            {/* Handling multiple image URLs as well */}
             {['image1', 'image2', 'image3', 'image4', 'image5', 'image6'].map((img, idx) => (
               <div key={idx}>
                 <label>Image {idx + 1}</label>
@@ -216,7 +178,7 @@ const ListObject = () => {
                   type="text"
                   placeholder={`Image URL ${idx + 1}`}
                   value={editingObject[img] || ''}
-                  onChange={(e) => handleInputChange(e, (value) => setEditingObject(prev => ({ ...prev, [img]: value })))}
+                  onChange={(e) => setEditingObject(prev => ({ ...prev, [img]: e.target.value }))}
                 />
                 <input
                   type="file"

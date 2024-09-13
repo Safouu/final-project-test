@@ -5,20 +5,11 @@ const ObjectSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
-  prices: [{
-    startDate: {
-      type: Date,
-      required: true,
-    },
-    endDate: {
-      type: Date,
-      required: true,
-    },
-    price: {
-      type: Number,
-      required: true,
-    },
-  }],
+  price: {
+    type: Number,
+    required: true,
+  },
+
   description: {
     type: String,
     required: true,

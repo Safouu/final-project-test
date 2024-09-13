@@ -10,6 +10,7 @@ function Booking() {
   const location = useLocation();
   const { object } = location.state || {};
   const storedFirstName = localStorage.getItem('firstName');
+
   const [dateRange, setDateRange] = useState([
     {
       startDate: new Date(),
@@ -36,50 +37,39 @@ function Booking() {
   useEffect(() => {
     if (!object) return;
     
-    const calculatePricePerDay = () => {
-      const { prices } = object;
+    // Function to calculate total price based on single price
+    const calculatePrice = () => {
+      const { price } = object;  // Assume object has a single price field
       const start = dateRange[0].startDate;
       const end = dateRange[0].endDate;
 
-      // Find the applicable price range
-      const applicablePriceRange = prices.find(({ startDate, endDate }) => {
-        const startDateObj = new Date(startDate);
-        const endDateObj = new Date(endDate);
-        return start >= startDateObj && end <= endDateObj;
-      });
-
-      console.log('Applicable price range:', applicablePriceRange); // Debugging line
-
-      if (!applicablePriceRange) {
-        setErrorMessage('No pricing available for the selected dates.');
-        return 0;
+      // Calculate the number of days
+      const days = Math.ceil(((end - start) / (1000 * 60 * 60 * 24)) + 1);
+      
+      // Ensure minimum days are selected
+      if (days < 5) {
+        setIsBookingValid(false);
+        setErrorMessage('You must select a minimum of 5 days.');
+        return { days: 0, totalPrice: 0, advancePayment: 0 };
+      } else {
+        setIsBookingValid(true);
+        setErrorMessage('');
+        
+        const totalPrice = price * days;
+        const advancePayment = totalPrice * 0.3; // 30% advance payment
+        
+        return { days, totalPrice, advancePayment };
       }
-
-      return applicablePriceRange.price;
     };
 
-    const start = dateRange[0].startDate;
-    const end = dateRange[0].endDate;
-    const days = Math.ceil(((end - start) / (1000 * 60 * 60 * 24) +1));
+    const { days, totalPrice, advancePayment } = calculatePrice();
 
-    if (days < 5) {
-      setIsBookingValid(false);
-      setErrorMessage('You must select a minimum of 5 days.');
-    } else {
-      setIsBookingValid(true);
-      setErrorMessage('');
-
-      const pricePerDay = calculatePricePerDay();
-      const totalPrice = pricePerDay * days;
-      const advancePayment = totalPrice * 0.3;
-
-      setFormData((prevFormData) => ({
-        ...prevFormData,
-        days: days,
-        totalPrice: totalPrice.toFixed(2),
-        advancePayment: advancePayment.toFixed(2)
-      }));
-    }
+    setFormData((prevFormData) => ({
+      ...prevFormData,
+      days: days,
+      totalPrice: totalPrice.toFixed(2),
+      advancePayment: advancePayment.toFixed(2)
+    }));
   }, [dateRange, object]);
 
   const handleChange = (e) => {
@@ -113,7 +103,7 @@ function Booking() {
     }
 
     try {
-      const response = await fetch('http://localhost:3232/genreservation', {
+      const response = await fetch('http://localhost:3232/genReservation', {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

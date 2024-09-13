@@ -3,7 +3,7 @@ import Map from './Map';
 
 const AddObject = () => {
   const [name, setName] = useState('');
-  const [prices, setPrices] = useState([{ startDate: '', endDate: '', price: '' }]);
+  const [price, setPrice] = useState(''); // Price is now a single number as a string initially
   const [description, setDescription] = useState('');
   const [image, setImage] = useState('');
   const [image1, setImage1] = useState('');
@@ -21,25 +21,6 @@ const AddObject = () => {
   const [image6Preview, setImage6Preview] = useState('');
   const [latitude, setLatitude] = useState('');
   const [longitude, setLongitude] = useState('');
-  // const [placeId, setPlaceId] = useState('');
-  // const [showMap, setShowMap] = useState(false);
- 
-
-  const handlePriceChange = (index, e) => {
-    const { name, value } = e.target;
-    const updatedPrices = [...prices];
-    updatedPrices[index] = { ...updatedPrices[index], [name]: value };
-    setPrices(updatedPrices);
-  };
-
-  const handleAddPriceRange = () => {
-    setPrices([...prices, { startDate: '', endDate: '', price: '' }]);
-  };
-
-  const handleRemovePriceRange = (index) => {
-    const updatedPrices = prices.filter((_, i) => i !== index);
-    setPrices(updatedPrices);
-  };
 
   const handleInputChange = (e, setImageFunction, setImagePreviewFunction) => {
     const value = e.target.value;
@@ -58,24 +39,13 @@ const AddObject = () => {
       reader.readAsDataURL(file);
     }
   };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    const formatDateToYYYYMMDD = (dateStr) => {
-      const date = new Date(dateStr);
-      return date.toISOString().split('T')[0];
-    };
-
-    const formattedPrices = prices.map(price => ({
-      ...price,
-      startDate: formatDateToYYYYMMDD(price.startDate),
-      endDate: formatDateToYYYYMMDD(price.endDate)
-    }));
-
-
     const objectData = {
-      name, 
-      prices: formattedPrices,
+      name,
+      price, // Single price
       description,
       image,
       image1,
@@ -85,11 +55,11 @@ const AddObject = () => {
       image5,
       image6,
       latitude,
-      longitude
+      longitude,
     };
-  
-    console.log('Object data being sent:', objectData); // Check here
-  
+
+    console.log('Object data being sent:', objectData);
+
     try {
       const response = await fetch('http://localhost:3232/objects', {
         method: 'POST',
@@ -98,7 +68,7 @@ const AddObject = () => {
         },
         body: JSON.stringify(objectData),
       });
-  
+
       if (response.ok) {
         console.log('Object added successfully');
       } else {
@@ -109,7 +79,7 @@ const AddObject = () => {
     }
 
     setName('');
-    setPrices([{ startDate: '', endDate: '', price: '' }]);
+    setPrice(''); // Reset the single price value
     setDescription('');
     setImage('');
     setImage1('');
@@ -140,14 +110,16 @@ const AddObject = () => {
           onChange={(e) => setName(e.target.value)}
           required
         />
-        {/* <label>Price</label>
+
+        <label>Price</label>
         <input
-          type="text"
+          type="number"
           placeholder="Price $"
           value={price}
-          onChange={(e) => setPrice(e.target.value)}
+          onChange={(e) => setPrice(e.target.value)} // Handle the single price change
           required
-        /> */}
+        />
+
         <label>Description</label>
         <input
           type="text"
@@ -156,40 +128,6 @@ const AddObject = () => {
           onChange={(e) => setDescription(e.target.value)}
           required
         />
-
-
-      {prices.map((priceRange, index) => (
-          <div key={index}>
-            <label>Start Date</label>
-            <input
-              type="date"
-              name="startDate"
-              value={priceRange.startDate}
-              onChange={(e) => handlePriceChange(index, e)}
-              required
-            />
-            <label>End Date</label>
-            <input
-              type="date"
-              name="endDate"
-              value={priceRange.endDate}
-              onChange={(e) => handlePriceChange(index, e)}
-              required
-            />
-            <label>Price</label>
-            <input
-              type="number"
-              name="price"
-              value={priceRange.price}
-              onChange={(e) => handlePriceChange(index, e)}
-              required
-            />
-            <button type="button" onClick={() => handleRemovePriceRange(index)}>Remove Price</button>
-          </div>
-        ))}
-        <button type="button" onClick={handleAddPriceRange}>Add Price</button>
-
-
 
         <label>Main image</label>
         <input
@@ -212,6 +150,7 @@ const AddObject = () => {
             />
           </div>
         )}
+
         
         <label>Image 1</label>
         <input
@@ -256,98 +195,94 @@ const AddObject = () => {
             />
           </div>
         )}
-        
-        <label>Image 3</label>
+          <label>Image 3</label>
         <input
           type="text"
           placeholder="Image URL 3"
-          value={image3}
-          onChange={(e) => handleInputChange(e, setImage3, setImage3Preview)}
+          value={image1}
+          onChange={(e) => handleInputChange(e, setImage1, setImage1Preview)}
         />
         <input
           type="file"
           accept="image/*"
-          onChange={(e) => handleFileChange(e, setImage3, setImage3Preview)}
+          onChange={(e) => handleFileChange(e, setImage1, setImage1Preview)}
         />
-        {image3Preview && (
+        {image1Preview && (
           <div className="image-preview">
             <img
-              src={image3Preview}
+              src={image1Preview}
               alt="Preview"
               style={{ maxWidth: '75%', borderRadius: '8px' }}
             />
           </div>
-
         )}
 
-      <label>Image 4</label>
+        <label>Image 4</label>
         <input
           type="text"
           placeholder="Image URL 4"
-          value={image4}
-          onChange={(e) => handleInputChange(e, setImage4, setImage4Preview)}
+          value={image2}
+          onChange={(e) => handleInputChange(e, setImage2, setImage2Preview)}
         />
         <input
           type="file"
           accept="image/*"
-          onChange={(e) => handleFileChange(e, setImage4, setImage4Preview)}
+          onChange={(e) => handleFileChange(e, setImage2, setImage2Preview)}
         />
-        {image3Preview && (
+        {image2Preview && (
           <div className="image-preview">
             <img
-              src={image4Preview}
+              src={image2Preview}
               alt="Preview"
               style={{ maxWidth: '75%', borderRadius: '8px' }}
             />
           </div>
-
         )}
-
-      <label>Image 5</label>
+          <label>Image 5</label>
         <input
           type="text"
           placeholder="Image URL 5"
-          value={image5}
-          onChange={(e) => handleInputChange(e, setImage5, setImage5Preview)}
+          value={image1}
+          onChange={(e) => handleInputChange(e, setImage1, setImage1Preview)}
         />
         <input
           type="file"
           accept="image/*"
-          onChange={(e) => handleFileChange(e, setImage5, setImage5Preview)}
+          onChange={(e) => handleFileChange(e, setImage1, setImage1Preview)}
         />
-        {image5Preview && (
+        {image1Preview && (
           <div className="image-preview">
             <img
-              src={image5Preview}
+              src={image1Preview}
               alt="Preview"
               style={{ maxWidth: '75%', borderRadius: '8px' }}
             />
           </div>
-
         )}
 
-      <label>Image 6</label>
+        <label>Image 6</label>
         <input
           type="text"
           placeholder="Image URL 6"
-          value={image6}
-          onChange={(e) => handleFileChange(e, setImage6, setImage6Preview)}
+          value={image2}
+          onChange={(e) => handleInputChange(e, setImage2, setImage2Preview)}
         />
         <input
           type="file"
           accept="image/*"
-          onChange={(e) => handleFileChange(e, setImage6, setImage6Preview)}
+          onChange={(e) => handleFileChange(e, setImage2, setImage2Preview)}
         />
-        {image6Preview && (
+        {image2Preview && (
           <div className="image-preview">
             <img
-              src={image6Preview}
+              src={image2Preview}
               alt="Preview"
               style={{ maxWidth: '75%', borderRadius: '8px' }}
             />
           </div>
-
         )}
+
+       
 
         <label>Latitude</label>
         <input
@@ -366,11 +301,9 @@ const AddObject = () => {
           required
         />
 
-    { <Map latitude={latitude} longitude={longitude} />}  
-   
-        <button type="submit">Add</button>
+        <Map latitude={latitude} longitude={longitude} />
 
-        
+        <button type="submit">Add</button>
       </form>
     </div>
   );
