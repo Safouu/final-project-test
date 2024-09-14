@@ -2,10 +2,11 @@ import { useState, useEffect } from "react";
 import AddGuest from "./AddGuest";
 
 const formatDate = (dateString) => {
-  const options = { year: 'numeric', month: '2-digit', day: '2-digit' };
+  const options = { year: 'numeric', month: 'numeric', day: 'numeric' };
   const date = new Date(dateString);
   return date.toLocaleDateString(undefined, options);
 };
+
 
 const GuestList = () => {
   const [reservations, setReservations] = useState([]);
@@ -22,7 +23,6 @@ const GuestList = () => {
       if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
       const data = await response.json();
       setReservations(data);
-      console.log("reservation:",data)
     } catch (error) {
       console.error("Error fetching reservations:", error);
     }
@@ -30,7 +30,7 @@ const GuestList = () => {
 
   const handleEdit = (reservation) => {
     setSelectedReservation(reservation);
-    setIsAdding(false);
+    setIsAdding(true);
   };
 
   const handleDelete = async (id) => {
@@ -58,7 +58,6 @@ const GuestList = () => {
 
   return (
     <div className="reservations-table">
-
       <button className="addNewGuest" onClick={handleAdd}>+ Reservation</button>
 
       <table>
@@ -75,14 +74,14 @@ const GuestList = () => {
             <th>Ad.Payment</th>
             <th>Total Price</th>
             <th>Apartment</th>
+            <th>Actions</th>
           </tr>
         </thead>
-
         <tbody>
           {reservations.map((reservation) => (
             <tr key={reservation._id}>
               <td>{reservation.user?.firstName || reservation.firstName}</td>
-              <td>{reservation.user?.lastName || reservation.lastName }</td>
+              <td>{reservation.user?.lastName || reservation.lastName}</td>
               <td>{reservation.user?.email || reservation.email}</td>
               <td>{formatDate(reservation.startDate)}</td>
               <td>{formatDate(reservation.endDate)}</td>
@@ -94,14 +93,13 @@ const GuestList = () => {
               <td>{reservation.apartment?.name || 'N/A'}</td>
               <td>
                 <button className="button edit" onClick={() => handleEdit(reservation)}>Edit</button>
-              </td>
-              <td>
                 <button className="button delete" onClick={() => handleDelete(reservation._id)}>X</button>
               </td>
             </tr>
           ))}
         </tbody>
       </table>
+
       {(selectedReservation || isAdding) && (
         <AddGuest
           reservationToEdit={selectedReservation}

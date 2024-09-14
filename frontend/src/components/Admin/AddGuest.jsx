@@ -4,20 +4,24 @@ import "react-date-range/dist/styles.css";
 import "react-date-range/dist/theme/default.css";
 
 const AddGuest = ({ reservationToEdit, onClose }) => {
+  const [apartments, setApartments] = useState([]);
+  const [isBookingValid, setIsBookingValid] = useState(false);
+  const [errorMessage, setErrorMessage] = useState("");
+  const [submitMessage, setSubmitMessage] = useState("");
+
   const [formData, setFormData] = useState({
     firstName: "",
     lastName: "",
     email: "",
-    // phone: "",
     apartment: "",
     startDate: "",
     endDate: "",
-    totalPrice: "",
-    advancePayment: "",
+    totalPrice: 0,
+    advancePayment: 0,
     people: 0,
     children: 0,
     pets: 0,
-    pricePerDay: "",
+    pricePerDay: 0,
     days: 0,
   });
 
@@ -28,11 +32,6 @@ const AddGuest = ({ reservationToEdit, onClose }) => {
       key: "selection",
     },
   ]);
-
-  const [apartments, setApartments] = useState([]);
-  const [isBookingValid, setIsBookingValid] = useState(false);
-  const [errorMessage, setErrorMessage] = useState("");
-  const [submitMessage, setSubmitMessage] = useState("");
 
   useEffect(() => {
     const fetchApartments = async () => {
@@ -54,21 +53,21 @@ const AddGuest = ({ reservationToEdit, onClose }) => {
 
   useEffect(() => {
     if (reservationToEdit) {
+      const selectedApartment = apartments.find(apartment => apartment._id === reservationToEdit.apartment._id);
       setFormData({
         firstName: reservationToEdit.firstName || "",
         lastName: reservationToEdit.lastName || "",
         email: reservationToEdit.email || "",
-        // phone: reservationToEdit.phone || "",
-        apartment: reservationToEdit.apartment || "",
+        apartment: reservationToEdit.apartment._id || "",
         startDate: reservationToEdit.startDate || "",
         endDate: reservationToEdit.endDate || "",
         people: reservationToEdit.people || 0,
         children: reservationToEdit.children || 0,
         pets: reservationToEdit.pets || 0,
-        pricePerDay: reservationToEdit.pricePerDay || "",
+        pricePerDay: selectedApartment ? selectedApartment.price : 0,
         days: reservationToEdit.days || 0,
-        totalPrice: reservationToEdit.totalPrice || "",
-        advancePayment: reservationToEdit.advancePayment || "",
+        totalPrice: reservationToEdit.totalPrice || 0,
+        advancePayment: reservationToEdit.advancePayment || 0,
       });
       setDateRange([
         {
@@ -78,7 +77,7 @@ const AddGuest = ({ reservationToEdit, onClose }) => {
         },
       ]);
     }
-  }, [reservationToEdit]);
+  }, [reservationToEdit, apartments]);
 
   useEffect(() => {
     const start = dateRange[0].startDate;
@@ -115,12 +114,23 @@ const AddGuest = ({ reservationToEdit, onClose }) => {
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-    setFormData((prevFormData) => ({
-      ...prevFormData,
-      [name]: value,
-    }));
+    if (name === "apartment") {
+      const selectedApartment = apartments.find(apartment => apartment._id === value);
+      if (selectedApartment) {
+        setFormData((prevFormData) => ({
+          ...prevFormData,
+          [name]: value,
+          pricePerDay: selectedApartment.price, 
+        }));
+      }
+    } else {
+      setFormData((prevFormData) => ({
+        ...prevFormData,
+        [name]: value,
+      }));
+    }
   };
-
+  
   const handleIncrement = (field) => {
     setFormData((prevFormData) => ({
       ...prevFormData,
@@ -138,7 +148,7 @@ const AddGuest = ({ reservationToEdit, onClose }) => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     const method = reservationToEdit ? "PATCH" : "POST";
-    const url = reservationToEdit? `http://localhost:3232/booking/${reservationToEdit._id}` : "http://localhost:3232/booking";
+    const url = reservationToEdit ? `http://localhost:3232/booking/${reservationToEdit._id}` : "http://localhost:3232/booking";
 
     try {
       const response = await fetch(url, {
@@ -146,21 +156,21 @@ const AddGuest = ({ reservationToEdit, onClose }) => {
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify(formData),
+        body: JSON.stringify({
+          ...formData,
+          apartment: { _id: formData.apartment },
+        }),
       });
 
       if (response.ok) {
         const result = await response.json();
         setSubmitMessage("Reservation saved successfully!");
-        console.log("Reservation saved:", result);
         if (onClose) onClose(); 
       } else {
         setSubmitMessage("Failed to save reservation.");
-        console.error("Error saving reservation:", response.statusText);
       }
     } catch (error) {
       setSubmitMessage("An error occurred during reservation.");
-      console.error("Error during reservation:", error);
     }
   };
 
@@ -169,7 +179,6 @@ const AddGuest = ({ reservationToEdit, onClose }) => {
       <h2>{reservationToEdit ? "Edit Reservation" : "New Reservation"}</h2>
 
       <form onSubmit={handleSubmit}>
-
         <div>
           <label>Select Apartment:</label>
           <select
@@ -192,6 +201,7 @@ const AddGuest = ({ reservationToEdit, onClose }) => {
           <input
             type="text"
             name="firstName"
+            placeholder="First Name"
             value={formData.firstName}
             onChange={handleChange}
             required
@@ -203,6 +213,7 @@ const AddGuest = ({ reservationToEdit, onClose }) => {
           <input
             type="text"
             name="lastName"
+            placeholder="Last Name"
             value={formData.lastName}
             onChange={handleChange}
             required
@@ -214,22 +225,12 @@ const AddGuest = ({ reservationToEdit, onClose }) => {
           <input
             type="email"
             name="email"
+            placeholder="Email"
             value={formData.email}
             onChange={handleChange}
             required
           />
         </div>
-
-        {/* <div>
-          <label>Phone:</label>
-          <input
-            type="tel"
-            name="phone"
-            value={formData.phone}
-            onChange={handleChange}
-            required
-          />
-        </div> */}
 
         <div className="calendar-section">
           <h3>Select Your Stay:</h3>
@@ -246,7 +247,6 @@ const AddGuest = ({ reservationToEdit, onClose }) => {
 
         <div className="people-container">
           <div className="people-group">
-
             <label>Adults:</label>
             <div className="input-group">
               <button type="button" onClick={() => handleDecrement("people")}>
@@ -311,6 +311,7 @@ const AddGuest = ({ reservationToEdit, onClose }) => {
               value={formData.pricePerDay}
               onChange={handleChange}
               required
+              readOnly
             />
           </div>
           <div>

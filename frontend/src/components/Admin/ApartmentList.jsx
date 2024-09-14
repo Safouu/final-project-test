@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import Map from './Map';
+import { NavLink } from 'react-router-dom';
 
 const ApartmentList = () => {
   const [apartments, setApartments] = useState([]);
@@ -98,7 +99,7 @@ const ApartmentList = () => {
     <div className='objects-container'>
       {apartments.map((apartment) => (
 
-        <div key={apartment._id} className='object'>
+        <NavLink to={`/apartment/${apartment._id}`} key={apartment._id} className='object'>
           <img src={apartment.image} alt={apartment.name} />
           <div className='object-details'>
             <h1>{apartment.name}</h1>
@@ -115,7 +116,7 @@ const ApartmentList = () => {
               onClick={() => handleEditApartment(apartment)}> Edit
             </button>
           </div>
-        </div>
+        </NavLink>
       ))}
 
       {editingApartment && (

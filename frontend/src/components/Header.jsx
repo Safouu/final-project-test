@@ -8,12 +8,14 @@ const Header = () => {
 
   return (
     <header className="header">
-       <div className="logo">
+
+       <nav className="logo">
         <NavLink to="/">
           Y.D.V
         </NavLink>
-      </div>
-      <nav>
+      </nav>
+      
+      <nav className="nav">
         <NavLink to="/">Home</NavLink>
         <NavLink to="/contact">Contact</NavLink>
         {isLoggedIn ? (
