@@ -1,8 +1,8 @@
-
-
 import { useState, useEffect, useRef } from 'react';
 import { DayPilotScheduler, DayPilot } from 'daypilot-pro-react';
-import moment from 'moment-timezone'; // For better timezone handling
+import moment from 'moment-timezone'; 
+import DatePicker from 'react-datepicker'; 
+
 
 // Utility to generate a random color
 const generateRandomColor = () => {
@@ -36,8 +36,8 @@ const processEvents = (data) => {
   return data
     .filter(item => item.apartment && item.user) // Filter out null values
     .map(item => {
-      const startDateUTC = moment.utc(item.startDate).local().format('YYYY-MM-DDTHH:mm:ss');
-      const endDateUTC = moment.utc(item.endDate).local().endOf('day').format('YYYY-MM-DDTHH:mm:ss');
+      const startDateUTC = moment.utc(item.startDate).local().format('YYYY-MM-DD[T]HH:mm:ss');
+      const endDateUTC = moment.utc(item.endDate).local().endOf('day').format('YYYY-MM-DD[T]HH:mm:ss');
       return {
         id: item._id,
         text: item.user.firstName,
@@ -52,8 +52,8 @@ const AdminCalendar = () => {
   const [objects, setObjects] = useState([]);
   const [events, setEvents] = useState([]);
   const schedulerRef = useRef(null);
-  const [startDate, setStartDate] = useState('2024-09-01');
-  const [days, setDays] = useState(365);
+  const [startDate, setStartDate] = useState(moment().startOf('month').format('YYYY-MM-DD')); // Default start date is current month
+  const [days] = useState(365); // Show full year
 
   // Function to fetch data
   const fetchData = async () => {
@@ -76,40 +76,20 @@ const AdminCalendar = () => {
   };
 
   useEffect(() => {
-    fetch('http://localhost:3232/bookings')
-      .then(response => {
-        if (!response.ok) {
-          throw new Error('Network response was not ok');
-        }
-        return response.json();
-      })
-      .then(data => {
-        console.log('Fetched data:', data); 
-
-        const resources = data
-
-          .filter(item => item.apartment) 
-          .map(item => ({
-            id: item.apartment._id,
-            name: item.apartment.name,
-            color: getColorForResource(item.apartment._id, data) 
-          }));
-
-        const events = data
-          .filter(item => item.apartment && item.user) 
-          .map(item => ({
-            id: item._id,
-            text: item.user.firstName, 
-            start: item.startDate,
-            end: item.endDate,
-            resource: item.apartment._id 
-          }));
-
-        setObjects(resources);
-        setEvents(events);
-      })
-      .catch(error => console.error('Error fetching data:', error));
+    fetchData();
   }, []);
+
+    // Function to handle changing the month with the arrows
+    const handleMonthChange = (direction) => {
+      const newDate = moment(startDate).add(direction, 'months').toDate();
+      setStartDate(newDate);
+    };
+
+  // Handle date change (from date picker)
+  const handleDateChange = (date) => {
+    const formattedDate = moment(date).startOf('month').format('YYYY-MM-DD');
+    setStartDate(formattedDate); // Update start date to the selected month
+  };
 
   // Scheduler configuration
   const config = {
@@ -122,7 +102,7 @@ const AdminCalendar = () => {
     days,
     startDate,
     timeRangeSelectedHandling: 'Enabled',
-    rowHeaderWidth: 150,
+    rowHeaderWidth: 185,
     onEventMoved: (args) => {
       console.log('Event moved:', args.e.data.id, args.newStart, args.newEnd, args.newResource);
       schedulerRef.current.message(`Event moved: ${args.e.data.text}`);
@@ -167,12 +147,32 @@ const AdminCalendar = () => {
   return (
     <div>
       <div className="admin-container-calendar">
-        <h1>Admin Scheduler</h1>
-        <DayPilotScheduler
+        <h1>Booking Calendar</h1>
+
+        {/* Date Picker for selecting month and year */}
+        <div className="date-picker-container" style={{ marginBottom: '20px' }}>
+          <DatePicker
+            selected={new Date(startDate)}
+            onChange={handleDateChange}
+            dateFormat="MMMM yyyy" 
+            showMonthYearPicker 
+            className="react-datepicker-ignore-onclickoutside"
+       
+          />
+        <div className="arrow-buttons">
+        <button onClick={() => handleMonthChange(-1)}>{'<'}</button>
+        <button onClick={() => handleMonthChange(1)}>{'>'}</button>
+      </div>
+
+        </div>
+
+
+       <DayPilotScheduler
           {...config}
           events={events}
           resources={objects}
           ref={schedulerRef}
+          
         />
       </div>
     </div>
@@ -180,5 +180,3 @@ const AdminCalendar = () => {
 };
 
 export default AdminCalendar;
-
-
