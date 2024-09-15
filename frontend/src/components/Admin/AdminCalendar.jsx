@@ -1,8 +1,9 @@
+
 import { useState, useEffect, useRef } from 'react';
 import { DayPilotScheduler, DayPilot } from 'daypilot-pro-react';
 import moment from 'moment-timezone'; 
 import DatePicker from 'react-datepicker'; 
-
+import 'react-datepicker/dist/react-datepicker.css'; 
 
 // Utility to generate a random color
 const generateRandomColor = () => {
@@ -36,8 +37,8 @@ const processEvents = (data) => {
   return data
     .filter(item => item.apartment && item.user) // Filter out null values
     .map(item => {
-      const startDateUTC = moment.utc(item.startDate).local().format('YYYY-MM-DD[T]HH:mm:ss');
-      const endDateUTC = moment.utc(item.endDate).local().endOf('day').format('YYYY-MM-DD[T]HH:mm:ss');
+      const startDateUTC = moment.utc(item.startDate).local().format('YYYY-MM-DDTHH:mm:ss');
+      const endDateUTC = moment.utc(item.endDate).local().endOf('day').format('YYYY-MM-DDTHH:mm:ss');
       return {
         id: item._id,
         text: item.user.firstName,
@@ -154,7 +155,7 @@ const AdminCalendar = () => {
           <DatePicker
             selected={new Date(startDate)}
             onChange={handleDateChange}
-            dateFormat="MMMM yyyy" 
+            dateFormat="MMMM yyyy" // Show only month and year
             showMonthYearPicker 
             className="react-datepicker-ignore-onclickoutside"
        
@@ -172,7 +173,6 @@ const AdminCalendar = () => {
           events={events}
           resources={objects}
           ref={schedulerRef}
-          
         />
       </div>
     </div>

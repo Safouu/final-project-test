@@ -853,10 +853,7 @@ hr{
 
 /*Admin Calendar*/
 
-.daypilot-scheduler {
-  font-family: var(--font); /* Replace with your desired font */
 
-}
 .admin-container-calendar {
   background-color: var(--background-color); /* Slightly transparent background */
   border-radius: 10px; /* Rounded corners */
@@ -882,16 +879,28 @@ hr{
   cursor: pointer; /* Pointer cursor for month and year menu */
 }
 
+/* Date picker custom hover effects for modern look */
+.react-datepicker__month-read-view:hover,
+.react-datepicker__year-read-view:hover {
+  background-color: rgba(0, 123, 255, 0.1); /* Light blue hover effect */
+}
 
+/* Enhance the text visibility in the DatePicker */
+.react-datepicker__current-month,
+.react-datepicker__month-read-view--down-arrow,
+.react-datepicker__year-read-view--down-arrow {
+  font-weight: bold;
+  color: #333;
+}
 
 /* Style calendar days with hover and selected states */
 .react-datepicker__day:hover {
-  background-color: rgba(156, 158, 161, 0.2); /* Light blue hover for days */
+  background-color: rgba(0, 123, 255, 0.2); /* Light blue hover for days */
   border-radius: 50%; /* Circular hover effect for days */
 }
 
 .react-datepicker__day--selected {
-  background-color: rgba(80, 82, 85, 0.7); /* Slightly darker selected state */
+  background-color: rgba(0, 123, 255, 0.7); /* Slightly darker selected state */
   border-radius: 50%; /* Circular shape for the selected day */
   color: white;
 }
@@ -906,7 +915,7 @@ hr{
   border-radius: 5px; /* Optional: Add rounded corners */
 }
 .react-datepicker-ignore-onclickoutside{
-  width: 180px;
+  width: 170px;
   height: 25px;
   cursor: pointer;
   border: none;
@@ -917,28 +926,6 @@ hr{
   text-align: center;
 
 }
-
-/* Custom style for the top table line where months are displayed */
-.daypilot-header {
-  background-color: #a54646; /* Gray background color */
-  font-family: 'Arial', sans-serif; /* Font family for headers */
-  font-size: 16px; /* Font size for headers */
-  font-weight: bold; /* Font weight for headers */
-}
-
-/* Custom style for the left column where resources are displayed */
-.daypilot-rowheader {
-  background-color: #b42c2c; /* Lighter gray background color for resources */
-  font-family: 'Verdana', sans-serif; /* Font family for row headers */
-  font-size: 14px; /* Font size for row headers */
-  color: #333; /* Font color for better contrast */
-}
-
-/* Optional: Style for the table cells and time headers */
-.daypilot-cell {
-  border-color: #490909; /* Light border color */
-}
-
 
 
   /* Style for the arrow buttons */
