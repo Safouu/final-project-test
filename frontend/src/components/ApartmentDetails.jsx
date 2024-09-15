@@ -40,54 +40,56 @@ const ApartmentDetails = () => {
 
   return (
     <div className='home'>
-      <div className='apart-details'>
-        {apartment ? (
-          apartment.error ? (
-            <p>{apartment.error}</p>
-          ) : (
-            <div className='single-apart'>
-              <div className='single-top'>
-                <div className='single-main-img'>
-                  <img src={selectedImage} alt={apartment.name} />
-                </div>
 
-                <div className='single-images'>
-                  {['image1', 'image2', 'image3', 'image4', 'image5', 'image6'].map((key) => (
-                    <img
-                      key={key}
-                      src={apartment[key]}
-                      alt={`Thumbnail ${key}`}
-                      onClick={() => handleImageClick(key)}
-                    />
-                  ))}
-                </div>
-              </div>
+      <div className='apart'>
+        <div className='top'>
+          <p>Follow Your Dream</p>
+        </div>
+      </div>
 
-              <div className='single-description'>
-                <h2>{apartment.name}</h2>
-                <p>{apartment.description}</p>
-                <p> {apartment.price} $ </p>
-              </div>
+      {apartment ? ( 
+        apartment.error ? (
+          <p>{apartment.error}</p>
+        ) : (
+          <div className='apartments apart-details'> 
 
-              {/* latitude and longitude  */}
-              {apartment.latitude && apartment.longitude ? (
-                <div className='map-container' style={{ marginTop: '20px' }}>
-                  <Map latitude={apartment.latitude} longitude={apartment.longitude} />
-                </div>
-              ) : (
-                <p>Location information is unavailable.</p>
-              )}
+            <img className='main-img' src={selectedImage} alt={apartment ? apartment.name : 'Apartment'} />
+           
+            <div className='single-images'>
+              {['image1', 'image2', 'image3', 'image4', 'image5', 'image6'].map((key) => (
+                <img
+                  key={key}
+                  src={apartment[key]}
+                  alt={`Thumbnail ${key}`}
+                  onClick={() => handleImageClick(key)}
+                />
+              ))}
+            </div>
 
-              <button className="booking-button" onClick={handleBooking}>
+            <hr />
+
+          <div className='apart-description'>
+            <h1>{apartment.name}</h1>
+            <p>{apartment.description}</p>
+            <h>{apartment.price} <span>$</span></h>
+          </div>
+
+          <hr />
+
+           <div className='map-container' style={{ marginTop: '20px' }}>
+                <Map latitude={apartment.latitude} longitude={apartment.longitude} />
+           </div>
+
+                <button className="booking-button" onClick={handleBooking}>
                 Book Now
               </button>
-            </div>
-          )
-        ) : (
-          <p>Loading...</p>
-        )}
-      </div>
-    </div>
+         </div>
+            )
+            ) : (
+              <p>Loading...</p>
+            )}
+          </div> 
+   
   );
 };
 

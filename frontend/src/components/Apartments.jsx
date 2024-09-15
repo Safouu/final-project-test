@@ -13,21 +13,23 @@ const Apartment = () => {
   }, []);
 
   return (
-    <div className='objects-container'>
+    <div div className='apartments'>
+
       {apartments && apartments.map((apartment) => (
         <NavLink to={`/apartment/${apartment._id}`} key={apartment._id}>
-          <div className='object'>
+          <div className='apartment'>
             <img src={apartment.image} alt={apartment.name} />
            
-          <div className='object-details'>
+          <div className='apartment-details'>
             <h1>{apartment.name}</h1>
-            <h3>{(apartment.description).slice(0,30)}...</h3>
-            <p>{apartment.price} $</p>
+            <p>{(apartment.description).slice(0,30)}...</p>
+            <h3>{apartment.price} <span>$</span></h3>
           </div>
 
           </div>
         </NavLink>
       ))}
+
     </div>
   );
 };

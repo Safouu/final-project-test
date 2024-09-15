@@ -7,10 +7,9 @@ return (
   <div className='top'>
     <p>Your Dream Vacation</p>
   </div>
+  
+  <Apartments/>
 
-  <div className='hello'>
-      <Apartments/>
-  </div>
     
 
 
