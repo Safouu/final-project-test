@@ -96,52 +96,71 @@ const ApartmentList = () => {
   };
 
   return (
-    <div className='objects-container'>
-      {apartments.map((apartment) => (
+    <div className='apartments'>
 
-        <NavLink to={`/apartment/${apartment._id}`} key={apartment._id} className='object'>
-          <img src={apartment.image} alt={apartment.name} />
-          <div className='object-details'>
+      {apartments && apartments.map((apartment) => (
+        <div key={apartment._id}>
+          <div className='admin-apartment'>
+            <img src={apartment.image} alt={apartment.name} />
+           
+          <div className='apartment-details'>
             <h1>{apartment.name}</h1>
-            <h3>{apartment.description.slice(0, 30)}...</h3>
-            <p>{apartment.price} $</p>
-
-            <button
-              style={{ background: 'red', color: 'white', cursor: 'pointer', padding: '5px 10px' }}
-              onClick={() => handleDelete(apartment._id)}> Delete
-            </button>
-
-            <button
-              style={{ background: 'green', color: 'white', cursor: 'pointer', padding: '5px 10px' }}
-              onClick={() => handleEditApartment(apartment)}> Edit
-            </button>
+            <p>{(apartment.description).slice(0,30)}...</p>
+            <h3>{apartment.price} <span>$</span></h3>
           </div>
-        </NavLink>
+
+          <div className='admin-buttons'>
+
+          <button className='delete-button'
+            onClick={() => handleDelete(apartment._id)}> X
+          </button>
+          <button className='edit-button'
+            onClick={() => handleEditApartment(apartment)}> Edit
+          </button>
+          </div>
+
+          </div>
+        </div>
       ))}
 
       {editingApartment && (
-        <div className='edit-modal'>
-          <form className='add-apartment' onSubmit={handleSubmit}>
-            <label>Name</label>
-            <input
-              type="text" placeholder="Object Name" value={name}
-              onChange={(e) => setName(e.target.value)}
-              required
-            />
 
-            <label>Description</label>
-            <input
+ 
+          <form className='admin-edit-apartment' onSubmit={handleSubmit}>
+
+            <div className='admin-edit-name-price'>
+
+            <label>Name
+                  <input
+                  type="text" placeholder="Apartment Name" value={name}
+                  onChange={(e) => setName(e.target.value)}
+                  required
+                  />
+            </label>       
+      
+            <label>Price
+                <input
+                  type="number" placeholder="Apartment Price/n" value={price}
+                  onChange={(e) => setPrice(e.target.value)}
+                  required
+                  />
+            </label>
+
+            </div>
+
+
+            <div className='admin-edit-description'>
+            <label>Description
+            <textarea
               type="text" placeholder="Description" value={description}
               onChange={(e) => setDescription(e.target.value)}
               required
             />
+            </label>
+            </div>
 
-            <label>Price</label> {/* Single price field */}
-            <input
-              type="number" placeholder="Price" value={price}
-              onChange={(e) => setPrice(e.target.value)}
-              required
-            />
+
+            <div className='admin-edit-image'>
 
             <label>Main image</label>
             <input
@@ -160,9 +179,10 @@ const ApartmentList = () => {
                 />
               </div>
             )}
+            </div>
 
-            {/* Handling multiple image URLs as well */}
-            {['image1', 'image2', 'image3', 'image4', 'image5', 'image6'].map((img, idx) => (
+           
+             {['image1', 'image2', 'image3', 'image4', 'image5', 'image6'].map((img, idx) => (
               <div key={idx}>
                 <label>Image {idx + 1}</label>
                 <input
@@ -182,9 +202,9 @@ const ApartmentList = () => {
                   </div>
                 )}
               </div>
-            ))}
+            ))} 
 
-            <label>Latitude</label>
+           <label>Latitude</label>
             <input
               type="text" placeholder="Latitude" value={latitude}
               onChange={(e) => setLatitude(e.target.value)}
@@ -200,11 +220,13 @@ const ApartmentList = () => {
 
             {showMap && <Map latitude={latitude} longitude={longitude} />}
 
-            <button type="submit">Save</button>
+            <button className='save' type="submit">Save</button>
 
-            <button type="button" onClick={() => setEditingApartment(null)}>Cancel</button>
+            <button className='cancel' type="button" onClick={() => setEditingApartment(null)}>Cancel</button>
+
           </form>
-        </div>
+
+
       )}
     </div>
   );
