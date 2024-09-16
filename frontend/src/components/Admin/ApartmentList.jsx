@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import Map from './Map';
-import { NavLink } from 'react-router-dom';
+// import { NavLink } from 'react-router-dom';
 
 const ApartmentList = () => {
   const [apartments, setApartments] = useState([]);

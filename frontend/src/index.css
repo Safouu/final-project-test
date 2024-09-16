@@ -308,11 +308,6 @@ backdrop-filter: blur(5px);
 }
 
 
-/* For Firefox */
-input[type="number"] {
-    -moz-appearance: textfield;
-} */
-
 
 button {
   cursor: not-allowed;
@@ -975,9 +970,105 @@ button{
 
 /*Admin Calendar*/
 
-.admin-container-calendar{
-  width: 89vw;
+
+.admin-container-calendar {
+  background-color: var(--background-color); /* Slightly transparent background */
+  border-radius: 10px; /* Rounded corners */
+  padding: 20px; /* Padding inside the container */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Subtle shadow for a modern effect */
+  width: 90vw;
+  margin: 0 auto; /* Center the calendar container */
+  font-family: var(--font-2);
 }
+
+
+/* Styling the Date Picker (Month and Year Menu) */
+.react-datepicker {
+  opacity: 0.95; /* Set opacity for the date picker */
+  border-radius: 8px; /* Round corners for the date picker */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Soft shadow */
+}
+
+/* Month and Year Menu Cursor */
+.react-datepicker__month-year-dropdown,
+.react-datepicker__month-read-view,
+.react-datepicker__year-read-view {
+  cursor: pointer; /* Pointer cursor for month and year menu */
+}
+
+/* Date picker custom hover effects for modern look */
+.react-datepicker__month-read-view:hover,
+.react-datepicker__year-read-view:hover {
+  background-color: rgba(0, 123, 255, 0.1); /* Light blue hover effect */
+}
+
+/* Enhance the text visibility in the DatePicker */
+.react-datepicker__current-month,
+.react-datepicker__month-read-view--down-arrow,
+.react-datepicker__year-read-view--down-arrow {
+  font-weight: bold;
+  color: #333;
+}
+
+/* Style calendar days with hover and selected states */
+.react-datepicker__day:hover {
+  background-color: rgba(0, 123, 255, 0.2); /* Light blue hover for days */
+  border-radius: 50%; /* Circular hover effect for days */
+}
+
+.react-datepicker__day--selected {
+  background-color: rgba(0, 123, 255, 0.7); /* Slightly darker selected state */
+  border-radius: 50%; /* Circular shape for the selected day */
+  color: white;
+}
+.date-picker-container {
+  position: absolute;
+  top: 377px; /* Adjust to match your desired position */
+  left: 50px; /* Adjust to match your desired position */
+  width: 100px; /* Adjust width based on the picker size */
+  height: 80px; /* Adjust height based on the picker size */
+  z-index: 1000; /* Ensure it is above other elements */
+  padding: 10px; /* Optional: Add some padding if needed */
+  border-radius: 5px; /* Optional: Add rounded corners */
+}
+.react-datepicker-ignore-onclickoutside{
+  width: 170px;
+  height: 25px;
+  cursor: pointer;
+  border: none;
+ font-family: var(--font);
+  font-size: 1.2rem;
+  background-color:  #93c47d;
+  border-radius: 2px;
+  text-align: center;
+
+}
+
+
+  /* Style for the arrow buttons */
+.arrow-buttons {
+  display: flex;
+  justify-content: space-between;
+  width: 80%;
+  position: absolute;
+  top: 40px; /* Adjust to match your desired position */
+  left: 50px; /* Adjust to match your desired position */
+  
+}
+
+.arrow-buttons button {
+  background-color: #93c47d; /* Optional: Set color */
+  border: none;
+  padding: 5px;
+  cursor: pointer;
+  font-size: 16px;
+  color: white;
+  width: 30px; /* Width of the arrow buttons */
+  border-radius: 50%;
+ 
+}
+
+
 
 /*List Guests*/
 
