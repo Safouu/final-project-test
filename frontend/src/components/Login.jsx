@@ -56,7 +56,7 @@ const Login = () => {
   };
 
   return (
-    <div className="home">
+    <div className="layout">
       <div className="login-container">
         <form className="login-form" onSubmit={handleSubmit}>
           <h2>Login</h2>
@@ -79,7 +79,8 @@ const Login = () => {
           />
           <button type="submit">Login</button>
           {message && <p className="message">{message}</p>}
-          <p>No account? <NavLink to="/register">Register</NavLink></p>
+
+          <p className='login-register'>No account? <NavLink to="/register">Register</NavLink></p>
         </form>
       </div>
     </div>

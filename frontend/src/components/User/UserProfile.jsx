@@ -9,41 +9,53 @@ const UserProfile = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
-  useEffect(() => {
-    const fetchUserData = async () => {
-      if (!isLoggedIn || !userId) {
-        setError('User is not logged in or user ID is not available.');
-        setLoading(false);
-        return;
-      }
+  const fetchUserData = async () => {
+    if (!isLoggedIn || !userId) {
+      setError('User is not logged in or user ID is not available.');
+      setLoading(false);
+      return;
+    }
 
-      try {
-        const response = await fetch(`http://localhost:3232/userProfile/${userId}`, {
-          method: 'GET',
-          headers: {
-            'Content-Type': 'application/json',
-            'Authorization': `Bearer ${localStorage.getItem('token')}`
-          }
-        });
-
-        if (!response.ok) {
-          throw new Error('Failed to fetch user profile and reservations');
+    try {
+      const response = await fetch(`http://localhost:3232/userProfile/${userId}`, {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${localStorage.getItem('token')}`
         }
+      });
 
-        const data = await response.json();
-        console.log(data)
-        setUser(data.user);
-        setReservations(data.bookings); 
-
-      } catch (err) {
-        setError(err.message);
-      } finally {
-        setLoading(false);
+      if (!response.ok) {
+        throw new Error('Failed to fetch user profile and reservations');
       }
-    };
 
+      const data = await response.json();
+      setUser(data.user);
+      setReservations(data.bookings);
+      console.log(data.bookings[0].apartment.name);
+
+    } catch (err) {
+      setError(err.message);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  useEffect(() => {
     fetchUserData();
   }, [isLoggedIn, userId]);
+
+  const handleDelete = async (id) => {
+    try {
+      const response = await fetch(`http://localhost:3232/booking/${id}`, {
+        method: "DELETE",
+      });
+      if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
+      fetchUserData();
+    } catch (error) {
+      console.error("Error deleting reservation:", error);
+    }
+  };
 
   if (loading) {
     return <div>Loading...</div>;
@@ -58,23 +70,34 @@ const UserProfile = () => {
   }
 
   return (
-    <div>
-      <h1>{user.firstName} Profile</h1>
-      <p><strong>First Name:</strong> {user.firstName}</p>
-      <p><strong>Last Name:</strong> {user.lastName}</p>
+    <div className='home'>
 
-      <h2>Reservations</h2>
+    <div className='user-profile'>
+      <div className='top'>
+        <p>{user.firstName} {user.lastName}</p>
+      </div>
+    </div>
+
+    <p>
+      My Reservations
+    </p>
+
+
+    <div className='user-profile-reservations' >
       <ul>
         {reservations.length > 0 ? (
           reservations.map(reservation => (
-            <li key={reservation._id}>
+            <li className='reservation' key={reservation._id}>
               {reservation.apartment ? (
                 <>
+                  <img src={reservation.apartment.image} alt={reservation.apartment.name} style={{height:"220px"}} />
                   <p><strong>Property:</strong> {reservation.apartment.name}</p>
                   <p><strong>Check-in Date:</strong> {new Date(reservation.startDate).toLocaleDateString()}</p>
                   <p><strong>Check-out Date:</strong> {new Date(reservation.endDate).toLocaleDateString()}</p>
-                  <p><strong>Total Price:</strong> {reservation.totalPrice}</p>
                   <p><strong>Advance Payment:</strong> {reservation.advancePayment}</p>
+                  <p><strong>Total Price:</strong> {reservation.totalPrice}</p>
+
+                  <button className="delete-button" onClick={() => handleDelete(reservation._id)}>X</button>
                 </>
               ) : (
                 <p>No apartment data available for this reservation</p>
@@ -85,6 +108,8 @@ const UserProfile = () => {
           <p>No reservations found</p>
         )}
       </ul>
+    </div>
+
     </div>
   );
 };

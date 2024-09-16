@@ -222,10 +222,9 @@ backdrop-filter: blur(5px);
   gap: 20px;
   padding: 20px;
   border-radius: 8px;
-  box-shadow: 0 2px 12px #0000002b;
+  box-shadow: 0 2px 12px #00000043;
   margin-top: 120px ;
   width: 30%;
-  background-color: yellowgreen;
 }
 
 .booking-container .calendar-section {
@@ -234,7 +233,7 @@ backdrop-filter: blur(5px);
   box-shadow: 0 2px 12px #0000002b;
   border-radius: 8px;
   padding: 3px;
-  border: solid 5px rgb(249, 207, 0);
+  box-shadow: 0 2px 12px #00000043;
 }
 
 .booking-container .people-container {
@@ -244,17 +243,19 @@ backdrop-filter: blur(5px);
   align-items: center;
   justify-content: space-around;
   gap: 10px;
+  padding: 5px;
   width: 100%;
   margin-bottom: 20px;
-  border: solid 5px rgb(16, 57, 181);
+  box-shadow: 0 2px 12px #00000043;
   input{
     text-align: center;
     border-radius: 4px;
-    border: solid 5px red;
+    color: black;
   }
   button{
     border-radius: 4px;
-    border: solid 5px red;
+    color: rgb(0, 0, 0);
+    border: solid 1px black;
   }
 }
 
@@ -287,7 +288,6 @@ backdrop-filter: blur(5px);
   flex-direction: column;
   align-items: center;
   gap: 10px;
-  border: solid 5px rgb(255, 0, 0);
 }
 
 
@@ -295,7 +295,6 @@ backdrop-filter: blur(5px);
 .price-calculator label {
   display: block;
   margin-bottom: 5px;
-  border: solid 5px rgb(255, 0, 0);
 }
 
 .price-calculator input {
@@ -304,7 +303,6 @@ backdrop-filter: blur(5px);
   margin-bottom: 10px;
   border-radius: 4px;
   border: 1px solid #ccc;
-  border: solid 5px rgb(255, 0, 0);
 }
 
 
@@ -1153,25 +1151,14 @@ button{
 .contact-message-container {
   padding: 20px;
   border-radius: 8px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  border: solid 5px red;
-  width: 100%;
-}
-
-.contact-message-container h1 {
-  display: flex;
-  align-items: center;
-  margin-bottom: 20px;
-  font-size: 2rem;
-  font-weight: 600;
-  border: solid 5px rgb(47, 255, 0);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.46);
+  width: 90%;
 }
 
 .object-message {
   padding: 20px;
   border-radius: 8px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  border: solid 5px rgb(255, 200, 0);
 }
 .object-message table {
   width: 100%;
@@ -1182,42 +1169,50 @@ button{
 .object-message td {
   padding: 12px 15px;
   text-align: left;
-  border-bottom: 1px solid #dee2e6;
 }
 
 .object-message th {
   font-weight: 600;
-  border: solid 5px rgb(0, 0, 0);
+  border: solid 1px rgb(0, 0, 0);
 }
 
-
-.object-message button {
-  color: var(--color);
-  padding: 6px 12px;
-  border: none;
-  border-radius: 4px;
-  cursor: pointer;
-  font-size: 14px;
-  transition: background-color 0.3s ease;
-}
 
 .object-message button:hover {
   background-color: var(--secondary-color);
 }
 
-.delete-all-button {
- 
-  color: white;
-  padding: 8px 16px;
-  border: none;
-  border-radius: 4px;
-  cursor: pointer;
-  font-size: 16px;
-  transition: background-color 0.3s ease;
+.user-profile .top{
+ background-image: url('../public/images/luxus-ferienhaus-adobestock_622275106-akim-d.webp');
+ p{
+  text-shadow: #000000 2px 8px 10px;
+  box-shadow: 0 2px 12px #000000;
+  padding: 0 25px;
+  border-radius: 8px;
+ }
 }
 
+.user-profile-reservations ul{
+  display: flex;
+  flex-wrap: wrap;
+  gap: 15px;
+  width: 80vw;
+  /* box-shadow: 0 2px 12px #0000003b;
+  border-radius: 8px; */
+}
 
+.reservation{
+  list-style-type: none;
+  width: 350px;
+  height: fit-content ;
+  border-radius: 8px;
+  box-shadow: 0 2px 12px #0000002b;
+  padding: 10px;
+  transition: box-shadow 0.3s;
+  &:hover{
+    box-shadow: 0 4px 12px #00000079;
+  }
 
+}
 
 
 @media (max-width: 1100px) {
@@ -1320,4 +1315,11 @@ button{
       width: 90%; 
       padding: 5px;   
     }
+}
+
+.login-register a{
+  color: var(--secondary-color);
+  text-decoration: none;
+  font-size: 1.2rem;
+  font-weight: 600;
 }

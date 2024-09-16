@@ -53,7 +53,7 @@ const Register = () => {
   };
 
   return (
-    <div className="home">
+    <div className="layout">
 
     <div className="login-container">
 
@@ -118,7 +118,7 @@ const Register = () => {
 
         <button type="submit">Sign up</button>
         {message && <p className="message">{message}</p>}
-        <p>
+        <p className="login-register">
           Already have an account? <NavLink to="/login">Login</NavLink>
         </p>
       </form>

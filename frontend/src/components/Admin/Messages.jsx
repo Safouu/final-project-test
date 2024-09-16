@@ -53,7 +53,6 @@ const Messages = () => {
 
   return (
     <div className="contact-message-container">
-    <h1>Contact Messages</h1>
     
     <div className='object-message'>
      
@@ -78,7 +77,7 @@ const Messages = () => {
               <td>{message.message}</td>
 
               <td>
-                <button onClick={() => handelDelete(message._id)}>X</button>
+                <button className='delete-button' onClick={() => handelDelete(message._id)}>X</button>
               </td>
             </tr>
           ))}

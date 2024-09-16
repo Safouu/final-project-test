@@ -248,7 +248,7 @@ function Booking() {
               />
             </div>
           </div>
-          <button type="submit" disabled={!isBookingValid}>
+          <button className="edit-button" type="submit" disabled={!isBookingValid}>
             Submit
           </button>
         </form>
