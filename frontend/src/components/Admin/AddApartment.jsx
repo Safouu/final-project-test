@@ -3,7 +3,7 @@ import Map from './Map';
 
 const AddApartment = () => {
   const [name, setName] = useState('');
-  const [price, setPrice] = useState(''); // Price is now a single number as a string initially
+  const [price, setPrice] = useState('');
   const [description, setDescription] = useState('');
   const [image, setImage] = useState('');
   const [image1, setImage1] = useState('');
@@ -100,7 +100,7 @@ const AddApartment = () => {
   };
 
   return (
-    <div>
+    
       <form className='add-apartment' onSubmit={handleSubmit}>
         <label>Name</label>
         <input
@@ -268,7 +268,7 @@ const AddApartment = () => {
         <button type="submit">Add</button>
 
       </form>
-    </div>
+    
   );
 };
 

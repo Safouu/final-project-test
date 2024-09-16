@@ -762,14 +762,24 @@ button{
 
 
 .admin-edit-image{
+  width: 100%;
   border-radius: 8px;
-  box-shadow: 0 2px 12px #0000002b;
-  border: solid 2px black;
-  img{
-    width: 50%;
-    object-fit: cover;
+  font-weight: 600;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  min-height: 100vh;
+  gap: 5px;
+  .images-div{
+    width: 31%;
+    box-shadow: 0 2px 12px #00000086;
+    img{
+      width: 100%;
+      height: 350px;
+    }
   }
 }
+
 
 
 
@@ -782,7 +792,6 @@ button{
   padding: 20px;
   border-radius: 10px;
   box-shadow: 0 20px 20px rgba(0, 0, 0, 0.1);
-  background-color: rgb(78, 78, 78);
 }
 
 .add-guest h2 {
@@ -810,10 +819,9 @@ button{
   padding: 10px;
   font-size: 14px;
   border-radius: 5px;
-  border: 1px solid #ccc;
+  border: 1px solid #9b9b9b;
   box-sizing: border-box;
   transition: border-color 0.3s ease;
-  background-color: rgb(202, 202, 202);
 }
 
 
@@ -837,23 +845,11 @@ button{
 }
 
 
-.add-guest button,
-.add-guest button {
-  padding: 12px 20px;
-  font-size: 16px;
-  color: #000000;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-  transition: background-color 0.3s ease;
-  margin-top: 10px;
-  width: 100%;
-}
 
 .people-container {
   display: flex;
   
-  gap: 200px; /* Abstand zwischen den Gruppen */
+  gap: 200px;
   margin-top: 20px;
 }
 
@@ -862,7 +858,7 @@ button{
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  gap: 5px; /* Abstand zwischen Label und Eingabefeld */
+  gap: 5px; 
 }
 
 .people-container label {
@@ -876,7 +872,7 @@ button{
 .input-group {
   display: flex;
   align-items: center;
-  gap: 5px; /* Abstand zwischen Button und Eingabefeld */
+  gap: 5px; 
 }
 
 .input-group button {
@@ -936,13 +932,13 @@ button{
 }
 
 .rdrDay {
-  flex: 1 0 calc(100% / 7); /* Gleiche Breite wie die Wochentage */
+  flex: 1 0 calc(100% / 7); 
   text-align: center;
   padding: 15px 0;
   box-sizing: border-box;
   border: 1px solid #ddd;
   background-color: #fff;
-  margin-top: -1px; /* Versteckt doppelte Ränder */
+  margin-top: -1px;
 }
 
 /* Add Object */
@@ -951,18 +947,18 @@ button{
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 15px; /* Erhöht den Abstand zwischen den Elementen */
+  gap: 15px;
   background-color: var(--main-color);
   padding: 20px;
   border-radius: 10px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  max-width: 600px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.448);
+  width: 50%;
   margin: 0 auto;
 }
 
 .add-apartment label {
   font-weight: bold;
-  margin-bottom: 5px; /* Abstand zwischen Label und Eingabefeld */
+  margin-bottom: 5px;
   color: var(--color-white);
   align-self: flex-start;
 }
@@ -970,7 +966,7 @@ button{
 .add-apartment input {
   width: 100%;
   padding: 10px;
-  margin-bottom: 15px; /* Abstand zwischen Eingabefeldern */
+  margin-bottom: 15px;
   border: 1px solid #ccc;
   border-radius: 5px;
   box-sizing: border-box;

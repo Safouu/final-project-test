@@ -338,11 +338,11 @@ const AddGuest = ({ reservationToEdit, onClose }) => {
           </div>
         </div>
 
-        <button type="submit" disabled={!isBookingValid}>
+        <button className="edit-button" type="submit" disabled={!isBookingValid}>
           {reservationToEdit ? "Update" : "Submit"}
         </button>
         {submitMessage && <p>{submitMessage}</p>}
-        <button type="button" onClick={onClose}>Close</button>
+        <button className="delete-button" type="button" onClick={onClose}>Close</button>
       </form>
     </div>
   );

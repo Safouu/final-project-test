@@ -1,10 +1,8 @@
-
-
 import { useState, useEffect, useRef } from 'react';
 import { DayPilotScheduler, DayPilot } from 'daypilot-pro-react';
-import moment from 'moment-timezone'; // For better timezone handling
+import moment from 'moment-timezone';
 
-// Utility to generate a random color
+
 const generateRandomColor = () => {
   const letters = '0123456789ABCDEF';
   let color = '#';
@@ -14,13 +12,13 @@ const generateRandomColor = () => {
   return color;
 };
 
-// Utility to get the color for a resource, with fallback to a random color
+
 const getColorForResource = (resourceId, resources) => {
   const resource = resources.find(r => r.id === resourceId);
   return resource ? resource.color : generateRandomColor();
 };
 
-// Function to deduplicate resources
+
 const deduplicateResources = (data) => {
   return data
     .filter((item, index, self) => self.findIndex(t => t.apartment._id === item.apartment._id) === index)
@@ -31,10 +29,9 @@ const deduplicateResources = (data) => {
     }));
 };
 
-// Function to process event data
 const processEvents = (data) => {
   return data
-    .filter(item => item.apartment && item.user) // Filter out null values
+    .filter(item => item.apartment && item.user) 
     .map(item => {
       const startDateUTC = moment.utc(item.startDate).local().format('YYYY-MM-DDTHH:mm:ss');
       const endDateUTC = moment.utc(item.endDate).local().endOf('day').format('YYYY-MM-DDTHH:mm:ss');
@@ -55,7 +52,7 @@ const AdminCalendar = () => {
   const [startDate, setStartDate] = useState('2024-09-01');
   const [days, setDays] = useState(365);
 
-  // Function to fetch data
+
   const fetchData = async () => {
     try {
       const response = await fetch('http://localhost:3232/bookings');
@@ -63,7 +60,7 @@ const AdminCalendar = () => {
         throw new Error(`Network response was not ok: ${response.statusText}`);
       }
       const data = await response.json();
-      console.log('Fetched data:', data); // Log data for debugging
+      console.log('Fetched data:', data); 
 
       const resources = deduplicateResources(data);
       const events = processEvents(data);
@@ -111,7 +108,6 @@ const AdminCalendar = () => {
       .catch(error => console.error('Error fetching data:', error));
   }, []);
 
-  // Scheduler configuration
   const config = {
     timeHeaders: [
       { groupBy: 'Month' },

@@ -162,6 +162,7 @@ const ApartmentList = () => {
 
             <div className='admin-edit-image'>
 
+              <div className='images-div'>
             <label>Main image</label>
             <input
               type="text" placeholder="Image URL" value={image}
@@ -175,15 +176,14 @@ const ApartmentList = () => {
               <div className="image-preview">
                 <img
                   src={imagePreview} alt="Preview"
-                  style={{ maxWidth: '75%', borderRadius: '8px' }}
                 />
               </div>
             )}
-            </div>
+              </div>
 
            
              {['image1', 'image2', 'image3', 'image4', 'image5', 'image6'].map((img, idx) => (
-              <div key={idx}>
+              <div className='images-div' key={idx}>
                 <label>Image {idx + 1}</label>
                 <input
                   type="text" placeholder={`Image URL ${idx + 1}`} value={editingApartment[img] || ''}
@@ -197,12 +197,12 @@ const ApartmentList = () => {
                   <div className="image-preview">
                     <img
                       src={editingApartment[`${img}Preview`]} alt="Preview"
-                      style={{ maxWidth: '75%', borderRadius: '8px' }}
                     />
                   </div>
                 )}
               </div>
             ))} 
+            </div>
 
            <label>Latitude</label>
             <input
@@ -220,9 +220,9 @@ const ApartmentList = () => {
 
             {showMap && <Map latitude={latitude} longitude={longitude} />}
 
-            <button className='save' type="submit">Save</button>
+            <button className='edit-button' type="submit">Save</button>
 
-            <button className='cancel' type="button" onClick={() => setEditingApartment(null)}>Cancel</button>
+            <button className='delete-button' type="button" onClick={() => setEditingApartment(null)}>Cancel</button>
 
           </form>
 
