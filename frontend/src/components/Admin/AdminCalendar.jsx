@@ -51,10 +51,10 @@ const AdminCalendar = () => {
   const [objects, setObjects] = useState([]);
   const [events, setEvents] = useState([]);
   const schedulerRef = useRef(null);
-  const [startDate, setStartDate] = useState(moment().startOf('month').format('YYYY-MM-DD')); // Default start date is current month
-  const [days] = useState(365); // Show full year
+  const [startDate, setStartDate] = useState(moment().startOf('month').format('YYYY-MM-DD')); 
+  const [days] = useState(365); 
 
-  // Function to fetch data
+ 
   const fetchData = async () => {
     try {
       const response = await fetch('http://localhost:3232/bookings');
@@ -78,19 +78,18 @@ const AdminCalendar = () => {
     fetchData();
   }, []);
 
-    // Function to handle changing the month with the arrows
     const handleMonthChange = (direction) => {
       const newDate = moment(startDate).add(direction, 'months').toDate();
       setStartDate(newDate);
     };
 
-  // Handle date change (from date picker)
+ 
   const handleDateChange = (date) => {
     const formattedDate = moment(date).startOf('month').format('YYYY-MM-DD');
-    setStartDate(formattedDate); // Update start date to the selected month
+    setStartDate(formattedDate); 
   };
 
-  // Scheduler configuration
+ 
   const config = {
     timeHeaders: [
       { groupBy: 'Month' },
@@ -148,12 +147,11 @@ const AdminCalendar = () => {
       <div className="admin-container-calendar">
         <h1>Booking Calendar</h1>
 
-        {/* Date Picker for selecting month and year */}
         <div className="date-picker-container" style={{ marginBottom: '20px' }}>
           <DatePicker
             selected={new Date(startDate)}
             onChange={handleDateChange}
-            dateFormat="MMMM yyyy" // Show only month and year
+            dateFormat="MMMM yyyy" 
             showMonthYearPicker 
             className="react-datepicker-ignore-onclickoutside"
        
