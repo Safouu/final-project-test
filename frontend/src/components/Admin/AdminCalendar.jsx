@@ -8,7 +8,7 @@ import 'react-datepicker/dist/react-datepicker.css';
 const generateRandomColor = () => {
   const letters = '0123456789ABCDEF';
   let color = '#';
-  for (let i = 0; i < 1; i++) {
+  for (let i = 0; i < 6; i++) {
     color += letters[Math.floor(Math.random() * 16)];
   }
   return color;
@@ -89,7 +89,8 @@ const AdminCalendar = () => {
     setStartDate(formattedDate); 
   };
 
- 
+  const eventColor = "#cdd4f3"; // Define the color you want for all events
+  
   const config = {
     timeHeaders: [
       { groupBy: 'Month' },
@@ -124,9 +125,7 @@ const AdminCalendar = () => {
       schedulerRef.current.events.add(newEvent);
     },
     onBeforeEventRender: (args) => {
-      const resource = objects.find(o => o.id === args.data.resource);
-      const color = resource ? resource.color : '#93c47d';
-      args.data.backColor = color;
+      args.data.backColor = eventColor;
     },
     contextMenu: new DayPilot.Menu({
       items: [
@@ -135,7 +134,20 @@ const AdminCalendar = () => {
           onClick: async (args) => {
             const modal = await DayPilot.Modal.confirm('Do you want to delete this event?');
             if (modal.canceled) return;
-            console.log('Deleted', args.source);
+                 // Find the event id to delete
+          const eventId = args.source.id();
+
+          // Filter the event out from the events state
+          const updatedEvents = events.filter(event => event.id !== eventId);
+
+          // Update the state
+          setEvents(updatedEvents);
+
+          // Remove the event from the scheduler
+          schedulerRef.current.events.remove(eventId);
+
+          console.log('Event deleted:', eventId);
+        
           }
         }
       ]

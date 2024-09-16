@@ -72,7 +72,11 @@ const Messages = () => {
         <tbody>
           {messages.map((message) => (
             <tr key={message._id}>
-              <td>{message.email}</td>
+              <td>
+              <a href={`mailto:${message.email}`}>
+                {message.email}
+              </a>
+              </td>
               <td>{message.name}</td>
               <td>{message.message}</td>
 

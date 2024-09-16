@@ -966,41 +966,38 @@ button{
   font-size: 16px;
 }
 
+
 /*Admin Calendar*/
 
-
 .admin-container-calendar {
-  background-color: var(--background-color); /* Slightly transparent background */
-  border-radius: 10px; /* Rounded corners */
-  padding: 20px; /* Padding inside the container */
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Subtle shadow for a modern effect */
+  border-radius: 10px; 
+  padding: 20px;
+  box-shadow: 0 10px 18px 12px rgba(0, 0, 0, 0.1); 
   width: 90vw;
-  margin: 0 auto; /* Center the calendar container */
+  margin: 0 auto; 
   font-family: var(--font-2);
+  color: var(--secondary-color);
+  font-size: var(--font-size-medium);
 }
 
-
-/* Styling the Date Picker (Month and Year Menu) */
 .react-datepicker {
-  opacity: 0.95; /* Set opacity for the date picker */
-  border-radius: 8px; /* Round corners for the date picker */
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Soft shadow */
+  opacity: 0.95; 
+  border-radius: 8px; 
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); 
 }
 
 /* Month and Year Menu Cursor */
 .react-datepicker__month-year-dropdown,
 .react-datepicker__month-read-view,
 .react-datepicker__year-read-view {
-  cursor: pointer; /* Pointer cursor for month and year menu */
+  cursor: pointer; 
 }
 
-/* Date picker custom hover effects for modern look */
 .react-datepicker__month-read-view:hover,
 .react-datepicker__year-read-view:hover {
-  background-color: rgba(0, 123, 255, 0.1); /* Light blue hover effect */
+  background-color: rgba(0, 123, 255, 0.1); 
 }
 
-/* Enhance the text visibility in the DatePicker */
 .react-datepicker__current-month,
 .react-datepicker__month-read-view--down-arrow,
 .react-datepicker__year-read-view--down-arrow {
@@ -1008,37 +1005,36 @@ button{
   color: #333;
 }
 
-/* Style calendar days with hover and selected states */
 .react-datepicker__day:hover {
-  background-color: rgba(0, 123, 255, 0.2); /* Light blue hover for days */
-  border-radius: 50%; /* Circular hover effect for days */
+  background-color: rgba(0, 123, 255, 0.2); 
+  border-radius: 50%; 
 }
-
 .react-datepicker__day--selected {
-  background-color: rgba(0, 123, 255, 0.7); /* Slightly darker selected state */
-  border-radius: 50%; /* Circular shape for the selected day */
+  background-color: rgba(0, 123, 255, 0.7); 
+  border-radius: 50%; 
   color: white;
 }
 .date-picker-container {
   position: absolute;
-  top: 377px; /* Adjust to match your desired position */
-  left: 50px; /* Adjust to match your desired position */
-  width: 100px; /* Adjust width based on the picker size */
-  height: 80px; /* Adjust height based on the picker size */
-  z-index: 1000; /* Ensure it is above other elements */
-  padding: 10px; /* Optional: Add some padding if needed */
-  border-radius: 5px; /* Optional: Add rounded corners */
+  top: 420px;
+  left: 50px; 
+  width: 120px; 
+  height: 80px; 
+  z-index: 1000; 
+  padding: 10px; 
+  border-radius: 5px; 
 }
 .react-datepicker-ignore-onclickoutside{
-  width: 170px;
+  width: 180px;
   height: 25px;
   cursor: pointer;
   border: none;
  font-family: var(--font);
   font-size: 1.2rem;
-  background-color:  #93c47d;
+  background-color: var(--secondary-color);
   border-radius: 2px;
   text-align: center;
+  color: white;
 
 }
 
@@ -1049,19 +1045,18 @@ button{
   justify-content: space-between;
   width: 80%;
   position: absolute;
-  top: 40px; /* Adjust to match your desired position */
-  left: 50px; /* Adjust to match your desired position */
-  
+  top: 40px;
+  left: 50px; 
 }
 
 .arrow-buttons button {
-  background-color: #93c47d; /* Optional: Set color */
+  background-color: var(--secondary-color); 
   border: none;
   padding: 5px;
   cursor: pointer;
   font-size: 16px;
   color: white;
-  width: 30px; /* Width of the arrow buttons */
+  width: 30px;
   border-radius: 50%;
  
 }
