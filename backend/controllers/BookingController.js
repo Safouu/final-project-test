@@ -9,7 +9,7 @@ export const PostBooking = async (req, res) => {
             advancePayment, people, children, pets } = req.body;
 
     if (!user || !apartment || !startDate || !endDate || !totalPrice ||
-        !advancePayment || !people || !children || !pets) {
+        !advancePayment || !people) {
       return res.status(400).json({ error: "Missing required fields" });
     }
 

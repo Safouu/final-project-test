@@ -32,7 +32,6 @@ const UserProfile = () => {
       const data = await response.json();
       setUser(data.user);
       setReservations(data.bookings);
-      console.log(data.bookings[0].apartment.name);
 
     } catch (err) {
       setError(err.message);
@@ -105,7 +104,7 @@ const UserProfile = () => {
             </li>
           ))
         ) : (
-          <p>No reservations found</p>
+          <p>No reservations</p>
         )}
       </ul>
     </div>
