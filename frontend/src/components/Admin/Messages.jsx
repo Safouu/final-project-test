@@ -54,7 +54,7 @@ const Messages = () => {
   return (
     <div className="contact-message-container">
     
-    <div className='object-message'>
+    <div className="reservations-table">
      
       <table>
         <thead>

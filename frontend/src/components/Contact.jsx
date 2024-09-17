@@ -1,5 +1,4 @@
 import { useState } from 'react';
-import { NavLink } from 'react-router-dom';
 
 const Contact = () => {
   const [name, setName] = useState('');

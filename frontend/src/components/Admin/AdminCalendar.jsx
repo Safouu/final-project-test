@@ -164,11 +164,10 @@ const AdminCalendar = () => {
             selected={new Date(startDate)}
             onChange={handleDateChange}
             dateFormat="MMMM yyyy" 
-            showMonthYearPicker 
-            className="react-datepicker-ignore-onclickoutside"
-       
+            showMonthYearPicker       
           />
-        <div className="arrow-buttons">
+          
+      <div className="arrow-buttons">
         <button onClick={() => handleMonthChange(-1)}>{'<'}</button>
         <button onClick={() => handleMonthChange(1)}>{'>'}</button>
       </div>

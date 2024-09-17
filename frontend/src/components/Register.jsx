@@ -115,8 +115,8 @@ const Register = () => {
           onChange={(e) => setAddress(e.target.value)}
           required
         /> */}
-
-        <button type="submit">Sign up</button>
+        
+        <button className='booking-button' type="submit">Register</button>
         {message && <p className="message">{message}</p>}
         <p className="login-register">
           Already have an account? <NavLink to="/login">Login</NavLink>

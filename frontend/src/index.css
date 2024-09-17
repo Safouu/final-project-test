@@ -140,7 +140,10 @@ header nav .logout {
  /*Footer*/
 
 footer {
-  text-align: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
   color: var(--secondary-color);
   font-weight: 600;
   padding: 1rem;
@@ -428,6 +431,11 @@ button {
 
 .login-form {
   width: 100%;
+  text-align: center;
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  align-items: center;
 }
 
 .login-form input {
@@ -439,22 +447,7 @@ button {
   margin-bottom: 1rem;
 }
 
-.login-form button {
-  width: 100%;
-  height: 40px;
-  padding: 5px;
-  background-color: var(--secondary-color);
-  color: var(--color-white);
-  font-size: var(--font-size-small);
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-}
 
-.login-form button:hover {
-  background-color: var(--secondary-color);
-  color: var(--color-white);
-}
 
 .login-form .message {
   color: var(--secondary-color);
@@ -466,6 +459,16 @@ button {
   margin-top: 1rem;
   font-size: var(--font-size-small);
   text-align: center;
+}
+
+.login-register a{
+  color: var(--secondary-color);
+  text-decoration: none;
+  font-size: 1.2rem;
+  font-weight: 600;
+  &:hover{
+    color: var(--price-color);
+  }
 }
 
 /*Object Details*/
@@ -974,16 +977,19 @@ button{
   padding: 20px;
   box-shadow: 0 10px 18px 12px rgba(0, 0, 0, 0.1); 
   width: 90vw;
-  margin: 0 auto; 
   font-family: var(--font-2);
   color: var(--secondary-color);
   font-size: var(--font-size-medium);
+  h1{
+    margin: 0;
+    padding: 0;
+  }
 }
 
 .react-datepicker {
-  opacity: 0.95; 
   border-radius: 8px; 
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); 
+  border: solid 5px rgb(255, 247, 0);
 }
 
 /* Month and Year Menu Cursor */
@@ -991,11 +997,13 @@ button{
 .react-datepicker__month-read-view,
 .react-datepicker__year-read-view {
   cursor: pointer; 
+  border: solid 5px rgb(89, 255, 0);
 }
 
 .react-datepicker__month-read-view:hover,
 .react-datepicker__year-read-view:hover {
   background-color: rgba(0, 123, 255, 0.1); 
+  border: solid 5px rgb(255, 0, 238);
 }
 
 .react-datepicker__current-month,
@@ -1003,53 +1011,64 @@ button{
 .react-datepicker__year-read-view--down-arrow {
   font-weight: bold;
   color: #333;
+  border: solid 5px rgb(255, 0, 238);
 }
 
 .react-datepicker__day:hover {
   background-color: rgba(0, 123, 255, 0.2); 
   border-radius: 50%; 
+  border: solid 5px rgb(255, 0, 238);
 }
 .react-datepicker__day--selected {
   background-color: rgba(0, 123, 255, 0.7); 
   border-radius: 50%; 
   color: white;
+  border: solid 5px rgb(255, 0, 238);
 }
-.date-picker-container {
-  position: absolute;
-  top: 420px;
-  left: 50px; 
-  width: 120px; 
-  height: 80px; 
-  z-index: 1000; 
-  padding: 10px; 
-  border-radius: 5px; 
-}
-.react-datepicker-ignore-onclickoutside{
-  width: 180px;
+
+.date-picker-container{
+  width: 182px;
   height: 25px;
   cursor: pointer;
   border: none;
- font-family: var(--font);
+  font-family: var(--font);
   font-size: 1.2rem;
-  background-color: var(--secondary-color);
   border-radius: 2px;
   text-align: center;
   color: white;
-
+  z-index: 4;
+  position: relative;
+  top: 42px;
 }
-
-
-  /* Style for the arrow buttons */
-.arrow-buttons {
-  display: flex;
-  justify-content: space-between;
-  width: 80%;
+.scheduler_default_corner_inner{
   position: absolute;
-  top: 40px;
-  left: 50px; 
+
 }
 
-.arrow-buttons button {
+.arrow-buttons{
+  z-index: 5;
+  button{
+    background-color: white;
+    border: solid 2px var(--secondary-color);
+    cursor: pointer;
+    color: var(--secondary-color);
+    width: 30px;
+    border-radius: 25%;
+    padding: 0;
+    font-weight: 600;
+  }
+  
+}
+ /* Style for the arrow buttons */
+/* .arrow-buttons { 
+  position: relative;
+  z-index: 5;
+  border: solid 5px fuchsia;
+  width: fit-content;
+} */
+
+/* .arrow-buttons button {
+  position: relative;
   background-color: var(--secondary-color); 
   border: none;
   padding: 5px;
@@ -1058,9 +1077,7 @@ button{
   color: white;
   width: 30px;
   border-radius: 50%;
- 
-}
-
+} */
 
 
 /*List Guests*/
@@ -1102,6 +1119,9 @@ button{
     tr:hover{
         background-color: navy;
         color: white;
+        a{
+          color: white;
+        }
     }
     td{
       padding: 10px;
@@ -1137,6 +1157,13 @@ button{
   }
 }
 
+.reservations-table tbody tr td  a{
+  text-decoration: none;
+  color: black;
+  &:hover{
+    color: rgb(0, 255, 187);
+  }
+}
 
 
 
@@ -1184,6 +1211,20 @@ button{
   padding: 0 25px;
   border-radius: 8px;
  }
+}
+
+
+
+.user-infos{
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  gap: 20px;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 2px 12px #0000002b;
+  width: 80vw;
 }
 
 .user-profile-reservations ul{
@@ -1263,6 +1304,8 @@ button{
 
   header {
     padding: 0.5rem;
+    justify-content: center;
+  
   }
 
   header .logout {
@@ -1275,8 +1318,9 @@ button{
   }
 
   header nav {
-    flex-direction: column;
+  
     align-items: flex-end;
+
     gap: 0.5rem;
   }
 
@@ -1312,9 +1356,3 @@ button{
     }
 }
 
-.login-register a{
-  color: var(--secondary-color);
-  text-decoration: none;
-  font-size: 1.2rem;
-  font-weight: 600;
-}

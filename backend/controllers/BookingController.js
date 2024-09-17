@@ -77,9 +77,10 @@ export const GetAllBookings = async (req, res) => {
       .populate('apartment')
       .populate('user');
 
-    if (!bookings || bookings.length === 0) {
-      return res.status(404).json({ error: 'No reservations found' });
-    }
+  //!!!!!!!// Das macht für uns nur Probleme deswegen habe ich es auskommentiert. Ich glaube wie brauchen nicht
+    // if (!bookings || bookings.length === 0) {
+    //   return res.status(404).json({ error: 'No reservations found' });
+    // }
 
     res.json(bookings);
   } catch (err) {

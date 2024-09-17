@@ -77,7 +77,7 @@ const Login = () => {
             onChange={(e) => setPassword(e.target.value)}
             required
           />
-          <button type="submit">Login</button>
+          <button className='booking-button' type="submit">Login</button>
           {message && <p className="message">{message}</p>}
 
           <p className='login-register'>No account? <NavLink to="/register">Register</NavLink></p>
