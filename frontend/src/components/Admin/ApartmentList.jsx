@@ -1,5 +1,7 @@
 import { useState, useEffect } from 'react';
 import Map from './Map';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faTrash, faPen } from '@fortawesome/free-solid-svg-icons';
 
 const ApartmentList = () => {
   const [apartments, setApartments] = useState([]);
@@ -136,12 +138,21 @@ const ApartmentList = () => {
             <div className='apartment-details'>
               <h1>{apartment.name}</h1>
               <p>{(apartment.description).slice(0, 30)}...</p>
-              <h3>{apartment.price} <span>$</span></h3>
+              <h3>{apartment.price} <span>€</span></h3>
             </div>
             <div className='admin-buttons'>
+            <button className='edit-button' onClick={() => handleEditApartment(apartment)}>
+        <FontAwesomeIcon icon={faPen} /> {/* Pen icon for edit */}
+      </button>
+      <button className='delete-button' onClick={() => handleDelete(apartment._id)}>
+        <FontAwesomeIcon icon={faTrash} /> {/* Trash icon for delete */}
+      </button>
+  
+    </div>
+            {/* <div className='admin-buttons'>
               <button className='delete-button' onClick={() => handleDelete(apartment._id)}> X </button>
               <button className='edit-button' onClick={() => handleEditApartment(apartment)}> Edit </button>
-            </div>
+            </div> */}
           </div>
         </div>
       ))}

@@ -1,5 +1,7 @@
 import { useState, useEffect } from "react";
 import AddGuest from "./AddGuest";
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faPen, faTrashAlt } from '@fortawesome/free-solid-svg-icons';
 
 const formatDate = (dateString) => {
   const options = { year: 'numeric', month: 'numeric', day: 'numeric' };
@@ -92,11 +94,15 @@ const GuestList = () => {
               <td>${reservation.totalPrice || '0.00'}</td>
               <td>{reservation.apartment?.name || 'N/A'}</td>
               <td>
-                <button className="button edit" onClick={() => handleEdit(reservation)}>Edit</button>
-                <button className="button delete" onClick={() => handleDelete(reservation._id)}>X</button>
-              </td>
+              <button className='edit-button' onClick={() => handleEdit(reservation)}>
+               <FontAwesomeIcon icon={faPen} /> 
+              </button>
+              <button className='delete-button' onClick={() => handleDelete(reservation)}>
+               <FontAwesomeIcon icon={faTrashAlt} /> 
+              </button>
+               </td>
             </tr>
-          ))}
+            ))}
         </tbody>
       </table>
 

@@ -1,4 +1,6 @@
 import { useEffect, useState } from 'react';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faTrash } from '@fortawesome/free-solid-svg-icons';
 
 const Messages = () => {
   const [messages, setMessages] = useState([]);
@@ -16,8 +18,6 @@ const Messages = () => {
         console.error('Error fetching messages:', error);
       }
     };
-
-    
 
     fetchMessages();
   }, []);
@@ -75,13 +75,16 @@ const Messages = () => {
               <td>
               <a href={`mailto:${message.email}`}>
                 {message.email}
-              </a>
-              </td>
+                </a>
+                </td>
+
               <td>{message.name}</td>
               <td>{message.message}</td>
 
               <td>
-                <button className='delete-button' onClick={() => handelDelete(message._id)}>X</button>
+              <button className='delete-button' onClick={() => handelDelete(message._id)}>
+                    <FontAwesomeIcon icon={faTrash} /> 
+              </button>
               </td>
             </tr>
           ))}

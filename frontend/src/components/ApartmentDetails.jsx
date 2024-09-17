@@ -71,7 +71,7 @@ const ApartmentDetails = () => {
           <div className='apart-description'>
             <h1>{apartment.name}</h1>
             <p>{apartment.description}</p>
-            <h3>{apartment.price} <span>$</span></h3>
+            <h3>{apartment.price} <span>€</span></h3>
           </div>
 
           <hr />

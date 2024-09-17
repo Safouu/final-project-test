@@ -77,7 +77,7 @@ const Contact = () => {
 
       </form>
       <div>
-      <p>Tel: 123456789</p>
+      <p>Tel: +49 (01) 259 789 54</p>
       <p>Email: Your.Dream.Vacation@gmail.com</p>
       </div>
 
