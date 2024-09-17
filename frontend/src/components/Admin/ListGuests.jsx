@@ -90,8 +90,8 @@ const GuestList = () => {
               <td>{reservation.people}</td>
               <td>{reservation.children}</td>
               <td>{reservation.pets}</td>
-              <td>${reservation.advancePayment || '0.00'}</td>
-              <td>${reservation.totalPrice || '0.00'}</td>
+              <td>{reservation.advancePayment || '0.00'}€</td>
+              <td>{reservation.totalPrice || '0.00'}€</td>
               <td>{reservation.apartment?.name || 'N/A'}</td>
               <td>
               <button className='edit-button' onClick={() => handleEdit(reservation)}>
