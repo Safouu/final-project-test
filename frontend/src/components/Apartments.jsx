@@ -13,7 +13,7 @@ const Apartment = () => {
   }, []);
 
   return (
-    <div div className='apartments'>
+    <div className='apartments'>
 
       {apartments && apartments.map((apartment) => (
         <NavLink to={`/apartment/${apartment._id}`} key={apartment._id}>

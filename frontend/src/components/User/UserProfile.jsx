@@ -122,6 +122,8 @@ const UserProfile = () => {
         </div>
       </div>
 
+
+
       <p>My Reservations</p>
 
       <div className='user-profile-reservations'>

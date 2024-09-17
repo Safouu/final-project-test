@@ -45,9 +45,7 @@ const Contact = () => {
         <p>Get in Tocuh</p>
       </div>
     </div>
-
-
-      {/* /////////////////// */}
+    
 
       <div className="apartments apart-details"> 
 
@@ -75,22 +73,31 @@ const Contact = () => {
           onChange={(e) => setMessage(e.target.value)}
           required
         />
-       
-         <button className='booking-button' type="submit">Send Message</button>
-       </form>
-       <div>
-       <p>Tel: 123456789</p>
-       <p>Email: Your.Dream.Vacation@gmail.com</p>
-       </div>
-
-       
-       
-       <div className='map-container'>
-       <h3>Adresse</h3>
-       <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d4855.896252935346!2d13.375129177001421!3d52.51627783650461!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x47a851c655f20989%3A0x26bbfb4e84674c63!2sBrandenburger%20Tor!5e0!3m2!1sde!2sde!4v1726408527045!5m2!1sde!2sde" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
-       </div>
       
-{/* //////////////////////////////// */}
+      <button className='booking-button' type="submit">Send Message</button>
+
+      </form>
+      <div>
+      <p>Tel: 123456789</p>
+      <p>Email: Your.Dream.Vacation@gmail.com</p>
+      </div>
+
+      
+      
+      <div className='map-container'>
+      <h3>Adresse</h3>
+
+      <iframe 
+        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d4855.896252935346!2d13.375129177001421!3d52.51627783650461!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x47a851c655f20989%3A0x26bbfb4e84674c63!2sBrandenburger%20Tor!5e0!3m2!1sde!2sde!4v1726408527045!5m2!1sde!2sde"
+        allowFullScreen
+        loading="lazy"
+        referrerPolicy="no-referrer-when-downgrade">
+      </iframe>
+
+
+
+      </div>
+
 
     </div>
     </div>
