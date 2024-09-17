@@ -97,7 +97,7 @@ const GuestList = () => {
               <button className='edit-button' onClick={() => handleEdit(reservation)}>
                <FontAwesomeIcon icon={faPen} /> 
               </button>
-              <button className='delete-button' onClick={() => handleDelete(reservation)}>
+              <button className='delete-button' onClick={() => handleDelete(reservation._id)}>
                <FontAwesomeIcon icon={faTrashAlt} /> 
               </button>
                </td>
