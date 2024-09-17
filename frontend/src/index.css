@@ -145,7 +145,7 @@ footer {
   align-items: center;
   gap: 10px;
   color: var(--secondary-color);
-  font-weight: 600;
+  font-weight: 500;
   padding: 1rem;
   position: fixed; 
   bottom: 0;
