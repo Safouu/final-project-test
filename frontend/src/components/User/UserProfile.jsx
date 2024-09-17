@@ -137,8 +137,7 @@ const UserProfile = () => {
                     <p><strong>Property:</strong> {reservation.apartment.name}</p>
                     <p><strong>Check-in Date:</strong> {new Date(reservation.startDate).toLocaleDateString()}</p>
                     <p><strong>Check-out Date:</strong> {new Date(reservation.endDate).toLocaleDateString()}</p>
-                    <p><strong>Advance Payment:</strong> {reservation.advancePayment} €</p>
-                    <p><strong>Total Price:</strong> {reservation.totalPrice} €</p>
+                  
 
                     <button className="delete-button" onClick={() => handleDelete(reservation._id)}>X</button>
                     <button className="edit-button" onClick={() => handleEditReservation(reservation)}>Edit</button>
@@ -175,24 +174,7 @@ const UserProfile = () => {
               required
             />
           </label>
-          <label>
-            Advance Payment
-            <input
-              type="number"
-              value={editAdvancePayment}
-              onChange={(e) => setEditAdvancePayment(e.target.value)}
-              required
-            />
-          </label>
-          <label>
-            Total Price
-            <input
-              type="number"
-              value={editTotalPrice}
-              onChange={(e) => setEditTotalPrice(e.target.value)}
-              required
-            />
-          </label>
+        
           <button className='edit-button' type="submit">Save</button>
           <button className='delete-button' type="button" onClick={() => setEditingReservation(null)}>Cancel</button>
         </form>
