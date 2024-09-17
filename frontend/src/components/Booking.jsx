@@ -220,7 +220,7 @@ function Booking() {
             </div>
           </div>
           <div className="price-calculator">
-            <h3>Price Calculator</h3>
+            <h3>Booking Price</h3>
             <div>
               <label>Number of days:</label>
               <input

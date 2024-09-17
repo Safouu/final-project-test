@@ -137,8 +137,8 @@ const UserProfile = () => {
                     <p><strong>Property:</strong> {reservation.apartment.name}</p>
                     <p><strong>Check-in Date:</strong> {new Date(reservation.startDate).toLocaleDateString()}</p>
                     <p><strong>Check-out Date:</strong> {new Date(reservation.endDate).toLocaleDateString()}</p>
-                    <p><strong>Advance Payment:</strong> {reservation.advancePayment}</p>
-                    <p><strong>Total Price:</strong> {reservation.totalPrice}</p>
+                    <p><strong>Advance Payment:</strong> {reservation.advancePayment} €</p>
+                    <p><strong>Total Price:</strong> {reservation.totalPrice} €</p>
 
                     <button className="delete-button" onClick={() => handleDelete(reservation._id)}>X</button>
                     <button className="edit-button" onClick={() => handleEditReservation(reservation)}>Edit</button>
