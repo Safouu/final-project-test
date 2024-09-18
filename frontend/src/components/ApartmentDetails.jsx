@@ -18,11 +18,7 @@ const ApartmentDetails = () => {
       })
       .catch((error) => {
         console.error('There was a problem with the fetch operation:', error);
-<<<<<<< HEAD
-      
-=======
         setApartment({ error: 'Failed to load the Apartment details' });
->>>>>>> refs/remotes/origin/main
       });
   }, [id]);
 
@@ -66,13 +62,6 @@ const ApartmentDetails = () => {
 
             <hr />
 
-<<<<<<< HEAD
-          <div className='apart-description'>
-            <h1>{apartment.name}</h1>
-            <p>{apartment.description}</p>
-            <h3><span>Price</span> {apartment.price} €<span> per Night</span></h3>
-         
-=======
             <div className='apart-description'>
               <h1>{apartment.name}</h1>
               <p>{apartment.description}</p>
@@ -88,7 +77,6 @@ const ApartmentDetails = () => {
             <button className="booking-button" onClick={handleBooking}>
               Book Now
             </button>
->>>>>>> refs/remotes/origin/main
           </div>
         )
       ) : (

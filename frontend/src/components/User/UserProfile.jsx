@@ -127,7 +127,7 @@ const UserProfile = () => {
       </div>
 
       <div className='user-infos'>
-        <p><strong>Firsname:</strong> {user.firstName}</p>
+        <p><strong>Firstname:</strong> {user.firstName}</p>
         <p><strong>Lastname:</strong> {user.lastName}</p>
         <p><strong>Email:</strong> {user.email}</p>
         {/* <img style={{width:"60px", height:"60px", border:"2px black solid"}} src="" alt="" /> */}

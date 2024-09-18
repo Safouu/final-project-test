@@ -699,6 +699,7 @@ button{
   box-shadow: 0 2px 12px #0000002b;
   margin-top: 120px ;
   width: 90%;
+
 }
 .admin-edit-name-price{
   display: flex;
@@ -751,6 +752,11 @@ button{
   min-height: 100vh;
   gap: 5px;
   .images-div{
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    gap: 10px;
+    padding: 10px;
     width: 31%;
     box-shadow: 0 2px 12px #00000086;
     img{
