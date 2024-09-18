@@ -59,7 +59,7 @@ header nav {
  box-shadow: 0 4px 30px rgba(109, 109, 109, 0.194);
  backdrop-filter: blur(5px);
  -webkit-backdrop-filter: blur(5px);
- padding: 20px;
+ padding: 10px;
  border-radius: 80px;
 
  a{
@@ -1070,26 +1070,6 @@ button{
   }
   
 }
- /* Style for the arrow buttons */
-/* .arrow-buttons { 
-  position: relative;
-  z-index: 5;
-  border: solid 5px fuchsia;
-  width: fit-content;
-} */
-
-/* .arrow-buttons button {
-  position: relative;
-  background-color: var(--secondary-color); 
-  border: none;
-  padding: 5px;
-  cursor: pointer;
-  font-size: 16px;
-  color: white;
-  width: 30px;
-  border-radius: 50%;
-} */
-
 
 /*List Guests*/
 
@@ -1264,7 +1244,7 @@ button{
 
 @media (max-width: 1100px) {
   header {
-    /* flex-direction: column; */
+  
     align-items: flex-start;
   }
 
@@ -1329,9 +1309,7 @@ button{
   }
 
   header nav {
-  
     align-items: flex-end;
-
     gap: 0.5rem;
   }
 

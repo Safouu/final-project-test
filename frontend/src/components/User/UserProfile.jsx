@@ -148,15 +148,13 @@ const UserProfile = () => {
                     <p><strong>Property:</strong> {reservation.apartment.name}</p>
                     <p><strong>Check-in Date:</strong> {new Date(reservation.startDate).toLocaleDateString()}</p>
                     <p><strong>Check-out Date:</strong> {new Date(reservation.endDate).toLocaleDateString()}</p>
-
-                    <button className="edit-button" onClick={() => handleEditReservation(reservation)}>
-                    <FontAwesomeIcon icon={faPen} /> 
-                    </button>                  
-
-                    <button className="delete-button" onClick={() => handleDelete(reservation._id)}>
-                    <FontAwesomeIcon icon={faTrashAlt} /> 
+                  
+                    <button className='edit-button' onClick={() => handleEditReservation(reservation)}>
+                    <FontAwesomeIcon  icon={faPen} /> 
                     </button>
-
+                    <button className='delete-button' onClick={() => handleDelete(reservation._id)}>
+                    <FontAwesomeIcon  icon={faTrashAlt} /> 
+                    </button>
                   </>
                 ) : (
                   <p>No apartment data available for this reservation</p>
