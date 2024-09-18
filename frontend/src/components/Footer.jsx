@@ -13,20 +13,24 @@ const Footer = () => {
     <footer>
       {new Date().getFullYear()} @ Your Dream Vacation  
 
-    <div style={{ marginTop: '50px' }}> 
+
+
     <a href="https://www.instagram.com" target="_blank" rel="noopener noreferrer">
-    <FontAwesomeIcon style={{ color: 'fuchsia', fontSize: '1.2rem', marginLeft:'-180px' }} icon={['fab', 'instagram']} size="1x" />
+    <FontAwesomeIcon style={{ color: 'fuchsia', fontSize: '1.2rem'}} icon={['fab', 'instagram']}  />
     </a>
+
     <a href="https://www.facebook.com" target="_blank" rel="noopener noreferrer">
-    <FontAwesomeIcon style={{ color: 'blue', fontSize: '1.2rem', marginLeft: '10px' }} icon={['fab', 'facebook-f']} />
+    <FontAwesomeIcon style={{ color: 'blue', fontSize: '1.2rem' }} icon={['fab', 'facebook-f']} />
     </a>
+
     <a href="https://www.twitter.com" target="_blank" rel="noopener noreferrer">
-    <FontAwesomeIcon style={{ color: 'cyan', fontSize: '1.2rem', marginLeft: '10px' }} icon={['fab', 'twitter']} size="1x" />
+    <FontAwesomeIcon style={{ color: 'cyan', fontSize: '1.2rem'}} icon={['fab', 'twitter']} />
     </a>
+
     <a href="mailto:your-dream-vacation@gmail.com">
-    <FontAwesomeIcon style={{ color: 'red', fontSize: '1.2rem', marginLeft: '10px' }} icon={['fa', 'envelope']} size="1x" />
+    <FontAwesomeIcon style={{ color: 'forestgreen', fontSize: '1.2rem'}} icon={['fa', 'envelope']} />
     </a>
-  </div>
+ 
     </footer>
 ) 
   };
