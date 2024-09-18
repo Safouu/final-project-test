@@ -264,7 +264,7 @@ const AddApartment = () => {
         />
 
         <Map latitude={latitude} longitude={longitude} />
-
+        
         <button type="submit">Add</button>
 
       </form>
