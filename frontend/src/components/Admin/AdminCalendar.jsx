@@ -42,7 +42,7 @@ const processEvents = (data) => {
         text: item.user.firstName,
         start: startDateUTC,
         end: endDateUTC,
-        resource: item.apartment._id,
+        resource: item.apartment._id
       };
     });
 };
@@ -69,8 +69,6 @@ const AdminCalendar = () => {
 
       setObjects(resources);
       setEvents(events);
-      console.log('events:', events); 
-
     } catch (error) {
       console.error('Error fetching data:', error.message);
     }
@@ -99,7 +97,7 @@ const AdminCalendar = () => {
       { groupBy: 'Day', format: 'd' }
     ],
     scale: 'Day',
-    cellWidth: 50,
+    cellWidth: 25,
     days,
     startDate,
     timeRangeSelectedHandling: 'Enabled',
@@ -145,6 +143,7 @@ const AdminCalendar = () => {
 
           setEvents(updatedEvents);
 
+
           schedulerRef.current.events.remove(eventId);
 
           console.log('Event deleted:', eventId);
@@ -174,6 +173,7 @@ const AdminCalendar = () => {
       </div>
 
         </div>
+
 
        <DayPilotScheduler
           {...config}
