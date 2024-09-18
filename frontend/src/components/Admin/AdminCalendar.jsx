@@ -36,7 +36,7 @@ const processEvents = (data) => {
       const endDateUTC = moment.utc(item.endDate).local().endOf('day').format('YYYY-MM-DDTHH:mm:ss');
       return {
         id: item._id,
-        text: item.user ? item.user.firstName : "Admin Booking",  
+        text: item.user && item.user.firstName ? item.user.firstName : item.firstName || "Admin Booking",
         start: startDateUTC,
         end: endDateUTC,
         resource: item.apartment._id
