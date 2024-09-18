@@ -4,7 +4,6 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPen, faTrashAlt } from '@fortawesome/free-solid-svg-icons';
 
 
-
 const UserProfile = () => {
   const { isLoggedIn, userId } = useAuth();
 

@@ -18,19 +18,18 @@ const ApartmentDetails = () => {
       })
       .catch((error) => {
         console.error('There was a problem with the fetch operation:', error);
+<<<<<<< HEAD
       
+=======
+        setApartment({ error: 'Failed to load the Apartment details' });
+>>>>>>> refs/remotes/origin/main
       });
-      
   }, [id]);
 
   const handleImageClick = (imageKey) => {
     if (!apartment) return;
 
     const clickedImage = apartment[imageKey];
-    setApartment({
-      ...apartment,
-      [imageKey]: selectedImage,
-    });
     setSelectedImage(clickedImage);
   };
 
@@ -41,21 +40,19 @@ const ApartmentDetails = () => {
 
   return (
     <div className='home'>
-
       <div className='apart'>
         <div className='top'>
           <p>Follow Your Dream</p>
         </div>
       </div>
 
-      {apartment ? ( 
+      {apartment ? (
         apartment.error ? (
           <p>{apartment.error}</p>
         ) : (
-          <div className='apartments apart-details'> 
+          <div className='apartments apart-details'>
+            <img className='main-img' src={selectedImage} alt={apartment.name} />
 
-            <img className='main-img' src={selectedImage} alt={apartment ? apartment.name : 'Apartment'} />
-           
             <div className='single-images'>
               {['image1', 'image2', 'image3', 'image4', 'image5', 'image6'].map((key) => (
                 <img
@@ -69,29 +66,35 @@ const ApartmentDetails = () => {
 
             <hr />
 
+<<<<<<< HEAD
           <div className='apart-description'>
             <h1>{apartment.name}</h1>
             <p>{apartment.description}</p>
             <h3><span>Price</span> {apartment.price} €<span> per Night</span></h3>
          
+=======
+            <div className='apart-description'>
+              <h1>{apartment.name}</h1>
+              <p>{apartment.description}</p>
+              <h3>{apartment.price} € / night</h3>
+            </div>
+
+            <hr />
+
+            <div className='map-container' style={{ marginTop: '20px' }}>
+              <Map latitude={apartment.latitude} longitude={apartment.longitude} />
+            </div>
+
+            <button className="booking-button" onClick={handleBooking}>
+              Book Now
+            </button>
+>>>>>>> refs/remotes/origin/main
           </div>
-
-          <hr />
-
-           <div className='map-container' style={{ marginTop: '20px' }}>
-                <Map latitude={apartment.latitude} longitude={apartment.longitude} />
-           </div>
-
-                <button className="booking-button" onClick={handleBooking}>
-                Book Now
-              </button>
-         </div>
-            )
-            ) : (
-              <p>Loading...</p>
-            )}
-          </div> 
-   
+        )
+      ) : (
+        <p>Loading...</p>
+      )}
+    </div>
   );
 };
 

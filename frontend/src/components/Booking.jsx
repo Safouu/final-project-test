@@ -1,13 +1,24 @@
-import { useState, useEffect } from "react";
-import { useLocation } from "react-router-dom";
+import { useState, useEffect } from 'react';
+import { useNavigate, useLocation } from 'react-router-dom';
 import { DateRange } from 'react-date-range';
 import 'react-date-range/dist/styles.css';
 import 'react-date-range/dist/theme/default.css';
 import { useAuth } from "../context/AuthContext";
+<<<<<<< HEAD
+=======
+import { eachDayOfInterval } from 'date-fns';
+
+>>>>>>> refs/remotes/origin/main
 function Booking() {
   const { isLoggedIn, userId } = useAuth();
   const location = useLocation();
   const { apartment } = location.state || {};
+<<<<<<< HEAD
+=======
+  const [disabledDates, setDisabledDates] = useState([]);
+  const navigate = useNavigate();
+
+>>>>>>> refs/remotes/origin/main
   const [dateRange, setDateRange] = useState([
     {
       startDate: new Date(),
@@ -15,6 +26,10 @@ function Booking() {
       key: 'selection',
     },
   ]);
+<<<<<<< HEAD
+=======
+
+>>>>>>> refs/remotes/origin/main
   const [formData, setFormData] = useState({
     user: "",
     apartment: apartment ? apartment.name : "",
@@ -31,11 +46,54 @@ function Booking() {
   const [errorMessage, setErrorMessage] = useState('');
   useEffect(() => {
     if (!apartment) return;
+<<<<<<< HEAD
+=======
+
+    const fetchBookedDates = async () => {
+      try {
+        const response = await fetch(`http://localhost:3232/booking/apartment/${apartment._id}`);
+        const data = await response.json();
+
+        if (response.ok) {
+          if (data && data.length > 0) {
+            const bookedRanges = data.map(booking => ({
+              startDate: new Date(booking.startDate),
+              endDate: new Date(booking.endDate),
+            }));
+
+            const allBookedDates = bookedRanges.flatMap(range => 
+              eachDayOfInterval({
+                start: range.startDate,
+                end: range.endDate,
+              })
+            );
+
+            setDisabledDates(allBookedDates);
+          } else {
+            setDisabledDates([]);
+          }
+        }
+      } catch (error) {
+        console.error("Error fetching booked dates:", error);
+      }
+    };
+
+    fetchBookedDates();
+  }, [apartment]);
+
+  useEffect(() => {
+    if (!apartment) return;
+
+>>>>>>> refs/remotes/origin/main
     const calculatePrice = () => {
       const { price } = apartment;
       const start = dateRange[0].startDate;
       const end = dateRange[0].endDate;
       const days = Math.ceil(((end - start) / (1000 * 60 * 60 * 24)) + 1);
+<<<<<<< HEAD
+=======
+
+>>>>>>> refs/remotes/origin/main
       if (days < 5) {
         setIsBookingValid(false);
         setErrorMessage('You must select a minimum of 5 days.');
@@ -43,8 +101,15 @@ function Booking() {
       } else {
         setIsBookingValid(true);
         setErrorMessage('');
+<<<<<<< HEAD
         const totalPrice = price * days;
         const advancePayment = totalPrice * 0.3;
+=======
+
+        const totalPrice = price * days;
+        const advancePayment = totalPrice * 0.3;
+
+>>>>>>> refs/remotes/origin/main
         return { days, totalPrice, advancePayment };
       }
     };
@@ -77,10 +142,19 @@ function Booking() {
   };
   const handleSubmit = async (e) => {
     e.preventDefault();
+<<<<<<< HEAD
+=======
+
+>>>>>>> refs/remotes/origin/main
     if (!isLoggedIn || !userId || !apartment) {
       alert('You must be logged in and have selected an apartment.');
+      navigate("/login");
       return;
     }
+<<<<<<< HEAD
+=======
+
+>>>>>>> refs/remotes/origin/main
     try {
       const response = await fetch(`http://localhost:3232/booking/${userId}`, {
         method: "POST",
@@ -99,10 +173,17 @@ function Booking() {
           pets: formData.pets
         }),
       });
+<<<<<<< HEAD
       const data = await response.json();
       console.log(data)
+=======
+
+      const data = await response.json();
+
+>>>>>>> refs/remotes/origin/main
       if (response.status === 201) {
-        alert('Reservation created successfully!');
+        alert('Reservation created successfully!, Thanks for booking with us');
+        navigate('/');
       } else {
         console.log("Fehler:", data);
         alert(`Failed to create reservation: ${data.error}`);
@@ -112,6 +193,16 @@ function Booking() {
       alert(`Failed to create reservation: ${error.message}`);
     }
   };
+<<<<<<< HEAD
+=======
+
+  useEffect(() => {
+    if (!apartment) {
+      navigate('/');
+    }
+  }, [apartment, navigate]);
+
+>>>>>>> refs/remotes/origin/main
   return (
     <div className="home">
       <div className="booking-container">
@@ -124,9 +215,16 @@ function Booking() {
               ranges={dateRange}
               className="date-range-picker"
               minDate={new Date()}
+<<<<<<< HEAD
             />
             {errorMessage && <p style={{ color: 'red' }}>{errorMessage}</p>}
          </div>
+=======
+              disabledDates={disabledDates}
+            />
+            {errorMessage && <p style={{ color: 'red' }}>{errorMessage}</p>}
+          </div>
+>>>>>>> refs/remotes/origin/main
           <div className="people-container">
             <div className="people-group">
               <label>Adults:</label>

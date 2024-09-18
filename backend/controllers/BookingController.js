@@ -11,22 +11,23 @@ export const PostBooking = async (req, res) => {
 
     if (!user || !apartment || !startDate || !endDate || !totalPrice ||
         !advancePayment || !people) {
-      return res.status(400).json({ error: "Missing required fields" });
+      return res.status(400).json({ error: "Missing required fields. At least 1 Persone" });
     }
 
     const start = new Date(startDate);
     const end = new Date(endDate);
 
-    const overlappingBooking = await Booking.findOne({
-      apartment,
-      $or: [
-        { startDate: { $lt: end }, endDate: { $gt: start } }
-      ]
-    });
+    /////Ich glaube das brauchen wir nicht weil sie sind sowieso (disabledDates)/////////
+    // const overlappingBooking = await Booking.findOne({
+    //   apartment,
+    //   $or: [
+    //     { startDate: { $lt: end }, endDate: { $gt: start } }
+    //   ]
+    // });
 
-    if (overlappingBooking) {
-      return res.status(409).json({ error: "Apartment is already booked for the selected dates." });
-    }
+    // if (overlappingBooking) {
+    //   return res.status(409).json({ error: "Apartment is already booked for the selected dates." });
+    // }
 
     const newBooking = new Booking({
       user,
@@ -170,3 +171,19 @@ export const PostAdminBooking = async (req, res) => {
     res.status(500).json({ error: "Failed to create reservation." });
   }
 };
+
+export const GetBookedApartment = async (req, res) => {
+  const { id } = req.params;
+  try {
+    await connect();
+
+    const bookings = await Booking.find({ apartment: id })
+      .populate('apartment')
+      .populate('user');
+
+    res.json(bookings);
+  } catch (err) {
+    console.error('Error fetching reservations:', err);
+    res.status(500).json({ error: 'Failed to fetch reservations' });
+  }
+}

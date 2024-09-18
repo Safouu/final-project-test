@@ -1,4 +1,3 @@
-
 import { useState, useEffect, useRef } from 'react';
 import { DayPilotScheduler, DayPilot } from 'daypilot-pro-react';
 import moment from 'moment-timezone'; 
@@ -14,12 +13,10 @@ const generateRandomColor = () => {
   return color;
 };
 
-
 const getColorForResource = (resourceId, resources) => {
   const resource = resources.find(r => r.id === resourceId);
   return resource ? resource.color : generateRandomColor();
 };
-
 
 const deduplicateResources = (data) => {
   return data
@@ -33,13 +30,13 @@ const deduplicateResources = (data) => {
 
 const processEvents = (data) => {
   return data
-    .filter(item => item.apartment && item.user) 
+    .filter(item => item.apartment) 
     .map(item => {
       const startDateUTC = moment.utc(item.startDate).local().format('YYYY-MM-DDTHH:mm:ss');
       const endDateUTC = moment.utc(item.endDate).local().endOf('day').format('YYYY-MM-DDTHH:mm:ss');
       return {
         id: item._id,
-        text: item.user.firstName,
+        text: item.user ? item.user.firstName : "Admin Booking",  
         start: startDateUTC,
         end: endDateUTC,
         resource: item.apartment._id
@@ -54,7 +51,6 @@ const AdminCalendar = () => {
   const [startDate, setStartDate] = useState(moment().startOf('month').format('YYYY-MM-DD')); 
   const [days] = useState(365); 
 
- 
   const fetchData = async () => {
     try {
       const response = await fetch('http://localhost:3232/bookings');
@@ -78,18 +74,17 @@ const AdminCalendar = () => {
     fetchData();
   }, []);
 
-    const handleMonthChange = (direction) => {
-      const newDate = moment(startDate).add(direction, 'months').toDate();
-      setStartDate(newDate);
-    };
+  const handleMonthChange = (direction) => {
+    const newDate = moment(startDate).add(direction, 'months').toDate();
+    setStartDate(newDate);
+  };
 
- 
   const handleDateChange = (date) => {
     const formattedDate = moment(date).startOf('month').format('YYYY-MM-DD');
     setStartDate(formattedDate); 
   };
 
-  const eventColor = "#cdd4f3"; // Define the color you want for all events
+  const eventColor = "#cdd4f3"; 
   
   const config = {
     timeHeaders: [
@@ -113,6 +108,7 @@ const AdminCalendar = () => {
     onTimeRangeSelected: async (args) => {
       const modal = await DayPilot.Modal.prompt('Notice new', 'Notice');
       if (!modal.result) return;
+      
       const newEvent = {
         id: DayPilot.guid(),
         text: modal.result,
@@ -120,9 +116,22 @@ const AdminCalendar = () => {
         end: args.end,
         resource: args.resource
       };
-      console.log('New event created:', newEvent);
-      setEvents((prevEvents) => [...prevEvents, newEvent]);
-      schedulerRef.current.events.add(newEvent);
+      
+      try {
+        const response = await fetch('http://localhost:3232/bookings', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(newEvent),
+        });
+        if (!response.ok) {
+          throw new Error(`Failed to save event: ${response.statusText}`);
+        }
+        setEvents((prevEvents) => [...prevEvents, newEvent]);
+        schedulerRef.current.events.add(newEvent);
+        console.log('New event saved and added:', newEvent);
+      } catch (error) {
+        console.error('Error saving event:', error.message);
+      }
     },
     onBeforeEventRender: (args) => {
       args.data.backColor = eventColor;
@@ -134,20 +143,15 @@ const AdminCalendar = () => {
           onClick: async (args) => {
             const modal = await DayPilot.Modal.confirm('Do you want to delete this event?');
             if (modal.canceled) return;
-                 // Find the event id to delete
-          const eventId = args.source.id();
+            const eventId = args.source.id();
 
-          // Filter the event out from the events state
-          const updatedEvents = events.filter(event => event.id !== eventId);
+            const updatedEvents = events.filter(event => event.id !== eventId);
 
-          // Update the state
-          setEvents(updatedEvents);
+            // Remove the event from state and calendar UI
+            setEvents(updatedEvents);
+            schedulerRef.current.events.remove(eventId);
 
-          // Remove the event from the scheduler
-          schedulerRef.current.events.remove(eventId);
-
-          console.log('Event deleted:', eventId);
-        
+            console.log('Event deleted:', eventId);
           }
         }
       ]
@@ -167,15 +171,13 @@ const AdminCalendar = () => {
             showMonthYearPicker       
           />
           
-      <div className="arrow-buttons">
-        <button onClick={() => handleMonthChange(-1)}>{'<'}</button>
-        <button onClick={() => handleMonthChange(1)}>{'>'}</button>
-      </div>
-
+          <div className="arrow-buttons">
+            <button onClick={() => handleMonthChange(-1)}>{'<'}</button>
+            <button onClick={() => handleMonthChange(1)}>{'>'}</button>
+          </div>
         </div>
 
-
-       <DayPilotScheduler
+        <DayPilotScheduler
           {...config}
           events={events}
           resources={objects}
