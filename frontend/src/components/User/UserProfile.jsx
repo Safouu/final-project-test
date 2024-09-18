@@ -136,7 +136,7 @@ const UserProfile = () => {
 
 
 
-      <p>My Reservations</p>
+      <h2>My Reservations</h2>
 
       <div className='user-profile-reservations'>
         <ul>

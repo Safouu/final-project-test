@@ -56,11 +56,11 @@ header nav {
   gap: 3rem;
   align-items: center;
   background: rgba(255, 255, 255, 0.142);
- box-shadow: 0 4px 30px rgba(109, 109, 109, 0.194);
- backdrop-filter: blur(5px);
- -webkit-backdrop-filter: blur(5px);
- padding: 10px;
- border-radius: 80px;
+  box-shadow: 0 4px 30px rgba(109, 109, 109, 0.194);
+  backdrop-filter: blur(5px);
+  -webkit-backdrop-filter: blur(5px);
+  padding: 10px;
+  border-radius: 80px;
 
  a{
   color: var(--secondary-color);
@@ -161,19 +161,8 @@ backdrop-filter: blur(5px);
 
 
 
-/*Objects-container//////////*/
+/*Objects-container*/
 
-/* 
-
-.objects-container {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 40px;
-  justify-content: center;
-  align-items: center;
-  width: 100%;
-  border: solid 2px rgb(255, 0, 0);
-} */
 .apartments {
   width: 100%;
   display: flex;
@@ -204,12 +193,17 @@ backdrop-filter: blur(5px);
       padding: 0 10px;
       p{
         color: black;
-        font-size: 1.3rem;
+        font-size: var(--font-size-small);
         font-weight: 500;
       }
       h3{
         color: var(--price-color);
         font-weight: 600;
+        font-size: var(--font-size-medium);
+      }
+      span{
+        font-size: var(--font-size-small);
+        color: var(--black-color);
       }
     }
     
@@ -266,8 +260,6 @@ backdrop-filter: blur(5px);
   }
 }
 
-
-
 .input-group button {
   color: white;
   border: none;
@@ -277,7 +269,6 @@ backdrop-filter: blur(5px);
   border-radius: 4px;
   border: solid 5px rgb(13, 255, 0);
 }
-
 
 .input-group input {
   width: 50px;
@@ -300,8 +291,6 @@ backdrop-filter: blur(5px);
   border-radius: 8px;
 }
 
-
-
 .price-calculator label {
   display: block;
   margin-bottom: 5px;
@@ -314,8 +303,6 @@ backdrop-filter: blur(5px);
   border-radius: 4px;
   border: 1px solid #ccc;
 }
-
-
 
 button {
   cursor: not-allowed;
@@ -332,23 +319,20 @@ button {
   display: flex;
   justify-content: space-between;
   width: 100%;
-  background-color: #f0f0f0;
-  
+  background-color: #f0f0f0; 
   padding: 10px 0;
   font-weight: bold;
 }
 
 .rdrWeekDay {
   flex: 1;
-  text-align: center;
-  
+  text-align: center; 
 }
 
 .rdrDays {
   display: flex;
   flex-wrap: wrap;
   justify-content: space-between;
-  
   width: 100%;
 }
 
@@ -357,15 +341,12 @@ button {
   text-align: center;
   padding: 15px 0;
   box-sizing: border-box;
-
-
   margin-top: 5px; 
 }
 
 
-
-
 /*Contact*/
+
 .contact .top{
   background-image: url('../public/images/Luxe-villa-Lago-Maggiore.jpg');
 }
@@ -386,7 +367,6 @@ button {
     border-right: 2px solid var(--secondary-color);
     box-sizing: border-box;
     font-size: var(--font-size-small);
-
   }
 
   textarea{
@@ -416,9 +396,7 @@ button {
 }
 
 
-
 /*Login*/
-
 
 .login-container {
   display: flex;
@@ -454,8 +432,6 @@ button {
   margin-bottom: 1rem;
 }
 
-
-
 .login-form .message {
   color: var(--secondary-color);
   font-size: var(--font-size-small);
@@ -480,7 +456,6 @@ button {
 
 /*Object Details*/
 
-
 .apart .top{
   background-image: url('../public/images/balkon.jpg');
 }
@@ -493,7 +468,6 @@ button {
   flex-direction: column;
   justify-content: center;
   padding: 20px;
-
 }
 
 .apart-details .main-img ,img {
@@ -510,7 +484,6 @@ button {
   flex-wrap: wrap;
   gap: 15px;
   justify-content: center;
-
 }
 
 .single-images img {
@@ -543,10 +516,14 @@ hr{
   h3{
     color: var(--price-color);
     font-weight: 600;
+    font-size: var(--font-size-medium);
   }
   p{
-    font-size: 1.3rem;
-
+    font-size: 1rem;
+  }
+  span{
+    font-size: var(--font-size-small);
+    color: var(--black-color);
   }
 }
 
@@ -588,7 +565,6 @@ hr{
 }
 
 .social-media a {
- 
   padding: 0.5rem;
   background-color: #333;
   opacity: 0.6 ;
@@ -603,8 +579,8 @@ hr{
   background-color: #555;
 }
 
-/* Admin-Panel */
 
+/* Admin-Panel */
 
 .layout{
   display: flex;
@@ -651,12 +627,8 @@ hr{
     text-decoration: none;
     border-radius: 20px;
     width: 400px;
-    /* transition: transform 0.5s; */
     box-shadow: 2px 5px 10px 2px #00000021;
-    /* &:hover {
-      box-shadow: 8px 12px 15px 5px #00000021;
-      transform: translateY(-15px);
-    } */
+ 
     img {
       width: 100%;
       height: 270px;
@@ -667,12 +639,17 @@ hr{
       padding: 0 10px;
       p{
         color: black;
-        font-size: 1.3rem;
+        font-size: var(--font-size-small);
         font-weight: 500;
       }
       h3{
         color: var(--price-color);
         font-weight: 600;
+        font-size: var(--font-size-medium);
+      }
+      span{
+        font-size: var(--font-size-small);
+        color: var(--black-color);
       }
     }
 }
@@ -784,8 +761,6 @@ button{
 }
 
 
-
-
 /*Add Guest*/
 
 .add-guest {
@@ -827,8 +802,6 @@ button{
   transition: border-color 0.3s ease;
 }
 
-
-
 .add-guest .input-group {
   display: flex;
   align-items: center;
@@ -846,8 +819,6 @@ button{
   margin: 0 5px;
   transition: background-color 0.3s ease;
 }
-
-
 
 .people-container {
   display: flex;
@@ -943,6 +914,7 @@ button{
   background-color: #fff;
   margin-top: -1px;
 }
+
 
 /* Add Object */
 
@@ -1049,7 +1021,6 @@ button{
 }
 .scheduler_default_corner_inner{
   position: absolute;
-
 }
 
 .arrow-buttons{
@@ -1068,7 +1039,6 @@ button{
       color: white;
     }
   }
-  
 }
 
 /*List Guests*/
@@ -1098,7 +1068,7 @@ button{
   overflow: hidden;
   thead{
     background-color: #c7c7c7;
-    font-size: 1.2rem;
+    font-size: var(--font-size-small);
     th{
       padding: 10px;
     }
@@ -1118,9 +1088,11 @@ button{
       padding: 10px;
       font-size: 1.2rem;
       font-weight: 500;
-
     }
+    button{
+    margin: 0 2px;
   }
+}
 }
 
 .reservations-table .button{
@@ -1157,8 +1129,6 @@ button{
 }
 
 
-
-
 /*Message*/
 
 .contact-message-container {
@@ -1189,7 +1159,6 @@ button{
   border: solid 1px rgb(0, 0, 0);
 }
 
-
 .object-message button:hover {
   background-color: var(--secondary-color);
 }
@@ -1203,8 +1172,6 @@ button{
   border-radius: 8px;
  }
 }
-
-
 
 .user-infos{
   display: flex;
@@ -1221,11 +1188,14 @@ button{
 .user-profile-reservations ul{
   display: flex;
   flex-wrap: wrap;
+  justify-content: center;
   gap: 15px;
   width: 80vw;
-  /* box-shadow: 0 2px 12px #0000003b;
-  border-radius: 8px; */
+  button{
+    margin: 0 2px;
+  }
 }
+
 
 .reservation{
   list-style-type: none;
@@ -1238,13 +1208,11 @@ button{
   &:hover{
     box-shadow: 0 4px 12px #00000079;
   }
-
 }
 
 
 @media (max-width: 1100px) {
   header {
-  
     align-items: flex-start;
   }
 
@@ -1276,8 +1244,6 @@ button{
 
 }
 
-
-
 .add-guest {
   padding: 15px;
   max-width: 100%;
@@ -1290,18 +1256,15 @@ button{
 }
 
 
-
 @media (max-width: 700px) {
 
   header {
     padding: 0.5rem;
     justify-content: center;
-  
   }
 
   header .logout {
     font-size: small;
-
   }
 
   header .logo a {

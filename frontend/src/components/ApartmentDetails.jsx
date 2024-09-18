@@ -8,6 +8,7 @@ const ApartmentDetails = () => {
   const [apartment, setApartment] = useState(null);
   const [selectedImage, setSelectedImage] = useState('');
 
+
   useEffect(() => {
     fetch(`http://localhost:3232/apartment/${id}`)
       .then((res) => res.json())
@@ -17,7 +18,7 @@ const ApartmentDetails = () => {
       })
       .catch((error) => {
         console.error('There was a problem with the fetch operation:', error);
-        setObject({ error: 'Failed to load the Apartment details' });
+      
       });
       
   }, [id]);
@@ -71,7 +72,8 @@ const ApartmentDetails = () => {
           <div className='apart-description'>
             <h1>{apartment.name}</h1>
             <p>{apartment.description}</p>
-            <h3>{apartment.price} <span>€</span></h3>
+            <h3><span>Price</span> {apartment.price} €<span> per Night</span></h3>
+         
           </div>
 
           <hr />

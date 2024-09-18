@@ -4,13 +4,10 @@ import { DateRange } from 'react-date-range';
 import 'react-date-range/dist/styles.css';
 import 'react-date-range/dist/theme/default.css';
 import { useAuth } from "../context/AuthContext";
-
 function Booking() {
   const { isLoggedIn, userId } = useAuth();
   const location = useLocation();
   const { apartment } = location.state || {};
-  // const storedFirstName = localStorage.getItem('firstName');
-
   const [dateRange, setDateRange] = useState([
     {
       startDate: new Date(),
@@ -18,10 +15,7 @@ function Booking() {
       key: 'selection',
     },
   ]);
-
-
   const [formData, setFormData] = useState({
-    // userId: userId,
     user: "",
     apartment: apartment ? apartment.name : "",
     startDate: dateRange[0].startDate,
@@ -32,25 +26,16 @@ function Booking() {
     children: 0,
     pets: 0,
     days: 0,
-    // storedFirstName: storedFirstName
   });
-
   const [isBookingValid, setIsBookingValid] = useState(false);
   const [errorMessage, setErrorMessage] = useState('');
-
   useEffect(() => {
     if (!apartment) return;
-    
-    // Function to calculate total price based on single price
     const calculatePrice = () => {
-      const { price } = apartment;  // Assume object has a single price field
+      const { price } = apartment;
       const start = dateRange[0].startDate;
       const end = dateRange[0].endDate;
-
-      // Calculate the number of days
       const days = Math.ceil(((end - start) / (1000 * 60 * 60 * 24)) + 1);
-      
-      // Ensure minimum days are selected
       if (days < 5) {
         setIsBookingValid(false);
         setErrorMessage('You must select a minimum of 5 days.');
@@ -58,16 +43,12 @@ function Booking() {
       } else {
         setIsBookingValid(true);
         setErrorMessage('');
-        
         const totalPrice = price * days;
-        const advancePayment = totalPrice * 0.3; // 30% advance payment
-        
+        const advancePayment = totalPrice * 0.3;
         return { days, totalPrice, advancePayment };
       }
     };
-
     const { days, totalPrice, advancePayment } = calculatePrice();
-
     setFormData((prevFormData) => ({
       ...prevFormData,
       days: days,
@@ -75,7 +56,6 @@ function Booking() {
       advancePayment: advancePayment.toFixed(2)
     }));
   }, [dateRange, apartment]);
-
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData({
@@ -83,29 +63,24 @@ function Booking() {
       [name]: value,
     });
   };
-
   const handleIncrement = (field) => {
     setFormData({
       ...formData,
       [field]: formData[field] + 1,
     });
   };
-
   const handleDecrement = (field) => {
     setFormData({
       ...formData,
       [field]: formData[field] > 0 ? formData[field] - 1 : 0,
     });
   };
-
   const handleSubmit = async (e) => {
     e.preventDefault();
-  
     if (!isLoggedIn || !userId || !apartment) {
       alert('You must be logged in and have selected an apartment.');
       return;
     }
-  
     try {
       const response = await fetch(`http://localhost:3232/booking/${userId}`, {
         method: "POST",
@@ -124,10 +99,8 @@ function Booking() {
           pets: formData.pets
         }),
       });
-  
       const data = await response.json();
       console.log(data)
-
       if (response.status === 201) {
         alert('Reservation created successfully!');
       } else {
@@ -139,15 +112,10 @@ function Booking() {
       alert(`Failed to create reservation: ${error.message}`);
     }
   };
-  
-  
-
   return (
     <div className="home">
       <div className="booking-container">
-
         <form onSubmit={handleSubmit}>
-
           <div className="calendar-section">
             <DateRange
               editableDateInputs={true}
@@ -155,14 +123,12 @@ function Booking() {
               moveRangeOnFirstSelection={false}
               ranges={dateRange}
               className="date-range-picker"
+              minDate={new Date()}
             />
-
             {errorMessage && <p style={{ color: 'red' }}>{errorMessage}</p>}
-
          </div>
           <div className="people-container">
             <div className="people-group">
-              
               <label>Adults:</label>
               <div className="input-group">
                 <button type="button" onClick={() => handleDecrement("people")}>
@@ -180,7 +146,6 @@ function Booking() {
                 </button>
               </div>
             </div>
-
             <div>
               <label>Children:</label>
               <div className="input-group">
@@ -199,7 +164,6 @@ function Booking() {
                 </button>
               </div>
             </div>
-
             <div>
               <label>Pets:</label>
               <div className="input-group">
@@ -257,5 +221,18 @@ function Booking() {
     </div>
   );
 }
-
 export default Booking;
+
+
+
+
+
+
+
+
+
+
+
+
+
+

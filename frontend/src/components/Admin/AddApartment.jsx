@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import Map from './Map';
+// import Map from './Map';
 
 const AddApartment = () => {
   const [name, setName] = useState('');
@@ -263,7 +263,7 @@ const AddApartment = () => {
           required
         />
 
-        <Map latitude={latitude} longitude={longitude} />
+        {/* <Map latitude={latitude} longitude={longitude} /> */}
         
         <button type="submit">Add</button>
 

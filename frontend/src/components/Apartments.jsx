@@ -23,7 +23,7 @@ const Apartment = () => {
           <div className='apartment-details'>
             <h1>{apartment.name}</h1>
             <p>{(apartment.description).slice(0,30)}...</p>
-            <h3>{apartment.price} <span>€</span></h3>
+            <h3><span>Price</span> {apartment.price} €<span> per Night</span></h3>
           </div>
 
           </div>

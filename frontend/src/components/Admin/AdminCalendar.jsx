@@ -111,7 +111,7 @@ const AdminCalendar = () => {
       schedulerRef.current.message(`Event resized: ${args.e.data.text}`);
     },
     onTimeRangeSelected: async (args) => {
-      const modal = await DayPilot.Modal.prompt('New event name', 'Event');
+      const modal = await DayPilot.Modal.prompt('Notice new', 'Notice');
       if (!modal.result) return;
       const newEvent = {
         id: DayPilot.guid(),
