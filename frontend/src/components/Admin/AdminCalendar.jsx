@@ -97,7 +97,7 @@ const AdminCalendar = () => {
       { groupBy: 'Day', format: 'd' }
     ],
     scale: 'Day',
-    cellWidth: 25,
+    cellWidth: 50,
     days,
     startDate,
     timeRangeSelectedHandling: 'Enabled',
@@ -134,16 +134,16 @@ const AdminCalendar = () => {
           onClick: async (args) => {
             const modal = await DayPilot.Modal.confirm('Do you want to delete this event?');
             if (modal.canceled) return;
-
+                 // Find the event id to delete
           const eventId = args.source.id();
 
-
+          // Filter the event out from the events state
           const updatedEvents = events.filter(event => event.id !== eventId);
 
-
+          // Update the state
           setEvents(updatedEvents);
 
-
+          // Remove the event from the scheduler
           schedulerRef.current.events.remove(eventId);
 
           console.log('Event deleted:', eventId);
