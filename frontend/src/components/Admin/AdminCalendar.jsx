@@ -42,7 +42,7 @@ const processEvents = (data) => {
         text: item.user.firstName,
         start: startDateUTC,
         end: endDateUTC,
-        resource: item.apartment._id
+        resource: item.apartment._id,
       };
     });
 };
@@ -69,6 +69,8 @@ const AdminCalendar = () => {
 
       setObjects(resources);
       setEvents(events);
+      console.log('events:', events); 
+
     } catch (error) {
       console.error('Error fetching data:', error.message);
     }
@@ -89,7 +91,7 @@ const AdminCalendar = () => {
     setStartDate(formattedDate); 
   };
 
-  const eventColor = "#cdd4f3"; // Define the color you want for all events
+  const eventColor = "#cdd4f3";
   
   const config = {
     timeHeaders: [
@@ -134,16 +136,15 @@ const AdminCalendar = () => {
           onClick: async (args) => {
             const modal = await DayPilot.Modal.confirm('Do you want to delete this event?');
             if (modal.canceled) return;
-                 // Find the event id to delete
+
           const eventId = args.source.id();
 
-          // Filter the event out from the events state
+
           const updatedEvents = events.filter(event => event.id !== eventId);
 
-          // Update the state
+
           setEvents(updatedEvents);
 
-          // Remove the event from the scheduler
           schedulerRef.current.events.remove(eventId);
 
           console.log('Event deleted:', eventId);
@@ -173,7 +174,6 @@ const AdminCalendar = () => {
       </div>
 
         </div>
-
 
        <DayPilotScheduler
           {...config}

@@ -45,7 +45,7 @@ const AddApartment = () => {
 
     const apartmentData = {
       name,
-      price, // Single price
+      price,
       description,
       image,
       image1,

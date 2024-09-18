@@ -138,14 +138,14 @@ const ApartmentList = () => {
             <div className='apartment-details'>
               <h1>{apartment.name}</h1>
               <p>{(apartment.description).slice(0, 30)}...</p>
-              <h3>{apartment.price} <span>€</span></h3>
+              <h3>{apartment.price} € / night</h3>
             </div>
             <div className='admin-buttons'>
             <button className='edit-button' onClick={() => handleEditApartment(apartment)}>
-        <FontAwesomeIcon icon={faPen} /> {/* Pen icon for edit */}
+        <FontAwesomeIcon icon={faPen} /> 
       </button>
       <button className='delete-button' onClick={() => handleDelete(apartment._id)}>
-        <FontAwesomeIcon icon={faTrash} /> {/* Trash icon for delete */}
+        <FontAwesomeIcon icon={faTrash} />
       </button>
   
     </div>
