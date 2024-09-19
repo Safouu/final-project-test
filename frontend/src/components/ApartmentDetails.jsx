@@ -8,6 +8,7 @@ const ApartmentDetails = () => {
   const [apartment, setApartment] = useState(null);
   const [selectedImage, setSelectedImage] = useState('');
 
+
   useEffect(() => {
     fetch(`http://localhost:3232/apartment/${id}`)
       .then((res) => res.json())

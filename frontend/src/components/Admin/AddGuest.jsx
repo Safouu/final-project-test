@@ -3,12 +3,12 @@ import { DateRange } from "react-date-range";
 import "react-date-range/dist/styles.css";
 import "react-date-range/dist/theme/default.css";
 
+
 const AddGuest = ({ reservationToEdit, onClose }) => {
   const [apartments, setApartments] = useState([]);
   const [isBookingValid, setIsBookingValid] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
   const [submitMessage, setSubmitMessage] = useState("");
-
   const [formData, setFormData] = useState({
     firstName: "",
     lastName: "",
@@ -24,7 +24,6 @@ const AddGuest = ({ reservationToEdit, onClose }) => {
     pricePerDay: 0,
     days: 0,
   });
-
   const [dateRange, setDateRange] = useState([
     {
       startDate: new Date(),
@@ -32,7 +31,6 @@ const AddGuest = ({ reservationToEdit, onClose }) => {
       key: "selection",
     },
   ]);
-
   useEffect(() => {
     const fetchApartments = async () => {
       try {
@@ -47,10 +45,8 @@ const AddGuest = ({ reservationToEdit, onClose }) => {
         console.error("Error fetching apartments:", error);
       }
     };
-
     fetchApartments();
   }, []);
-
   useEffect(() => {
     if (reservationToEdit) {
       const selectedApartment = apartments.find(apartment => apartment._id === reservationToEdit.apartment._id);
@@ -78,12 +74,10 @@ const AddGuest = ({ reservationToEdit, onClose }) => {
       ]);
     }
   }, [reservationToEdit, apartments]);
-
   useEffect(() => {
     const start = dateRange[0].startDate;
     const end = dateRange[0].endDate;
     const days = Math.ceil((end - start) / (1000 * 60 * 60 * 24));
-
     if (days < 5) {
       setIsBookingValid(false);
       setErrorMessage("You must select a minimum of 5 days.");
@@ -98,12 +92,10 @@ const AddGuest = ({ reservationToEdit, onClose }) => {
       }));
     }
   }, [dateRange]);
-
   useEffect(() => {
     if (formData.pricePerDay && formData.days) {
       const totalPrice = formData.pricePerDay * formData.days;
       const advancePayment = totalPrice * 0.3;
-
       setFormData((prevFormData) => ({
         ...prevFormData,
         totalPrice: totalPrice.toFixed(2),
@@ -111,7 +103,6 @@ const AddGuest = ({ reservationToEdit, onClose }) => {
       }));
     }
   }, [formData.pricePerDay, formData.days]);
-
   const handleChange = (e) => {
     const { name, value } = e.target;
     if (name === "apartment") {
@@ -120,7 +111,7 @@ const AddGuest = ({ reservationToEdit, onClose }) => {
         setFormData((prevFormData) => ({
           ...prevFormData,
           [name]: value,
-          pricePerDay: selectedApartment.price, 
+          pricePerDay: selectedApartment.price,
         }));
       }
     } else {
@@ -130,26 +121,22 @@ const AddGuest = ({ reservationToEdit, onClose }) => {
       }));
     }
   };
-  
   const handleIncrement = (field) => {
     setFormData((prevFormData) => ({
       ...prevFormData,
       [field]: prevFormData[field] + 1,
     }));
   };
-
   const handleDecrement = (field) => {
     setFormData((prevFormData) => ({
       ...prevFormData,
       [field]: prevFormData[field] > 0 ? prevFormData[field] - 1 : 0,
     }));
   };
-
   const handleSubmit = async (e) => {
     e.preventDefault();
     const method = reservationToEdit ? "PATCH" : "POST";
     const url = reservationToEdit ? `http://localhost:3232/booking/${reservationToEdit._id}` : "http://localhost:3232/booking";
-
     try {
       const response = await fetch(url, {
         method: method,
@@ -161,11 +148,10 @@ const AddGuest = ({ reservationToEdit, onClose }) => {
           apartment: { _id: formData.apartment },
         }),
       });
-
       if (response.ok) {
         const result = await response.json();
         setSubmitMessage("Reservation saved successfully!");
-        if (onClose) onClose(); 
+        if (onClose) onClose();
       } else {
         setSubmitMessage("Failed to save reservation.");
       }
@@ -173,11 +159,9 @@ const AddGuest = ({ reservationToEdit, onClose }) => {
       setSubmitMessage("An error occurred during reservation.");
     }
   };
-
   return (
     <div className="add-guest">
       <h2>{reservationToEdit ? "Edit Reservation" : "New Reservation"}</h2>
-
       <form onSubmit={handleSubmit}>
         <div>
           <label>Select Apartment:</label>
@@ -195,7 +179,6 @@ const AddGuest = ({ reservationToEdit, onClose }) => {
             ))}
           </select>
         </div>
-
         <div>
           <label>First Name:</label>
           <input
@@ -207,7 +190,6 @@ const AddGuest = ({ reservationToEdit, onClose }) => {
             required
           />
         </div>
-
         <div>
           <label>Last Name:</label>
           <input
@@ -219,7 +201,6 @@ const AddGuest = ({ reservationToEdit, onClose }) => {
             required
           />
         </div>
-
         <div>
           <label>Email:</label>
           <input
@@ -231,7 +212,6 @@ const AddGuest = ({ reservationToEdit, onClose }) => {
             required
           />
         </div>
-
         <div className="calendar-section">
           <h3>Select Your Stay:</h3>
           <DateRange
@@ -244,7 +224,6 @@ const AddGuest = ({ reservationToEdit, onClose }) => {
           />
           {errorMessage && <p style={{ color: "red" }}>{errorMessage}</p>}
         </div>
-
         <div className="people-container">
           <div className="people-group">
             <label>Adults:</label>
@@ -263,7 +242,6 @@ const AddGuest = ({ reservationToEdit, onClose }) => {
               </button>
             </div>
           </div>
-
           <div className="people-group">
             <label>Children:</label>
             <div className="input-group">
@@ -281,7 +259,6 @@ const AddGuest = ({ reservationToEdit, onClose }) => {
               </button>
             </div>
           </div>
-
           <div className="people-group">
             <label>Pets:</label>
             <div className="input-group">
@@ -300,7 +277,6 @@ const AddGuest = ({ reservationToEdit, onClose }) => {
             </div>
           </div>
         </div>
-
         <div className="calculator">
           <h3>Price Calculator</h3>
           <div>
@@ -337,7 +313,6 @@ const AddGuest = ({ reservationToEdit, onClose }) => {
             />
           </div>
         </div>
-
         <button className="edit-button" type="submit" disabled={!isBookingValid}>
           {reservationToEdit ? "Update" : "Submit"}
         </button>
@@ -347,5 +322,12 @@ const AddGuest = ({ reservationToEdit, onClose }) => {
     </div>
   );
 };
-
 export default AddGuest;
+
+
+
+
+
+
+
+

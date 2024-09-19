@@ -20,7 +20,6 @@ function Booking() {
       key: 'selection',
     },
   ]);
-
   const [formData, setFormData] = useState({
     user: "",
     apartment: apartment ? apartment.name : "",
@@ -33,32 +32,33 @@ function Booking() {
     pets: 0,
     days: 0,
   });
-
   const [isBookingValid, setIsBookingValid] = useState(false);
   const [errorMessage, setErrorMessage] = useState('');
-
   useEffect(() => {
     if (!apartment) return;
-
+  
     const fetchBookedDates = async () => {
       try {
         const response = await fetch(`http://localhost:3232/booking/apartment/${apartment._id}`);
         const data = await response.json();
-
+  
         if (response.ok) {
           if (data && data.length > 0) {
-            const bookedRanges = data.map(booking => ({
-              startDate: new Date(booking.startDate),
-              endDate: new Date(booking.endDate),
-            }));
-
-            const allBookedDates = bookedRanges.flatMap(range => 
-              eachDayOfInterval({
-                start: range.startDate,
-                end: range.endDate,
-              })
-            );
-
+            let allBookedDates = [];
+  
+            for (const booking of data) {
+              const startDate = new Date(booking.startDate);
+              const endDate = new Date(booking.endDate);
+              const days = eachDayOfInterval({
+                start: startDate,
+                end: endDate,
+              });
+  
+              for (const day of days) {
+                allBookedDates.push(day);
+              }
+            }
+  
             setDisabledDates(allBookedDates);
           } else {
             setDisabledDates([]);
@@ -68,7 +68,7 @@ function Booking() {
         console.error("Error fetching booked dates:", error);
       }
     };
-
+  
     fetchBookedDates();
   }, [apartment]);
 
@@ -80,7 +80,6 @@ function Booking() {
       const start = dateRange[0].startDate;
       const end = dateRange[0].endDate;
       const days = Math.ceil(((end - start) / (1000 * 60 * 60 * 24)) + 1);
-
       if (days < 5) {
         setIsBookingValid(false);
         setErrorMessage('You must select a minimum of 5 days.');
@@ -95,9 +94,7 @@ function Booking() {
         return { days, totalPrice, advancePayment };
       }
     };
-
     const { days, totalPrice, advancePayment } = calculatePrice();
-
     setFormData((prevFormData) => ({
       ...prevFormData,
       days: days,
@@ -105,7 +102,6 @@ function Booking() {
       advancePayment: advancePayment.toFixed(2)
     }));
   }, [dateRange, apartment]);
-
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData({
@@ -113,30 +109,25 @@ function Booking() {
       [name]: value,
     });
   };
-
   const handleIncrement = (field) => {
     setFormData({
       ...formData,
       [field]: formData[field] + 1,
     });
   };
-
   const handleDecrement = (field) => {
     setFormData({
       ...formData,
       [field]: formData[field] > 0 ? formData[field] - 1 : 0,
     });
   };
-
   const handleSubmit = async (e) => {
     e.preventDefault();
-
     if (!isLoggedIn || !userId || !apartment) {
       alert('You must be logged in and have selected an apartment.');
       navigate("/login");
       return;
     }
-
     try {
       const response = await fetch(`http://localhost:3232/booking/${userId}`, {
         method: "POST",
@@ -182,6 +173,7 @@ function Booking() {
       <div className="booking-container">
         <form onSubmit={handleSubmit}>
           <div className="calendar-section">
+            
             <DateRange
               editableDateInputs={true}
               onChange={item => setDateRange([item.selection])}
@@ -287,5 +279,18 @@ function Booking() {
     </div>
   );
 }
-
 export default Booking;
+
+
+
+
+
+
+
+
+
+
+
+
+
+

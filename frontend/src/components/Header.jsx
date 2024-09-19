@@ -1,5 +1,9 @@
 import { NavLink } from "react-router-dom";
 import { useAuth } from '../context/AuthContext';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faDoorOpen } from '@fortawesome/free-solid-svg-icons';
+import { faPagelines } from '@fortawesome/free-brands-svg-icons';
+
 
 const Header = () => {
   const { isLoggedIn, isAdmin, isUser, firstName, logout } = useAuth();
@@ -10,9 +14,9 @@ const Header = () => {
     <header className="header">
 
        <nav className="logo">
-        <NavLink to="/">
-          Y.D.V
-        </NavLink>
+         <NavLink to="/">
+          <FontAwesomeIcon icon={faPagelines} style={{ fontSize:"3rem"}} />
+         </NavLink>
       </nav>
       
       <nav className="nav">
@@ -22,7 +26,9 @@ const Header = () => {
           <>
             {isAdmin && <NavLink to="/admin">Admin</NavLink>}
             {isUser && <NavLink to="/userProfile">{firstName} </NavLink>}
-            <button onClick={logout} className="logout">{`=>`}</button>
+            <button onClick={logout} className="logout">
+             <FontAwesomeIcon icon={faDoorOpen} /> 
+            </button>
           </>
         ) : (
           <NavLink to="/login">Login</NavLink>
