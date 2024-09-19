@@ -1,23 +1,14 @@
 import { useState, useEffect } from 'react';
 import { useAuth } from '../../context/AuthContext';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faPen, faTrashAlt } from '@fortawesome/free-solid-svg-icons';
-
+import { faTrashAlt } from '@fortawesome/free-solid-svg-icons';
 
 const UserProfile = () => {
   const { isLoggedIn, userId } = useAuth();
-
   const [user, setUser] = useState();
   const [reservations, setReservations] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-
-  ////////// State for editing
-  const [editingReservation, setEditingReservation] = useState(null);
-  const [editStartDate, setEditStartDate] = useState('');
-  const [editEndDate, setEditEndDate] = useState('');
-  const [editAdvancePayment, setEditAdvancePayment] = useState('');
-  const [editTotalPrice, setEditTotalPrice] = useState('');
 
   const fetchUserData = async () => {
     if (!isLoggedIn || !userId) {
@@ -42,7 +33,6 @@ const UserProfile = () => {
       const data = await response.json();
       setUser(data.user);
       setReservations(data.bookings);
-
     } catch (err) {
       setError(err.message);
     } finally {
@@ -60,48 +50,9 @@ const UserProfile = () => {
         method: "DELETE",
       });
       if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
-      fetchUserData();
+      fetchUserData(); ////// Refresh the data after deleting
     } catch (error) {
       console.error("Error deleting reservation:", error);
-    }
-  };
-
-  const handleEditReservation = (reservation) => {
-    setEditingReservation(reservation);
-    setEditStartDate(reservation.startDate);
-    setEditEndDate(reservation.endDate);
-    setEditAdvancePayment(reservation.advancePayment);
-    setEditTotalPrice(reservation.totalPrice);
-  };
-
-  const handleUpdateReservation = async (e) => {
-    e.preventDefault();
-
-    const updatedReservation = {
-      startDate: editStartDate,
-      endDate: editEndDate,
-      advancePayment: editAdvancePayment,
-      totalPrice: editTotalPrice,
-    };
-
-    try {
-      const response = await fetch(`http://localhost:3232/booking/${editingReservation._id}`, {
-        method: 'PATCH',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(updatedReservation),
-      });
-
-      if (response.ok) {
-        const updatedData = await response.json();
-        setReservations(reservations.map((reservation) =>
-          reservation._id === updatedData._id ? updatedData : reservation
-        ));
-        setEditingReservation(null);
-      }
-    } catch (error) {
-      console.error('Error:', error);
     }
   };
 
@@ -119,7 +70,6 @@ const UserProfile = () => {
 
   return (
     <div className='home'>
-
       <div className='user-profile'>
         <div className='top'>
           <p>{user.firstName} {user.lastName}</p>
@@ -130,10 +80,7 @@ const UserProfile = () => {
         <p><strong>Firstname:</strong> {user.firstName}</p>
         <p><strong>Lastname:</strong> {user.lastName}</p>
         <p><strong>Email:</strong> {user.email}</p>
-        {/* <img style={{width:"60px", height:"60px", border:"2px black solid"}} src="" alt="" /> */}
       </div>
-
-
 
       <h2>My Reservations</h2>
 
@@ -148,12 +95,13 @@ const UserProfile = () => {
                     <p><strong>Property:</strong> {reservation.apartment.name}</p>
                     <p><strong>Check-in Date:</strong> {new Date(reservation.startDate).toLocaleDateString()}</p>
                     <p><strong>Check-out Date:</strong> {new Date(reservation.endDate).toLocaleDateString()}</p>
-                  
-                    <button className='edit-button' onClick={() => handleEditReservation(reservation)}>
-                    <FontAwesomeIcon  icon={faPen} /> 
-                    </button>
+                    <p><strong>People:</strong> {reservation.people}</p>
+                    <p><strong>Children:</strong> {reservation.children} </p>
+                    <p><strong>Pets:</strong> {reservation.pets}</p>
+                    <p><strong>Total Price:</strong> {reservation.totalPrice} €</p>
+                    <p><strong>Advance Payment (30%):</strong> {reservation.advancePayment} €</p>
                     <button className='delete-button' onClick={() => handleDelete(reservation._id)}>
-                    <FontAwesomeIcon  icon={faTrashAlt} /> 
+                      <FontAwesomeIcon icon={faTrashAlt} />
                     </button>
                   </>
                 ) : (
@@ -166,33 +114,6 @@ const UserProfile = () => {
           )}
         </ul>
       </div>
-
-      {editingReservation && (
-        <form className='edit-reservation-form' onSubmit={handleUpdateReservation}>
-          <h2>Edit Reservation</h2>
-          <label>
-            Check-in Date
-            <input
-              type="date"
-              value={editStartDate}
-              onChange={(e) => setEditStartDate(e.target.value)}
-              required
-            />
-          </label>
-          <label>
-            Check-out Date
-            <input
-              type="date"
-              value={editEndDate}
-              onChange={(e) => setEditEndDate(e.target.value)}
-              required
-            />
-          </label>
-        
-          <button className='edit-button' type="submit">Save</button>
-          <button className='delete-button' type="button" onClick={() => setEditingReservation(null)}>Cancel</button>
-        </form>
-      )}
     </div>
   );
 };
