@@ -36,15 +36,11 @@ app.post("/contacts",PostContact)
 /////////////  BOOKING ////////////
 app.post("/booking/:id",PostBooking)
 app.get("/booking/:id",GetSingleBooking)
-
 app.delete("/booking/:id",DeleteSingleBooking)
 app.patch("/booking/:id",UpdateSingleBooking)
 ////////  GET ALL BOOKINGS  /////////
 app.get("/booking",GetAllBookings)
-
 app.post("/booking/",PostAdminBooking)
-
-
 ////////////////////////////////////////////////////
 
 app.get('/bookings', GetAllBookings); // New endpoint

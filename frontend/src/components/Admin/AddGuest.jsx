@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import { DateRange } from "react-date-range";
 import "react-date-range/dist/styles.css";
 import "react-date-range/dist/theme/default.css";
-
+import { eachDayOfInterval } from 'date-fns';
 
 const AddGuest = ({ reservationToEdit, onClose }) => {
   const [apartments, setApartments] = useState([]);
@@ -31,6 +31,8 @@ const AddGuest = ({ reservationToEdit, onClose }) => {
       key: "selection",
     },
   ]);
+  const [disabledDates, setDisabledDates] = useState([]);
+
   useEffect(() => {
     const fetchApartments = async () => {
       try {
@@ -47,6 +49,7 @@ const AddGuest = ({ reservationToEdit, onClose }) => {
     };
     fetchApartments();
   }, []);
+
   useEffect(() => {
     if (reservationToEdit) {
       const selectedApartment = apartments.find(apartment => apartment._id === reservationToEdit.apartment._id);
@@ -74,6 +77,33 @@ const AddGuest = ({ reservationToEdit, onClose }) => {
       ]);
     }
   }, [reservationToEdit, apartments]);
+
+  useEffect(() => {
+    const fetchBookedDates = async () => {
+      if (!formData.apartment) return;
+      try {
+        const response = await fetch(`http://localhost:3232/booking/apartment/${formData.apartment}`);
+        const data = await response.json();
+        if (response.ok) {
+          const allBookedDates = [];
+          data.forEach(booking => {
+            const startDate = new Date(booking.startDate);
+            const endDate = new Date(booking.endDate);
+            const days = eachDayOfInterval({
+              start: startDate,
+              end: endDate,
+            });
+            allBookedDates.push(...days);
+          });
+          setDisabledDates(allBookedDates);
+        }
+      } catch (error) {
+        console.error("Error fetching booked dates:", error);
+      }
+    };
+    fetchBookedDates();
+  }, [formData.apartment]);
+
   useEffect(() => {
     const start = dateRange[0].startDate;
     const end = dateRange[0].endDate;
@@ -84,7 +114,7 @@ const AddGuest = ({ reservationToEdit, onClose }) => {
     } else {
       setIsBookingValid(true);
       setErrorMessage("");
-      setFormData((prevFormData) => ({
+      setFormData(prevFormData => ({
         ...prevFormData,
         days,
         startDate: start.toISOString().split("T")[0],
@@ -92,47 +122,52 @@ const AddGuest = ({ reservationToEdit, onClose }) => {
       }));
     }
   }, [dateRange]);
+
   useEffect(() => {
     if (formData.pricePerDay && formData.days) {
       const totalPrice = formData.pricePerDay * formData.days;
       const advancePayment = totalPrice * 0.3;
-      setFormData((prevFormData) => ({
+      setFormData(prevFormData => ({
         ...prevFormData,
         totalPrice: totalPrice.toFixed(2),
         advancePayment: advancePayment.toFixed(2),
       }));
     }
   }, [formData.pricePerDay, formData.days]);
+
   const handleChange = (e) => {
     const { name, value } = e.target;
     if (name === "apartment") {
       const selectedApartment = apartments.find(apartment => apartment._id === value);
       if (selectedApartment) {
-        setFormData((prevFormData) => ({
+        setFormData(prevFormData => ({
           ...prevFormData,
           [name]: value,
           pricePerDay: selectedApartment.price,
         }));
       }
     } else {
-      setFormData((prevFormData) => ({
+      setFormData(prevFormData => ({
         ...prevFormData,
         [name]: value,
       }));
     }
   };
+
   const handleIncrement = (field) => {
-    setFormData((prevFormData) => ({
+    setFormData(prevFormData => ({
       ...prevFormData,
       [field]: prevFormData[field] + 1,
     }));
   };
+
   const handleDecrement = (field) => {
-    setFormData((prevFormData) => ({
+    setFormData(prevFormData => ({
       ...prevFormData,
       [field]: prevFormData[field] > 0 ? prevFormData[field] - 1 : 0,
     }));
   };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     const method = reservationToEdit ? "PATCH" : "POST";
@@ -149,7 +184,6 @@ const AddGuest = ({ reservationToEdit, onClose }) => {
         }),
       });
       if (response.ok) {
-        const result = await response.json();
         setSubmitMessage("Reservation saved successfully!");
         if (onClose) onClose();
       } else {
@@ -159,6 +193,7 @@ const AddGuest = ({ reservationToEdit, onClose }) => {
       setSubmitMessage("An error occurred during reservation.");
     }
   };
+
   return (
     <div className="add-guest">
       <h2>{reservationToEdit ? "Edit Reservation" : "New Reservation"}</h2>
@@ -172,7 +207,7 @@ const AddGuest = ({ reservationToEdit, onClose }) => {
             required
           >
             <option value="" disabled>Select an option</option>
-            {apartments.map((apartment) => (
+            {apartments.map(apartment => (
               <option key={apartment._id} value={apartment._id}>
                 {apartment.name}
               </option>
@@ -216,11 +251,11 @@ const AddGuest = ({ reservationToEdit, onClose }) => {
           <h3>Select Your Stay:</h3>
           <DateRange
             editableDateInputs={true}
-            onChange={(item) => setDateRange([item.selection])}
+            onChange={item => setDateRange([item.selection])}
             moveRangeOnFirstSelection={false}
             ranges={dateRange}
-            className="date-range-picker"
             minDate={new Date()}
+            disabledDates={disabledDates}
           />
           {errorMessage && <p style={{ color: "red" }}>{errorMessage}</p>}
         </div>
@@ -318,16 +353,10 @@ const AddGuest = ({ reservationToEdit, onClose }) => {
         </button>
         {submitMessage && <p>{submitMessage}</p>}
         <button className="delete-button" type="button" onClick={onClose}>Close</button>
-      </form>
-    </div>
+        </form>
+        </div>
+
   );
 };
+
 export default AddGuest;
-
-
-
-
-
-
-
-

@@ -45,11 +45,11 @@ const BookingSchema = new mongoose.Schema({
   },
   children: {
     type: Number,
-    required: true,
+    // required: true,
   },
   pets: {
     type: Number,
-    required: true,
+    // required: true,
   },
 });
 

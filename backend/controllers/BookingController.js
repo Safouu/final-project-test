@@ -131,23 +131,23 @@ export const PostAdminBooking = async (req, res) => {
             advancePayment, people, children, pets } = req.body;
 
     if (!apartment || !startDate || !endDate || !totalPrice ||
-        !advancePayment || !people || !children || !pets) {
-      return res.status(400).json({ error: "Missing required fields" });
+        !advancePayment || !people) {
+      return res.status(400).json({ error: "Missing required fields. At least 1 Persone"  });
     }
 
     const start = new Date(startDate);
     const end = new Date(endDate);
 
-    const overlappingBooking = await Booking.findOne({
-      apartment,
-      $or: [
-        { startDate: { $lt: end }, endDate: { $gt: start } }
-      ]
-    });
+    // const overlappingBooking = await Booking.findOne({
+    //   apartment,
+    //   $or: [
+    //     { startDate: { $lt: end }, endDate: { $gt: start } }
+    //   ]
+    // });
 
-    if (overlappingBooking) {
-      return res.status(409).json({ error: "Apartment is already booked for the selected dates." });
-    }
+    // if (overlappingBooking) {
+    //   return res.status(409).json({ error: "Apartment is already booked for the selected dates." });
+    // }
 
     const newBooking = new Booking({
       apartment,
@@ -171,6 +171,7 @@ export const PostAdminBooking = async (req, res) => {
     res.status(500).json({ error: "Failed to create reservation." });
   }
 };
+
 
 export const GetBookedApartment = async (req, res) => {
   const { id } = req.params;
