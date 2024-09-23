@@ -355,6 +355,7 @@ const AddGuest = ({ reservationToEdit, onClose }) => {
         <button className="delete-button" type="button" onClick={onClose}>Close</button>
         </form>
         </div>
+        
 
   );
 };
