@@ -15,14 +15,14 @@ const loadGoogleMaps = (callback) => {
 };
 
 const Map = ({ latitude, longitude }) => {
-  const mapRef = useRef(null);   // Reference to the div containing the map
-  const mapInstance = useRef(null);  // Reference to the map instance itself
-  const [placeDetails, setPlaceDetails] = useState(null);  // Store place details
+  const mapRef = useRef(null);  
+  const mapInstance = useRef(null);  
+  const [placeDetails, setPlaceDetails] = useState(null);  
 
   useEffect(() => {
     const initializeMap = () => {
       if (window.google?.maps && mapRef.current && !mapInstance.current) {
-        // Only create the map if it hasn't been created yet
+        
         mapInstance.current = new window.google.maps.Map(mapRef.current, {
           center: { lat: latitude, lng: longitude },
           zoom: 15,
@@ -33,7 +33,7 @@ const Map = ({ latitude, longitude }) => {
           map: mapInstance.current,
         });
 
-        // Add a click event listener to the marker
+       
         marker.addListener('click', () => {
           const service = new window.google.maps.places.PlacesService(mapInstance.current);
           const request = {
@@ -48,7 +48,7 @@ const Map = ({ latitude, longitude }) => {
               service.getDetails({ placeId }, (placeResult, status) => {
                 if (status === window.google.maps.places.PlacesServiceStatus.OK) {
                   console.log('Place Details:', placeResult);
-                  setPlaceDetails(placeResult);  // Update place details in state
+                  setPlaceDetails(placeResult);  
                 }
               });
             }
@@ -64,7 +64,7 @@ const Map = ({ latitude, longitude }) => {
     <div>
       <div ref={mapRef} style={{ height: '400px', width: '100%' }} />
       
-      {/* Display place details if available */}
+    
       {placeDetails && (
         <div style={{ marginTop: '20px' }}>
           <h3>Place Details</h3>
