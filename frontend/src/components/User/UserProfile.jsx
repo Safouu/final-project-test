@@ -101,7 +101,7 @@ const UserProfile = () => {
                     <p><strong>Total Price:</strong> {reservation.totalPrice} €</p>
                     <p><strong>Advance Payment (30%):</strong> {reservation.advancePayment} €</p>
                     <button className='delete-button' onClick={() => handleDelete(reservation._id)}>
-                      <FontAwesomeIcon icon={faTrashAlt} />
+                      <FontAwesomeIcon icon={faTrashAlt} /> Cancel Reservation
                     </button>
                   </>
                 ) : (
